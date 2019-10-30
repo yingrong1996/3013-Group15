@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 
 from FlaskApp.__init__ import db, login_manager
