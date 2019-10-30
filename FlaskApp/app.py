@@ -1,7 +1,7 @@
 from flask import Flask
 
 from FlaskApp.__init__ import db, login_manager
-from views import view
+from FlaskApp.views import view
 
 app = Flask(__name__)
 
