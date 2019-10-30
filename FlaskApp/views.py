@@ -27,6 +27,8 @@ def render_registration_page():
         username = form.username.data
         preferred_name = form.preferred_name.data
         password = form.password.data
+        query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
+        db.session.execute(query)
         query = "SELECT * FROM web_user WHERE username = '{}'".format(username)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
