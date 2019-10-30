@@ -1,4 +1,4 @@
-from __init__ import db
+from FlaskApp.__init__ import db
 
 
 class WebUser(db.Model):
