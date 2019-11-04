@@ -16,28 +16,28 @@ def load_user(username):
 
 @view.route("/", methods=["GET"])
 def render_landing_page():
-	query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
-	db.session.execute(query)
-	query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, description VARCHAR NOT NULL, quota INT NOT NULL);"
-	db.session.execute(query)
-	query = "INSERT INTO modules ('module_code', 'name', 'prof_id', 'description', 'quota') VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
-	db.session.execute(query)
+    query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
+    db.session.execute(query)
+    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, description VARCHAR NOT NULL, quota INT NOT NULL);"
+    db.session.execute(query)
+    query = "INSERT INTO modules ('module_code', 'name', 'prof_id', 'description', 'quota') VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
+    db.session.execute(query)
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
-	
+    
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
-	form = SearchForm()
-	if form.validate_on_submit():
-		search = form.search.data
-		query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
-		result = db.session.execute(query).fetchall()
-		if result:
-			form.search.errors.append("Modules found with {}".format(search))
-		else:
-			form.search.errors.append("No modules found with {}".format(search))
-	return render_template("search.html", form = form)
+    form = SearchForm()
+    if form.validate_on_submit():
+        search = form.search.data
+        query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
+        result = db.session.execute(query).fetchall()
+        if result:
+            form.search.errors.append("Modules found with {}".format(search))
+        else:
+            form.search.errors.append("No modules found with {}".format(search))
+    return render_template("search.html", form = form)
 
 
 @view.route("/registration", methods=["GET", "POST"])
