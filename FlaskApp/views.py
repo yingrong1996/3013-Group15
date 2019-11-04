@@ -20,7 +20,7 @@ def render_landing_page():
 	db.session.execute(query)
 	query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, description VARCHAR NOT NULL, quota INT NOT NULL);"
 	db.session.execute(query)
-	query = "INSERT INTO modules ("module_code", "name", "prof_id", "description", "quota") VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
+	query = "INSERT INTO modules ('module_code', 'name', 'prof_id', 'description', 'quota') VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
 	db.session.execute(query)
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
