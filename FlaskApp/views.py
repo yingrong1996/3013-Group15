@@ -32,6 +32,7 @@ def render_landing_page():
 def render_search_page():
 	form = SearchForm()
 	if form.validate_on_submit():
+		print("valid")
 		search = form.search.data
 		query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
 		result = db.session.execute(query).fetchall()
@@ -39,6 +40,8 @@ def render_search_page():
 			return "Modules found with {}".format(search)
 		else:
 			return "No modules found with {}".format(search)
+	else:
+		print(form.errors)
 	return render_template("search.html", form = form)
 
 
