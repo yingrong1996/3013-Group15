@@ -38,7 +38,7 @@ def render_search_page():
 		if result:
 			return "Modules found with {}".format(search)
 		else:
-			form.search.errors.append("No modules found with {}".format(search))
+			return "No modules found with {}".format(search)
 	return render_template("search.html", form = form)
 
 
