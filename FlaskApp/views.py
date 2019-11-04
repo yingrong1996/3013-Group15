@@ -36,7 +36,7 @@ def render_search_page():
 		query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
 		result = db.session.execute(query).fetchall()
 		if result:
-			form.search.errors.append("Modules found with {}".format(search))
+			return "Modules found with {}".format(search)
 		else:
 			form.search.errors.append("No modules found with {}".format(search))
 	return render_template("search.html", form = form)
