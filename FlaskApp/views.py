@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm
+from FlaskApp.forms import LoginForm, RegistrationFor, SearchForm
 from FlaskApp.models import WebUser
 
 view = Blueprint("view", __name__)
