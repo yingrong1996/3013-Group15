@@ -30,6 +30,7 @@ def render_landing_page():
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
+	print("search")
 	form = SearchForm()
 	if form.validate_on_submit():
 		print("valid")
