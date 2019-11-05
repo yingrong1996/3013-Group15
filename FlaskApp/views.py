@@ -38,7 +38,7 @@ def render_search_page():
         search = form.search.data
         query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
         result = db.session.execute(query).fetchall()
-        if !result:
+        if not result:
             result = {'module_code':'No results', 'name':'No results', 'prof_id':'No results', 'quota':'No results'}
         return render_template("search.html", form = form, data = result)
     else:
