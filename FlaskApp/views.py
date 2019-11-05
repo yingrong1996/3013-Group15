@@ -4,7 +4,7 @@ from flask_login import current_user, login_required, login_user
 from FlaskApp.__init__ import db, login_manager
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm
 from FlaskApp.models import WebUser
-from FaskApp.utility import hprint
+from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
 
