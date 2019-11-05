@@ -24,6 +24,7 @@ def render_landing_page():
 	db.session.execute(query);
 	query = "INSERT INTO modules (module_code, name, prof_id, description, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
 	db.session.execute(query)
+	db.session.commit()
 	return "<h1>CS2102</h1>\
 	<h2>Flask App started successfully!</h2>"
 	
