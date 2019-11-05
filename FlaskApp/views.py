@@ -40,7 +40,7 @@ def render_search_page():
         result = db.session.execute(query).fetchall()
         if result:
             hprint("Modules found with {}".format(search))
-            return "Modules found with {}".format(search)
+            return render("BOAdmin/BalanceReport.html", data = result)
         else:
             hprint("No modules found with {}".format(search))
             return "No modules found with {}".format(search)

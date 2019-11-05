@@ -20,6 +20,30 @@
             </div>
         {% endif %}
         </div>
+        
+        <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="100%" >
+        <thead>
+            <tr> 					
+                <th>Module Code</th>
+                <th></th>
+                <th>Name</th>
+                <th>Professor</th>
+                <th>Description</th>
+                <th>Quota</th>
+            </tr>
+        </thead>					 
+        <tbody>					  
+            {% for x in data%}
+            <tr> 						
+                <td>{{x.module_code}}</td>            
+                <td>{{x.name}}</td>
+                <td>{{x.prof_id}}</td>													
+                <td>{{x.description}} </td>	
+                <td>{{x.quota}}</td>								
+            </tr>
+            {% endfor %}													
+        </tbody>
+        </table>
 
         <button id="searchButton" formmethod="post">Search</button>
     </form>
