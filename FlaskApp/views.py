@@ -18,11 +18,11 @@ def load_user(username):
 def render_landing_page():
     query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
     db.session.execute(query)
-    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, description VARCHAR NOT NULL, quota INT NOT NULL);"
+    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, quota INT NOT NULL);"
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query);
-    query = "INSERT INTO modules (module_code, name, prof_id, description, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 'Intro to coding', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 'Basic coding', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 'Intermediate coding', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 'Advanced coding', 300), ('CS5555', 'Master Coding', 'Dr Ming', 'Master coding', 200), ('CS6666', 'Godlike Coding', 'Dr E', 'Godlike coding', 100);"
+    query = "INSERT INTO modules (module_code, name, prof_id, description, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 300), ('CS5555', 'Master Coding', 'Dr Ming', 200), ('CS6666', 'Godlike Coding', 'Dr Ee', 100);"
     db.session.execute(query)
     db.session.commit()
     return "<h1>CS2102</h1>\
@@ -36,14 +36,11 @@ def render_search_page():
     if form.validate_on_submit():
         hprint("valid")
         search = form.search.data
-        query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
+        query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
         result = db.session.execute(query).fetchall()
-        if result:
-            hprint("Modules found with {}".format(search))
-            return render_template("search.html", form = form, data = result)
-        else:
-            hprint("No modules found with {}".format(search))
-            return "No modules found with {}".format(search)
+        if !result:
+            result = {'module_code':'No results', 'name':'No results', 'prof_id':'No results', 'quota':'No results'}
+        return render_template("search.html", form = form, data = result)
     else:
         hprint(form.errors)
     return render_template("search.html", form = form)
