@@ -1,5 +1,3 @@
-import logging
-
 from flask import Blueprint, redirect, render_template
 from flask_login import current_user, login_required, login_user
 
@@ -9,7 +7,6 @@ from FlaskApp.models import WebUser
 from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
-log = logging.getLogger('views')
 
 @login_manager.user_loader
 def load_user(username):
@@ -34,7 +31,6 @@ def render_landing_page():
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
 	hprint("search")
-	log.debug("search")
 	form = SearchForm()
 	if form.validate_on_submit():
 		hprint("valid")
@@ -43,11 +39,9 @@ def render_search_page():
 		result = db.session.execute(query).fetchall()
 		if result:
 			hprint("Modules found with {}".format(search))
-			log.debug("Modules found with {}".format(search))
 			return "Modules found with {}".format(search)
 		else:
 			hprint("No modules found with {}".format(search))
-			log.debug("No modules found with {}".format(search))
 			return "No modules found with {}".format(search)
 	else:
 		hprint(form.errors)
