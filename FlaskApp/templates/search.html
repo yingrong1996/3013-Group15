@@ -21,8 +21,8 @@
         </div>
         <button id="searchButton" formmethod="post">Search</button>
         <br>
-        <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="100%" >
-        <thead>
+        <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="100%" align="left">
+        <thead align="left">
             <tr> 					
                 <th>Module Code</th>
                 <th>Name</th>
@@ -31,7 +31,7 @@
                 <th>Quota</th>
             </tr>
         </thead>					 
-        <tbody>					  
+        <tbody align="left">					  
             {% for x in data%}
             <tr> 						
                 <td>{{x.module_code}}</td>
