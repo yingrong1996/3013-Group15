@@ -4,6 +4,7 @@ from flask_login import current_user, login_required, login_user
 from FlaskApp.__init__ import db, login_manager
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm
 from FlaskApp.models import WebUser
+from FaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
 
@@ -30,19 +31,21 @@ def render_landing_page():
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
-	print("search")
+	hprint("search")
 	form = SearchForm()
 	if form.validate_on_submit():
-		print("valid")
+		hprint("valid")
 		search = form.search.data
 		query = "SELECT * FROM modules WHERE module_code = '{}'".format(search)
 		result = db.session.execute(query).fetchall()
 		if result:
+			hprint("Modules found with {}".format(search))
 			return "Modules found with {}".format(search)
 		else:
+			hprint("No modules found with {}".format(search))
 			return "No modules found with {}".format(search)
 	else:
-		print(form.errors)
+		hprint(form.errors)
 	return render_template("search.html", form = form)
 
 
