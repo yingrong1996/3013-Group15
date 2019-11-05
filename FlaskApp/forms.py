@@ -43,9 +43,10 @@ class LoginForm(FlaskForm):
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
 
+
 class SearchForm(FlaskForm):
-    username = StringField(
+    search = StringField(
         label='Search',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Search', 'class': 'input100'}
+        render_kw={'placeholder': 'Search'}
     )
