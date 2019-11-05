@@ -22,8 +22,6 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query);
-    query = "ALTER TABLE modules DROP COLUMN description;"
-    db.session.execute(query);
     query = "INSERT INTO modules (module_code, name, prof_id, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 300), ('CS5555', 'Master Coding', 'Dr Ming', 200), ('CS6666', 'Godlike Coding', 'Dr Ee', 100);"
     db.session.execute(query)
     db.session.commit()
@@ -40,8 +38,6 @@ def render_search_page():
         search = form.search.data
         query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
         result = db.session.execute(query).fetchall()
-        if not result:
-            result = {'module_code':'No results', 'name':'No results', 'prof_id':'No results', 'quota':'No results'}
         return render_template("search.html", form = form, data = result)
     else:
         hprint(form.errors)
