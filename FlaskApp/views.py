@@ -72,7 +72,8 @@ def render_login_page():
         print("password entered:", form.password.data)
     if form.validate_on_submit():
         user = WebUser.query.filter_by(username=form.username.data).first()
-        if user:
+        password = WebUser.query.filter_by(password=form.password.data).first()
+        if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
             return redirect("/privileged-page")
