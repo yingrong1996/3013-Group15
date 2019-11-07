@@ -547,14 +547,14 @@ def render_module_page():
     form2 = DeleteModuleForm()
 ##    form3 = UpdateModuleForm()
     if form1.validate_on_submit():
-        module_code = form.module_code.data
-        module_name = form.module_name.data
-        quota = form.quota.data
+        module_code = form1.module_code.data
+        module_name = form1.module_name.data
+        quota = form1.quota.data
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
     elif form2.validate_on_submit():
-        module_code = form.module_code.data
-        module_name = form.module_name.data
+        module_code = form2.module_code.data
+        module_name = form2.module_name.data
         query = "DELETE FROM modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
 ##    elif form3.validate_on_submit():
@@ -564,7 +564,7 @@ def render_module_page():
 ##        query = "UPDATE modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
 ##                .format(module_code, module_name)
     db.session.execute(query)
-    return render_template("adminmodule.html", form=form)
+    return render_template("adminmodule.html", form1=form1, form2=form2)
 
 
 @view.route("/privileged-page", methods=["GET"])
