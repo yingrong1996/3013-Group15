@@ -608,3 +608,16 @@ def render_module_page():
 @login_required
 def render_privileged_page():
     return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
+
+
+@view.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return render_template("logoutpage.html")
+
+
+@view.route("/userhome", methods=["GET"])
+@login_required
+def userhome():
+    return render_template('userhome.html')
