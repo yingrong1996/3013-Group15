@@ -184,7 +184,7 @@ def render_landing_page():
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
             prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
-            module_code REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
