@@ -406,7 +406,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS assists(
-            user_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
             module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
