@@ -45,7 +45,7 @@ def render_search_page():
         filter = request.form.get('filter_list')
         if filter == 'None':
             query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
-        else if filter == 'Quota Met':
+        elif filter == 'Quota Met':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
@@ -58,7 +58,7 @@ def render_search_page():
                 ON m1.module_code = a.module_code
                 WHERE m1.quota <= a.num;
             """
-        else if filter == 'Quota Not Met':
+        elif filter == 'Quota Not Met':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
@@ -71,7 +71,7 @@ def render_search_page():
                 ON m1.module_code = a.module_code
                 WHERE m1.quota > a.num;
             """
-        else if filter == 'Currently Available':
+        elif filter == 'Currently Available':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
@@ -84,7 +84,7 @@ def render_search_page():
                 ON m1.module_code = a.module_code
                 WHERE m1.quota <= a.num;
             """
-        else if filter == 'Not Available':
+        elif filter == 'Not Available':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
@@ -97,7 +97,7 @@ def render_search_page():
                 ON m1.module_code = a.module_code
                 WHERE m1.quota <= a.num;
             """
-        else if filter == 'No Prerequisites':
+        elif filter == 'No Prerequisites':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
@@ -110,7 +110,7 @@ def render_search_page():
                 ON m1.module_code = a.module_code
                 WHERE m1.quota <= a.num;
             """
-        else if filter == 'Has Prerequisites':
+        elif filter == 'Has Prerequisites':
             query = """
                 SELECT m1.module_code
                 FROM Modules m1
