@@ -427,7 +427,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000');"
     db.session.execute(query)
-
+    db.session.commit()
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
 
@@ -480,7 +480,7 @@ def render_search_page():
             """.format(date, date, search)
         elif filter == 'Not Available':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.name, m1 .prof_id, m1.quota
                 FROM modules m1
                 LEFT JOIN
                 rounds r
