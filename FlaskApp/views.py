@@ -275,7 +275,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM took;"
     db.session.execute(query)
-    query = """"INSERT INTO took(student_id, module_code) VALUES
+    query = """INSERT INTO took(student_id, module_code) VALUES
     ('S34567890', 'CS1111'),
     ('S34567890', 'CS2222'),
     ('S34567890', 'CS3333'),
