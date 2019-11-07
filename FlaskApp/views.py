@@ -88,7 +88,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS students(
-            student_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id) on delete cascade, 
+            student_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) on delete cascade, 
             major VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM students;"
@@ -138,7 +138,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS professors(
-            prof_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id) on delete cascade,
+            prof_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) on delete cascade,
             faculty VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM professors;"
