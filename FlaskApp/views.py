@@ -16,21 +16,361 @@ def load_user(username):
 
 @view.route("/", methods=["GET"])
 def render_landing_page():
-    query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
+    query = "DROP TABLE web_user;"
     db.session.execute(query)
-    query = "CREATE TABLE IF NOT EXISTS registration(module_code VARCHAR PRIMARY KEY NOT NULL, student_id VARCHAR NOT NULL);"
+    query = "DROP TABLE modules;"
     db.session.execute(query)
-    query = "DELETE FROM registration;"
+    query = "DROP TABLE registration;"
     db.session.execute(query)
-    query = "INSERT INTO registration (module_code, student_id) VALUES ('CS6666', 'A1');"
+    query = "CREATE TABLE IF NOT EXISTS web_user(user_id VARCHAR PRIMARY KEY, preferred_name VARCHAR, password VARCHAR NOT NULL);"
     db.session.execute(query)
-    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, quota INT NOT NULL);"
+    query = "DELETE FROM web_user;"
+    db.session.execute(query)
+    query = """INSERT INTO web_user(user_id, preferred_name, password) VALUES
+    ('A2345678', 'Ali', 'adminpassword'),
+    ('S3456789', 'Bob', 'studentpassword'),
+    ('P4567890', 'Charlie', 'profpassword'),
+    ('S37132455', 'Hoyt', 'gWg7qwSJ2S'),
+    ('S49083365', 'Alfonso', 'Xq1l1FxphUdK'),
+    ('S69940317', 'Audrey', '9UeGk6Eo6s'),
+    ('S10702156', 'Kadeem', 'TH4ZShsSQyk'),
+    ('S10797599', 'Addison', 'VOoQPnLk'),
+    ('S29260258', 'Alan', 'DixPKZrX'),
+    ('S77113792', 'Chloe', 'mX5SXrRebF'),
+    ('S45831058', 'Tanisha', 'HUHm9WtawRLb'),
+    ('S46268848', 'Shoshana', 'rSpsosmlp'),
+    ('S90704597', 'Jennifer', 'UrfPZ2'),
+    ('S62553855', 'Ariel', 'HgCEKcsoUNn'),
+    ('S38183148', 'Meredith', 'TrZqjhC92'),
+    ('S69415105', 'Branden', 'Ap556lVx'),
+    ('S06577699', 'Edan', '5P2CwQGDfve'),
+    ('S04174038', 'Colin', 'xd6aCxamOm'),
+    ('S72184175', 'Desirae', 'rK2YHcf465yh'),
+    ('S84819297', 'Wyoming', 'BBFgjUGP'),
+    ('S17317326', 'Burke', '6tEm5s6C0fL'),
+    ('S23192964', 'Isaiah', 'wd87rDD'),
+    ('S29167213', 'Hop', 'ADhPXqD'),
+    ('S27096888', 'Xenos', 'ZjiViM0NAQG'),
+    ('S80890371', 'Yuli', 'nftGRs3d9A3'),
+    ('S75527240', 'Dominic', 'NGa2jrc5'),
+    ('S38624753', 'Francesca', 'RcUyDxc'),
+    ('S85884267', 'Richard', 'nNhS8mtMDOu5'),
+    ('S73452376', 'Dakota', '90vdWR'),
+    ('S97672292', 'Gloria', 'Xx8IvrGrCkD'),
+    ('S40008988', 'Jack', 'k25vMvb9l'),
+    ('S61330047', 'Justine', 'VJZzwjR'),
+    ('S93854165', 'Thomas', 'tL2PVYheeA9x'),
+    ('S35540141', 'Melvin', 'Wh4fP54uDdP'),
+    ('S62075673', 'Ezekiel', 'ug7hHIi'),
+    ('S61409011', 'Jade', 'kSlr1OM'),
+    ('S60121089', 'Xander', 'wWQgnkb6'),
+    ('S91590043', 'Tiger', '87HPquwlyi9t'),
+    ('S45630599', 'Baxter', 'gutyswlT6lZ5'),
+    ('S16005132', 'Ulla', 'iRpDnzLJJs54'),
+    ('S58494691', 'Hedy', 'nDbPWJ90uVLP'),
+    ('S28946726', 'Aladdin', 'JGIWEaW33Rx'),
+    ('S01154352', 'Cherokee', 'HGGJxTMD'),
+    ('P48491547', 'Maia', 'Ll97fw8M'),
+    ('P68799892', 'Carol', 'CSmbs3wN'),
+    ('P62707222', 'Azalia', 'kE9AXLUzZxi7'),
+    ('P35809956', 'Nayda', 'OJfhCpgkLeG'),
+    ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS admin(admin_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id));"
+    db.session.execute(query)
+    query = "DELETE FROM admin;"
+    db.session.execute(query)
+    query = "INSERT INTO admins(admin_id) VALUES (A23456789);"
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS students(student_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id), major VARCHAR NOT NULL);"
+    db.session.execute(query)
+    query = "DELETE FROM students;"
+    db.session.execute(query)
+    query = """INSERT INTO students(student_id, major) VALUES
+    ('S34567890', 'CEG'),
+    ('S37132455', 'CS'),
+    ('S49083365', 'IS'),
+    ('S69940317', 'CEG'),
+    ('S10702156', 'CS'),
+    ('S10797599', 'IS'),
+    ('S29260258', 'CEG'),
+    ('S77113792', 'CS'),
+    ('S45831058', 'IS'),
+    ('S46268848', 'CEG'),
+    ('S90704597', 'CS'),
+    ('S62553855', 'IS'),
+    ('S38183148', 'CEG'),
+    ('S69415105', 'CS'),
+    ('S06577699', 'IS'),
+    ('S04174038', 'CEG'),
+    ('S72184175', 'CS'),
+    ('S84819297', 'IS'),
+    ('S17317326', 'CEG'),
+    ('S23192964', 'CS'),
+    ('S29167213', 'IS'),
+    ('S27096888', 'CEG'),
+    ('S80890371', 'CS'),
+    ('S75527240', 'IS'),
+    ('S38624753', 'CEG'),
+    ('S85884267', 'CS'),
+    ('S73452376', 'IS'),
+    ('S97672292', 'CEG'),
+    ('S40008988', 'CS'),
+    ('S61330047', 'IS'),
+    ('S93854165', 'CEG'),
+    ('S35540141', 'CS'),
+    ('S62075673', 'IS'),
+    ('S61409011', 'CEG'),
+    ('S60121089', 'CS'),
+    ('S91590043', 'IS'),
+    ('S45630599', 'CEG'),
+    ('S16005132', 'CS'),
+    ('S58494691', 'IS'),
+    ('S28946726', 'CEG'),
+    ('S01154352', 'CS');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS professors(prof_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id), faculty VARCHAR NOT NULL);"
+    db.session.execute(query)
+    query = "DELETE FROM professors;"
+    db.session.execute(query)
+    query = """INSERT INTO professors(professor_id, faculty) VALUES
+    ('P45678901', 'SoC'),
+    ('P48491547', 'SoC'),
+    ('P68799892', 'SoC'),
+    ('P62707222', 'SoC'),
+    ('P35809956', 'FoE'),
+    ('P53579939', 'FoE');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR, module_name VARCHAR NOT NULL, quota INT NOT NULL CHECK (quota>0), start_date DATE REFERENCES rounds(start_date), PRIMARY KEY (module_code, start_date));"
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query)
-    query = "INSERT INTO modules (module_code, name, prof_id, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 300), ('CS5555', 'Master Coding', 'Dr Ming', 200), ('CS6666', 'Godlike Coding', 'Dr Ee', 1);"
+    query = """INSERT INTO modules(module_code, module_name, quota, start_date) VALUES 
+    ('CS1111', 'Intro to Coding', 20, '2019-11-07'), 
+    ('CG1111', 'Engineering Principles', 10, '2019-11-07'),
+    ('CS2222', 'Basic Coding', 20, '2019-11-07'), 
+    ('CS3333', 'Intermediate Coding', 10, '2019-11-07'), 
+    ('CS4444', 'Advanced Coding', 5, '2019-11-07'), 
+    ('CS5555', 'Master Coding', 2, '2019-11-07'), 
+    ('CS6666', 'Godlike Coding', 1, '2019-11-07'),
+    ('CS1111', 'Intro to Coding', 20, '2019-11-20'), 
+    ('CG1111', 'Engineering Principles', 10, '2019-11-20'),
+    ('GEQ1000', 'CSU is Life', 20, '2019-11-07');"""
     db.session.execute(query)
-    db.session.commit()
+
+    query = "CREATE TABLE IF NOT EXISTS supervises(prof_id VARCHAR REFERENCES professors(prof_id), module_code REFERENCES modules(module_code), PRIMARY KEY (prof_id, module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM supervises;"
+    db.session.execute(query)
+    query = """INSERT INTO supervises(prof_id, module_code) VALUES
+    ('P45678901', 'CS1111'),
+    ('P45678901', 'CS2222'),    
+    ('P48491547', 'CS4444'),
+    ('P68799892', 'CS3333'),
+    ('P62707222', 'CS5555'),
+    ('P62707222', 'CS6666'),    
+    ('P35809956', 'CG1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS takes(student_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM takes;"
+    db.session.execute(query)
+    query = """INSERT INTO takes(student_id, module_code) VALUES
+    ('S34567890', 'CS6666'),
+    ('S37132455', 'CS5555'),
+    ('S49083365', 'CS5555'),
+    ('S69940317', 'CS4444'),
+    ('S10702156', 'CS4444'),
+    ('S10797599', 'CS3333'),
+    ('S29260258', 'CS3333'),
+    ('S77113792', 'CS3333'),
+    ('S45831058', 'CS3333'),
+    ('S46268848', 'CS3333'),
+    ('S90704597', 'CS3333'),
+    ('S62553855', 'CS2222'),
+    ('S38183148', 'CS2222'),
+    ('S69415105', 'CS2222'),
+    ('S06577699', 'CS2222'),
+    ('S04174038', 'CS2222'),
+    ('S72184175', 'CS2222'),
+    ('S84819297', 'CS2222'),
+    ('S17317326', 'CS2222'),
+    ('S23192964', 'CS2222'),
+    ('S29167213', 'CS2222'),
+    ('S27096888', 'CS2222'),
+    ('S80890371', 'CS2222'),
+    ('S75527240', 'CS2222'),
+    ('S38624753', 'CG1111'),
+    ('S85884267', 'CG1111'),
+    ('S73452376', 'CS1111'),
+    ('S97672292', 'CS1111'),
+    ('S40008988', 'CS1111'),
+    ('S61330047', 'CS1111'),
+    ('S93854165', 'CS1111'),
+    ('S35540141', 'CS1111'),
+    ('S62075673', 'CS1111'),
+    ('S61409011', 'CS1111'),
+    ('S60121089', 'CS1111'),
+    ('S91590043', 'CS1111'),
+    ('S45630599', 'CS1111'),
+    ('S16005132', 'CS1111'),
+    ('S58494691', 'CS1111'),
+    ('S28946726', 'CS1111'),
+    ('S01154352', 'CS1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS took(student_id REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM took;"
+    db.session.execute(query)
+    query = """"INSERT INTO took(student_id, module_code) VALUES
+    ('S34567890', 'CS1111'),
+    ('S34567890', 'CS2222'),
+    ('S34567890', 'CS3333'),
+    ('S34567890', 'CS4444'),
+    ('S34567890', 'CS5555'),
+    ('S37132455', 'CS1111'),
+    ('S37132455', 'CS2222'),
+    ('S37132455', 'CS3333'),
+    ('S37132455', 'CS4444'),
+    ('S49083365', 'CS1111'),
+    ('S49083365', 'CS2222'),
+    ('S49083365', 'CS3333'),
+    ('S49083365', 'CS4444'),
+    ('S69940317', 'CS1111'),
+    ('S69940317', 'CS2222'),
+    ('S69940317', 'CS3333'),
+    ('S10702156', 'CS1111'),
+    ('S10702156', 'CS2222'),
+    ('S10702156', 'CS3333'),
+    ('S10797599', 'CS1111'),
+    ('S10797599', 'CS2222'),
+    ('S29260258', 'CS1111'),
+    ('S29260258', 'CS2222'),
+    ('S77113792', 'CS1111'),
+    ('S77113792', 'CS2222'),
+    ('S45831058', 'CS1111'),
+    ('S45831058', 'CS2222'),
+    ('S46268848', 'CS1111'),
+    ('S46268848', 'CS2222'),
+    ('S90704597', 'CS1111'),
+    ('S90704597', 'CS2222'),
+    ('S62553855', 'CS1111'),
+    ('S38183148', 'CS1111'),
+    ('S69415105', 'CS1111'),
+    ('S06577699', 'CS1111'),
+    ('S04174038', 'CS1111'),
+    ('S72184175', 'CS1111'),
+    ('S84819297', 'CS1111'),
+    ('S17317326', 'CS1111'),
+    ('S23192964', 'CS1111'),
+    ('S29167213', 'CS1111'),
+    ('S27096888', 'CS1111'),
+    ('S80890371', 'CS1111'),
+    ('S75527240', 'CS1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS prerequisites(module_code VARCHAR REFERENCES modules(module_code), prerequisite VARCHAR REFERENCES modules(module_code), PRIMARY KEY(module_code, prerequisite));"
+    db.session.execute(query)
+    query = "DELETE FROM prerequisites;"
+    db.session.execute(query)
+    query = """INSERT INTO prerequisites(module_code, prerequisite) VALUES
+    ('CS6666', 'CS5555'),
+    ('CS5555', 'CS4444'),
+    ('CS4444', 'CS3333'),
+    ('CS3333', 'CS2222'),
+    ('CS2222', 'CS1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS lessons(module_code REFERENCES modules(module_code), day INT CHECK (day > 0 AND day < 6), time INT CHECK (time >= 0 AND time <= 23), location VARCHAR, PRIMARY KEY (day, time, location));"
+    db.session.execute(query)
+    query = "DELETE FROM lessons;"
+    db.session.execute(query)
+    query = """INSERT INTO lessons(module_code, day, time, location) VALUES
+    ('CS6666', '1', '10', 'LT1'),
+    ('CS6666', '1', '11', 'LT1'),
+    ('CS6666', '3', '10', 'COM1-01'),
+    ('CS5555', '2', '10', 'LT1'),
+    ('CS5555', '2', '11', 'LT1'),
+    ('CS5555', '2', '1', 'COM1-02'),
+    ('CS4444', '2', '1', 'LT1'),
+    ('CS4444', '4', '11', 'LT1'),
+    ('CS4444', '3', '2', 'COM1-01'),
+    ('CS3333', '2', '4', 'LT1'),
+    ('CS3333', '2', '5', 'LT1'),
+    ('CS3333', '4', '12', 'COM1-02'),
+    ('CS2222', '1', '11', 'LT1'),
+    ('CS2222', '1', '12', 'LT1'),
+    ('CS2222', '4', '1', 'COM1-02'),
+    ('CS1111', '4', '12', 'LT1'),
+    ('CS1111', '4', '1', 'LT1'),
+    ('CS1111', '3', '11', 'COM1-01'),
+    ('CS1111', '2', '5', 'COM1-02'),
+    ('CS1111', '5', '10', 'COM1-B1'),
+    ('CS1111', '5', '11', 'COM1-B1'),
+    ('CG1111', '3', '10', 'LT1'),
+    ('CG1111', '3', '11', 'LT1'),
+    ('CG1111', '5', '12', 'COM1-B1'),
+    ('CG1111', '5', '13', 'COM1-B1');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES lessons(module_code)) PRIMARY KEY;"
+    db.session.execute(query)
+    query = "DELETE FROM lectures;"
+    db.session.execute(query)
+    query = """INSERT INTO lectures(module_code) VALUES ('CS6666'), ('CS5555'), ('CS4444'), ('CS3333'), ('CS2222'), ('CS1111'), ('CG1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS lecturing(prod_id VARCHAR REFERENCES professor(prof_id), module_code VARCHAR REFERENCES lessons(module_code), PRIMARY KEY (prof_id, module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM lecturing;"
+    db.session.execute(query)
+    query = """INSERT INTO lecturing(prof_id, module_code) VALUES
+    ('P45678901', 'CS1111'),
+    ('P45678901', 'CS2222'),    
+    ('P48491547', 'CS4444'),
+    ('P68799892', 'CS3333'),
+    ('P62707222', 'CS5555'),
+    ('P62707222', 'CS6666'),    
+    ('P35809956', 'CG1111'),
+    ('P68799892', 'CS4444');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES lessons(module_code)) PRIMARY KEY;"
+    db.session.execute(query)
+    query = "DELETE FROM labtut;"
+    db.session.execute(query)
+    query = """INSERT INTO labtut(module_code) VALUES ('CS6666'), ('CS5555'), ('CS4444'), ('CS3333'), ('CS2222'), ('CS1111'), ('CG1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS assists(user_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM assists;"
+    db.session.execute(query)
+    query = """INSERT INTO assists(student_id, module_code) VALUES
+    ('S37132455', 'CS1111'),
+    ('S49083365', 'CS1111');"""
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS rounds(start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, end_date DATE CHECK(end_date > start_date));"
+    db.session.execute(query)
+    query = "DELETE FROM rounds;"
+    db.session.execute(query)
+    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-13');"
+    db.session.execute(query)
+
+    query = "CREATE TABLE IF NOT EXISTS registration(student_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code);"
+    db.session.execute(query)
+    query = "DELETE FROM registration;"
+    db.session.execute(query)
+    query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000');"
+    db.session.execute(query)
+
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
 
