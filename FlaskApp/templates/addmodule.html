@@ -44,6 +44,17 @@
             </div>
         {% endif %}
         </div>
+		
+		<div class="formField">
+        {{ form.supervisor }}
+        {% if form.supervisor.errors %}
+            <div class="errorMessage">
+            {% for error in form.supervisor.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
 
 		<button id="addModuleButton" formmethod="post">Add Module</button>
         

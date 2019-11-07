@@ -79,3 +79,8 @@ class AddModuleForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Quota'}
     )
+    supervisor = StringField(
+        label='Supervisor',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Supervisor'}
+    )

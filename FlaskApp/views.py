@@ -574,8 +574,12 @@ def render_add_module_page():
         module_code = form.module_code.data
         module_name = form.module_name.data
         quota = form.quota.data
+        supervisor = form.supervisor.data
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
+        db.session.execute(query)
+        query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}')"\
+                .format(supervisor, module_code)
         db.session.execute(query)
         db.session.commit()
     return render_template("addmodule.html", form=form)
