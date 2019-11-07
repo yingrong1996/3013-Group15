@@ -338,7 +338,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS lessons(
-            module_code REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             day INT CHECK (day > 0 AND day < 6), 
             time INT CHECK (time >= 0 AND time <= 23), 
             location VARCHAR, 
@@ -408,7 +408,7 @@ def render_landing_page():
 
     query = """CREATE TABLE IF NOT EXISTS assists(
             user_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM assists;"
