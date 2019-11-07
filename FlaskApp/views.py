@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
@@ -68,15 +68,15 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()
     if form.is_submitted():
-        print("username entered:", form.username.data)
-        print("password entered:", form.password.data)
+        hprint("username entered:", form.username.data)
+        hprint("password entered:", form.password.data)
     if form.validate_on_submit():
         user = WebUser.query.filter_by(username=form.username.data).first()
         password = WebUser.query.filter_by(password=form.password.data).first()
         if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
-            return redirect("/privileged-page")
+            return redirect(url_for("/privileged-page"))
     return render_template("login.html", form=form)
 
 
