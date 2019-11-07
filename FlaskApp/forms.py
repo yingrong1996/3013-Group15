@@ -82,5 +82,5 @@ class AddModuleForm(FlaskForm):
     supervisor = StringField(
         label='Supervisor',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Supervisor'}
+        render_kw={'placeholder': 'Prof ID'}
     )
