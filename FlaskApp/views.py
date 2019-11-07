@@ -20,7 +20,7 @@ def load_user(username):
 def render_landing_page():
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
-            preferred_name VARCHAR NOT NULL, 
+            preferred_name VARCHAR, 
             password VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM web_users;"
@@ -84,7 +84,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS students(
-            student_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) ON DELETE CASCADE, 
+            student_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) on delete cascade, 
             major VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM students;"
@@ -134,7 +134,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS professors(
-            prof_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) ON DELETE CASCADE,
+            prof_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) on delete cascade,
             faculty VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM professors;"
@@ -149,7 +149,7 @@ def render_landing_page():
     db.session.execute(query)
     
     query = """CREATE TABLE IF NOT EXISTS rounds(
-            start_date DATE  PRIMARY KEY CHECK (start_date > '1900-01-01'), 
+            start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, 
             end_date DATE CHECK(end_date > start_date));"""
     db.session.execute(query)
     query = "DELETE FROM rounds;"
@@ -158,9 +158,10 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
-            module_code VARCHAR PRIMARY KEY,
+            module_code VARCHAR,
             module_name VARCHAR NOT NULL,
-            quota INT NOT NULL CHECK (quota>0));"""
+            quota INT NOT NULL CHECK (quota>0),
+            PRIMARY KEY (module_code));"""
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query)
@@ -176,8 +177,8 @@ def render_landing_page():
     db.session.execute(query)
     
     query = """CREATE TABLE IF NOT EXISTS available(
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE,
-            start_date DATE REFERENCES rounds(start_date) ON DELETE CASCADE,
+            module_code VARCHAR,
+            start_date DATE REFERENCES rounds(start_date) on delete cascade,
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM available;"
@@ -196,8 +197,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
-            prof_id VARCHAR REFERENCES professors(prof_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
@@ -213,8 +214,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS takes(
-            student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM takes;"
@@ -264,8 +265,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS took(
-            student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM took;"
@@ -318,8 +319,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS prerequisites(
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
-            prerequisite VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            prerequisite VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(module_code, prerequisite));"""
     db.session.execute(query)
     query = "DELETE FROM prerequisites;"
@@ -333,7 +334,7 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS lessons(
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             day INT CHECK (day > 0 AND day < 6), 
             time INT CHECK (time >= 0 AND time <= 23), 
             location VARCHAR, 
@@ -368,7 +369,7 @@ def render_landing_page():
     ('CG1111', '5', '13', 'COM1-B1');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR PRIMARY KEY REFERENCES modules(module_code) ON DELETE CASCADE);"
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES modules(module_code) on delete cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM lectures;"
     db.session.execute(query)
@@ -376,8 +377,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS lecturing(
-            prof_id VARCHAR REFERENCES professors(prof_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM lecturing;"
@@ -393,7 +394,7 @@ def render_landing_page():
     ('P68799892', 'CS4444');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR PRIMARY KEY REFERENCES modules(module_code) ON DELETE CASCADE);"
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) on delete cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM labtut;"
     db.session.execute(query)
@@ -401,8 +402,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS assists(
-            student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM assists;"
@@ -413,8 +414,8 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS registration(
-            student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE;"""
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade);"""
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
@@ -537,6 +538,20 @@ def render_login_page():
             login_user(user)
             return redirect(url_for("view.render_privileged_page"))
     return render_template("login.html", form=form)
+
+
+@view.route("/Admin/addmodule", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_add_module_page():
+    form = AddModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        quota = form.quota.data
+        query =  query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+                .format(module_code, module_name, quota)
+    db.session.execute(query)
+    return render_template("addmodule.html", form=form)
 
 
 @view.route("/privileged-page", methods=["GET"])
