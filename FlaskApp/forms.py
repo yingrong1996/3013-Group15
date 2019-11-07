@@ -68,6 +68,7 @@ class AddModuleForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Quota'}
     )
+    submit1 = SubmitField('submit')
 
 class DeleteModuleForm(FlaskForm):
     module_code = StringField(
@@ -80,6 +81,7 @@ class DeleteModuleForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Module name'}
     )
+    submit2 = SubmitField('submit')
 
 ##class UpdateModuleForm(FlaskForm):
 ##    module_code = StringField(
