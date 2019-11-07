@@ -87,5 +87,5 @@ class AddModuleForm(FlaskForm):
     prerequisite = StringField(
         label='prerequisite',
         validators=[Optional()],
-        render_kw={'placeholder': 'prerequisite1, prerequisite2...'}
+        render_kw={'placeholder': 'prerequisite_code1, prerequisite_code2...'}
     )
