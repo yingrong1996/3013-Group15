@@ -16,13 +16,10 @@ def load_user(username):
 
 @view.route("/", methods=["GET"])
 def render_landing_page():
-    query = "DROP TABLE web_user;"
-    db.session.execute(query)
-    query = "DROP TABLE modules;"
-    db.session.execute(query)
-    query = "DROP TABLE registration;"
-    db.session.execute(query)
-    query = "CREATE TABLE IF NOT EXISTS web_users(user_id VARCHAR PRIMARY KEY, preferred_name VARCHAR, password VARCHAR NOT NULL);"
+    query = """CREATE TABLE IF NOT EXISTS web_users(
+            user_id VARCHAR PRIMARY KEY, 
+            preferred_name VARCHAR, 
+            password VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM web_users;"
     db.session.execute(query)
@@ -77,14 +74,16 @@ def render_landing_page():
     ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id));"
+    query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id));"
     db.session.execute(query)
     query = "DELETE FROM admins;"
     db.session.execute(query)
     query = "INSERT INTO admins(admin_id) VALUES (A23456789);"
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS students(student_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id), major VARCHAR NOT NULL);"
+    query = """CREATE TABLE IF NOT EXISTS students(
+            student_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id) on delete cascade, 
+            major VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM students;"
     db.session.execute(query)
@@ -132,7 +131,9 @@ def render_landing_page():
     ('S01154352', 'CS');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS professors(prof_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id), faculty VARCHAR NOT NULL);"
+    query = """CREATE TABLE IF NOT EXISTS professors(
+            prof_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id) on delete cascade,
+            faculty VARCHAR NOT NULL);"""
     db.session.execute(query)
     query = "DELETE FROM professors;"
     db.session.execute(query)
@@ -145,7 +146,11 @@ def render_landing_page():
     ('P53579939', 'FoE');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR, module_name VARCHAR NOT NULL, quota INT NOT NULL CHECK (quota>0), start_date DATE REFERENCES rounds(start_date), PRIMARY KEY (module_code, start_date));"
+    query = """CREATE TABLE IF NOT EXISTS modules(
+            module_code VARCHAR, module_name VARCHAR NOT NULL,
+            quota INT NOT NULL CHECK (quota>0),
+            start_date DATE REFERENCES rounds(start_date) on delete cascade,
+            PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query)
@@ -162,7 +167,10 @@ def render_landing_page():
     ('GEQ1000', 'CSU is Life', 20, '2019-11-07');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS supervises(prof_id VARCHAR REFERENCES professors(prof_id), module_code REFERENCES modules(module_code), PRIMARY KEY (prof_id, module_code);"
+    query = """CREATE TABLE IF NOT EXISTS supervises(
+            prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
+            module_code REFERENCES modules(module_code) on delete cascade, 
+            PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
     db.session.execute(query)
@@ -176,7 +184,10 @@ def render_landing_page():
     ('P35809956', 'CG1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS takes(student_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    query = """CREATE TABLE IF NOT EXISTS takes(
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code REFERENCES modules(module_code) on delete cascade, 
+            PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM takes;"
     db.session.execute(query)
@@ -224,7 +235,10 @@ def render_landing_page():
     ('S01154352', 'CS1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS took(student_id REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    query = """CREATE TABLE IF NOT EXISTS took(
+            student_id REFERENCES students(student_id) on delete cascade, 
+            module_code REFERENCES modules(module_code) on delete cascade, 
+            PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM took;"
     db.session.execute(query)
@@ -275,7 +289,10 @@ def render_landing_page():
     ('S75527240', 'CS1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS prerequisites(module_code VARCHAR REFERENCES modules(module_code), prerequisite VARCHAR REFERENCES modules(module_code), PRIMARY KEY(module_code, prerequisite));"
+    query = """CREATE TABLE IF NOT EXISTS prerequisites(
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            prerequisite VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            PRIMARY KEY(module_code, prerequisite));"""
     db.session.execute(query)
     query = "DELETE FROM prerequisites;"
     db.session.execute(query)
@@ -287,7 +304,12 @@ def render_landing_page():
     ('CS2222', 'CS1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lessons(module_code REFERENCES modules(module_code), day INT CHECK (day > 0 AND day < 6), time INT CHECK (time >= 0 AND time <= 23), location VARCHAR, PRIMARY KEY (day, time, location));"
+    query = """CREATE TABLE IF NOT EXISTS lessons(
+            module_code REFERENCES modules(module_code) on delete cascade, 
+            day INT CHECK (day > 0 AND day < 6), 
+            time INT CHECK (time >= 0 AND time <= 23), 
+            location VARCHAR, 
+            PRIMARY KEY (day, time, location));"""
     db.session.execute(query)
     query = "DELETE FROM lessons;"
     db.session.execute(query)
@@ -319,14 +341,17 @@ def render_landing_page():
     ('CG1111', '5', '13', 'COM1-B1');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES lessons(module_code)) PRIMARY KEY;"
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES lessons(module_code) on delete cascade) PRIMARY KEY;"
     db.session.execute(query)
     query = "DELETE FROM lectures;"
     db.session.execute(query)
     query = """INSERT INTO lectures(module_code) VALUES ('CS6666'), ('CS5555'), ('CS4444'), ('CS3333'), ('CS2222'), ('CS1111'), ('CG1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lecturing(prod_id VARCHAR REFERENCES professor(prof_id), module_code VARCHAR REFERENCES lessons(module_code), PRIMARY KEY (prof_id, module_code);"
+    query = """CREATE TABLE IF NOT EXISTS lecturing(
+            prod_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
+            module_code VARCHAR REFERENCES lessons(module_code) on delete cascade, 
+            PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM lecturing;"
     db.session.execute(query)
@@ -341,14 +366,17 @@ def render_landing_page():
     ('P68799892', 'CS4444');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES lessons(module_code)) PRIMARY KEY;"
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES lessons(module_code) on delete cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM labtut;"
     db.session.execute(query)
     query = """INSERT INTO labtut(module_code) VALUES ('CS6666'), ('CS5555'), ('CS4444'), ('CS3333'), ('CS2222'), ('CS1111'), ('CG1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS assists(user_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code), PRIMARY KEY(student_id, module_code);"
+    query = """CREATE TABLE IF NOT EXISTS assists(
+            user_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code REFERENCES modules(module_code) on delete cascade, 
+            PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM assists;"
     db.session.execute(query)
@@ -357,14 +385,18 @@ def render_landing_page():
     ('S49083365', 'CS1111');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS rounds(start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, end_date DATE CHECK(end_date > start_date));"
+    query = """CREATE TABLE IF NOT EXISTS rounds(
+            start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, 
+            end_date DATE CHECK(end_date > start_date));"""
     db.session.execute(query)
     query = "DELETE FROM rounds;"
     db.session.execute(query)
     query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-13');"
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS registration(student_id VARCHAR REFERENCES students(student_id), module_code REFERENCES modules(module_code);"
+    query = """CREATE TABLE IF NOT EXISTS registration(
+            student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
+            module_code REFERENCES modules(module_code) on delete cascade);"""
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
