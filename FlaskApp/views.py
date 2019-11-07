@@ -22,9 +22,9 @@ def render_landing_page():
     db.session.execute(query)
     query = "DROP TABLE registration;"
     db.session.execute(query)
-    query = "CREATE TABLE IF NOT EXISTS web_user(user_id VARCHAR PRIMARY KEY, preferred_name VARCHAR, password VARCHAR NOT NULL);"
+    query = "CREATE TABLE IF NOT EXISTS web_users(user_id VARCHAR PRIMARY KEY, preferred_name VARCHAR, password VARCHAR NOT NULL);"
     db.session.execute(query)
-    query = "DELETE FROM web_user;"
+    query = "DELETE FROM web_users;"
     db.session.execute(query)
     query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
     ('A2345678', 'Ali', 'adminpassword'),
