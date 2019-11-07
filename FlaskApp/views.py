@@ -540,20 +540,20 @@ def render_login_page():
     return render_template("login.html", form=form)
 
 
-@view.route("/Admin/module", methods=["GET", "POST"])
+@view.route("/admin/module", methods=["GET", "POST"])
 #@roles_required('Admin')
 def render_module_page():
     form1 = AddModuleForm()
     form2 = DeleteModuleForm()
 ##    form3 = UpdateModuleForm()
-    if form1.validate_on_submit():
+    if form1.submit1.data and form1.validate_on_submit():
         module_code = form1.module_code.data
         module_name = form1.module_name.data
         quota = form1.quota.data
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
         db.session.execute(query)
-    elif form2.validate_on_submit():
+    elif form2.submit2.data and form2.validate_on_submit():
         module_code = form2.module_code.data
         module_name = form2.module_name.data
         query = "DELETE FROM modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
