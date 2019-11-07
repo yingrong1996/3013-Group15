@@ -162,9 +162,9 @@ def render_landing_page():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
-            module_code VARCHAR, module_name VARCHAR NOT NULL,
+            module_code VARCHAR,
+            module_name VARCHAR NOT NULL,
             quota INT NOT NULL CHECK (quota>0),
-            start_date DATE REFERENCES rounds(start_date) on delete cascade,
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM modules;"
