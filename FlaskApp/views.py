@@ -77,7 +77,7 @@ def render_login_page():
             # TODO: You may want to verify if password is correct
             login_user(user)
             hprint(url_for("privileged-page"))
-            return redirect(url_for("privileged-page"))
+            return redirect(url_for("view.privileged-page"))
     return render_template("login.html", form=form)
 
 
