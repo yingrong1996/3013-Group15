@@ -163,8 +163,8 @@ def render_landing_page():
             quota INT NOT NULL CHECK (quota>0),
             PRIMARY KEY (module_code));"""
     db.session.execute(query)
-##    query = "DELETE FROM modules;"
-##    db.session.execute(query)
+    query = "DELETE FROM modules;"
+    db.session.execute(query)
     query = """INSERT INTO modules(module_code, module_name, quota) VALUES 
     ('CS1111', 'Intro to Coding', 20), 
     ('CG1111', 'Engineering Principles', 10),
