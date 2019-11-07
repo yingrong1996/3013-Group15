@@ -547,18 +547,18 @@ def render_login_page():
     return render_template("login.html", form=form)
 
 
-@view.route("/admin/module", methods=["GET", "POST"])
+@view.route("/deletemodule", methods=["GET", "POST"])
 #@roles_required('Admin')
-def render_module_page():
+def render_delete_module_page():
     form = DeleteModuleForm()
-    if form.validate():
+    if form.validate_on_submit():
         module_code = form.module_code.data
         module_name = form.module_name.data
         query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
         db.session.execute(query)
         db.session.commit()
-    return render_template("adminmodule.html", form=form)
+    return render_template("deletemodule.html", form=form)
 
 
 @view.route("/privileged-page", methods=["GET"])
