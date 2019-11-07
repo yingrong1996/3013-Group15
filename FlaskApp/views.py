@@ -551,7 +551,7 @@ def render_login_page():
 #@roles_required('Admin')
 def render_module_page():
     form = DeleteModuleForm()
-    if form.submit1.data and form.validate():
+    if form.submit1.data # and form.validate():
         module_code = form.module_code.data
         module_name = form.module_name.data
         query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
