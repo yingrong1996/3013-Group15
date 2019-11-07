@@ -436,7 +436,7 @@ def render_search_page():
         filter = request.form.get('filter_list')
         if filter == 'None':
             query = """
-                SELECT m.module_code, m.name, m.quota, w.preferred_name
+                SELECT m.module_code, m.module_name, m.quota, w.preferred_name
                 FROM modules m
                 LEFT JOIN supervises s
                 ON m.module_code = s.module_code
