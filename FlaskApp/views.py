@@ -419,7 +419,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
-    query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000');"
+    query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000'), ('S29167213', 'CS6666');"
     db.session.execute(query)
     db.session.commit()
     return "<h1>CS2102</h1>\
@@ -507,8 +507,7 @@ def render_search_page():
             """.format(search)
         result = db.session.execute(query).fetchall()
         return render_template("search.html", form = form, data = result, filters = filters)
-    else:
-        hprint(form.errors)
+
     return render_template("search.html", form = form, filters = filters)
 
 
