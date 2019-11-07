@@ -26,7 +26,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM web_user;"
     db.session.execute(query)
-    query = """INSERT INTO web_user(user_id, preferred_name, password) VALUES
+    query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
     ('A2345678', 'Ali', 'adminpassword'),
     ('S3456789', 'Bob', 'studentpassword'),
     ('P4567890', 'Charlie', 'profpassword'),
@@ -77,9 +77,9 @@ def render_landing_page():
     ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS admin(admin_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id));"
+    query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id));"
     db.session.execute(query)
-    query = "DELETE FROM admin;"
+    query = "DELETE FROM admins;"
     db.session.execute(query)
     query = "INSERT INTO admins(admin_id) VALUES (A23456789);"
     db.session.execute(query)
@@ -136,7 +136,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM professors;"
     db.session.execute(query)
-    query = """INSERT INTO professors(professor_id, faculty) VALUES
+    query = """INSERT INTO professors(prof_id, faculty) VALUES
     ('P45678901', 'SoC'),
     ('P48491547', 'SoC'),
     ('P68799892', 'SoC'),
