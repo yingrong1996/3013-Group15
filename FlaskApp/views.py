@@ -575,7 +575,7 @@ def render_add_module_page():
         module_name = form.module_name.data
         quota = form.quota.data
         supervisor = form.supervisor.data
-        prerequisite = form.prerequisite.data.str.replace(',', ' ')
+        prerequisite = form.prerequisite.data.replace(',', ' ')
         prerequisite = prerequisite.split()
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
