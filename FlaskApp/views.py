@@ -187,7 +187,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM available;"
     db.session.execute(query)
-    query = """INSERT INTO available(module_code, module_name, quota, start_date) VALUES 
+    query = """INSERT INTO available(module_code, start_date) VALUES 
     ('CS1111', '2019-11-07'), 
     ('CG1111', '2019-11-07'),
     ('CS2222', '2019-11-07'), 
