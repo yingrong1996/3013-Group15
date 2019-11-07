@@ -84,7 +84,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM admins;"
     db.session.execute(query)
-    query = "INSERT INTO admins(admin_id) VALUES (A23456789);"
+    query = "INSERT INTO admins(admin_id) VALUES ('A23456789');"
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS students(
