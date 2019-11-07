@@ -158,7 +158,7 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM rounds;"
     db.session.execute(query)
-    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-13');"
+    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-23');"
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
