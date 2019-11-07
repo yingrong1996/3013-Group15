@@ -18,12 +18,6 @@ def load_user(username):
 
 @view.route("/", methods=["GET"])
 def render_landing_page():
-    query = "DROP TABLE web_user;"
-    db.session.execute(query)
-    query = "DROP TABLE modules;"
-    db.session.execute(query)
-    query = "DROP TABLE registration;"
-    db.session.execute(query)
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
             preferred_name VARCHAR, 
