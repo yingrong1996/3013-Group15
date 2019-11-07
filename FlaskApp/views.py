@@ -178,7 +178,7 @@ def render_landing_page():
     
     query = """CREATE TABLE IF NOT EXISTS available(
             module_code VARCHAR,
-            start_date DATE REFERENCES rounds(start_date) on delete cascade,
+            start_date DATE REFERENCES rounds(start_date) on delete cascade,    
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM available;"
@@ -558,3 +558,10 @@ def render_add_module_page():
 @login_required
 def render_privileged_page():
     return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
+
+
+@view.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return render_template("logoutpage.html")
