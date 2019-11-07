@@ -561,13 +561,15 @@ def render_module_page():
                 .format(module_code, module_name, quota)
         db.session.execute(query)
         db.session.commit()
+        hprint("Added")
     elif form2.submit2.data and form2.validate_on_submit():
         module_code = form2.module_code.data
         module_name = form2.module_name.data
         query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
         db.session.execute(query)
-        db.session.commit()
+        db.session.commit()'
+        hprint("Deleted")
 ##    elif form3.validate_on_submit():
 ##        module_code = form.module_code.data
 ##        module_name = form.module_name.data

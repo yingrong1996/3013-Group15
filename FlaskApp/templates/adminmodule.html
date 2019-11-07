@@ -9,6 +9,7 @@
 <body>
     <div style="font-size:300%;">Add a module.</div>
     <form class="addModuleForm">
+		{{ form.hidden_tag() }}
 	
 		<div class="formField">
         {{ form1.module_code }}
@@ -43,15 +44,14 @@
         {% endif %}
         </div>
 
-		<div class="formField">
-		{{ form1.submit1 }}
-		</div>
+		<button id="addModuleButton" formmethod="post">Add Module</button>
         
     </form>
 	
 	<div style="font-size:300%;">Delete a module.</div>
 	<form class="deleteModuleForm">
-	
+		{{ form.hidden_tag() }}
+		
 		<div class="formField">
         {{ form2.module_code }}
         {% if form2.module_code.errors %}
@@ -74,9 +74,7 @@
         {% endif %}
         </div>
 
-		<div class="formField">
-		{{ form2.submit2 }}
-		</div>
+		<button id="deleteModuleButton" formmethod="post">Delete Module</button>
         
     </form>
 	
