@@ -373,7 +373,7 @@ def render_landing_page():
     ('CG1111', '5', '13', 'COM1-B1');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES lessons(module_code) on delete cascade PRIMARY KEY;)"
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES lessons(module_code) on delete cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM lectures;"
     db.session.execute(query)
