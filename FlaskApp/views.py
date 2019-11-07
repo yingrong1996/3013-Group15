@@ -431,7 +431,7 @@ def render_search_page():
     form = SearchForm()
     filters = ['Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites', 'None']
     if form.validate_on_submit():
-        date = datetime.now()
+        date = datetime.datetime.now()
         search = form.search.data
         filter = request.form.get('filter_list')
         if filter == 'None':
