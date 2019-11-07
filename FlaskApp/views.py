@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm
 from FlaskApp.models import WebUser
 from FlaskApp.utility import hprint
 
@@ -559,6 +559,21 @@ def render_delete_module_page():
         db.session.execute(query)
         db.session.commit()
     return render_template("deletemodule.html", form=form)
+
+
+@view.route("/addmodule", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_add_module_page():
+    form = AddModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        quota = form.quota.data
+        query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+                .format(module_code, module_name, quota)
+        db.session.execute(query)
+        db.session.commit()
+    return render_template("addmodule.html", form=form)
 
 
 @view.route("/logout", methods=["GET"])
