@@ -451,8 +451,8 @@ def render_search_page():
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
                 FROM modules m
-                INNER JOIN registration r 
-                ON m.module_code = r.module_code
+                INNER JOIN takes t
+                ON m.module_code = t.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
                 WHERE m1.quota <= a.num AND m1.module_code LIKE '%{}%';
@@ -464,8 +464,8 @@ def render_search_page():
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
                 FROM modules m
-                INNER JOIN registration r 
-                ON m.module_code = r.module_code
+                INNER JOIN takes t
+                ON m.module_code = t.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
                 WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%{}%';
