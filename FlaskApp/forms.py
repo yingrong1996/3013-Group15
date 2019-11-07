@@ -62,3 +62,20 @@ class DeleteModuleForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Module name'}
     )
+    
+class AddModuleForm(FlaskForm):
+    module_code = StringField(
+        label='Module code',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Module code'}
+    )
+    module_name = StringField(
+        label='Module name',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Module name'}
+    )
+    quota = StringField(
+        label='Quota',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Quota'}
+    )
