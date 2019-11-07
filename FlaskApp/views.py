@@ -560,12 +560,14 @@ def render_module_page():
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
         db.session.execute(query)
+        db.session.commit()
     elif form2.submit2.data and form2.validate_on_submit():
         module_code = form2.module_code.data
         module_name = form2.module_name.data
         query = "DELETE FROM modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
         db.session.execute(query)
+        db.session.commit()
 ##    elif form3.validate_on_submit():
 ##        module_code = form.module_code.data
 ##        module_name = form.module_name.data
