@@ -565,3 +565,9 @@ def render_privileged_page():
 def logout():
     logout_user()
     return render_template("logoutpage.html")
+
+
+@view.route("/userhome", methods=["GET"])
+@login_required
+def userhome():
+    return render_template('userhome.html')
