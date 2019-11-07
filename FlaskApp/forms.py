@@ -62,4 +62,3 @@ class DeleteModuleForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Module name'}
     )
-    submit1 = SubmitField('submit')
