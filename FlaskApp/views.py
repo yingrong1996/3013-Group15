@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, AddModuleForm, DeleteModuleForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm
 from FlaskApp.models import WebUser
 from FlaskApp.utility import hprint
 
@@ -547,34 +547,33 @@ def render_login_page():
     return render_template("login.html", form=form)
 
 
-@view.route("/admin/module", methods=["GET", "POST"])
+@view.route("/deletemodule", methods=["GET", "POST"])
 #@roles_required('Admin')
-def render_module_page():
-    form1 = AddModuleForm()
-    form2 = DeleteModuleForm()
-##    form3 = UpdateModuleForm()
-    if form1.submit1.data and form1.validate_on_submit():
-        module_code = form1.module_code.data
-        module_name = form1.module_name.data
-        quota = form1.quota.data
-        query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
-                .format(module_code, module_name, quota)
-        db.session.execute(query)
-        db.session.commit()
-    elif form2.submit2.data and form2.validate_on_submit():
-        module_code = form2.module_code.data
-        module_name = form2.module_name.data
+def render_delete_module_page():
+    form = DeleteModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
         query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
         db.session.execute(query)
         db.session.commit()
-##    elif form3.validate_on_submit():
-##        module_code = form.module_code.data
-##        module_name = form.module_name.data
-##        quota = form.quota.data
-##        query = "UPDATE modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
-##                .format(module_code, module_name)
-    return render_template("adminmodule.html", form1=form1, form2=form2)
+    return render_template("deletemodule.html", form=form)
+
+
+@view.route("/addmodule", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_add_module_page():
+    form = AddModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        quota = form.quota.data
+        query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+                .format(module_code, module_name, quota)
+        db.session.execute(query)
+        db.session.commit()
+    return render_template("addmodule.html", form=form)
 
 
 @view.route("/logout", methods=["GET"])
