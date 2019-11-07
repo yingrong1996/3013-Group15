@@ -11,10 +11,10 @@
     <form class="addModuleForm">
 	
 		<div class="formField">
-        {{ form.module_code }}
-        {% if form.module_code.errors %}
+        {{ form1.module_code }}
+        {% if form1.module_code.errors %}
             <div class="errorMessage">
-            {% for error in form.module_code.errors %}
+            {% for error in form1.module_code.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -22,10 +22,10 @@
         </div>
 		
 		<div class="formField">
-        {{ form.module_name }}
-        {% if form.module_name.errors %}
+        {{ form1.module_name }}
+        {% if form1.module_name.errors %}
             <div class="errorMessage">
-            {% for error in form.module_name.errors %}
+            {% for error in form1.module_name.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -33,10 +33,10 @@
         </div>
 		
         <div class="formField">
-        {{ form.quota }}
-        {% if form.quota.errors %}
+        {{ form1.quota }}
+        {% if form1.quota.errors %}
             <div class="errorMessage">
-            {% for error in form.quota.errors %}
+            {% for error in form1.quota.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -51,10 +51,10 @@
 	<form class="deleteModuleForm">
 	
 		<div class="formField">
-        {{ form.module_code }}
-        {% if form.module_code.errors %}
+        {{ form2.module_code }}
+        {% if form2.module_code.errors %}
             <div class="errorMessage">
-            {% for error in form.module_code.errors %}
+            {% for error in form2.module_code.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -62,10 +62,10 @@
         </div>
 		
 		<div class="formField">
-        {{ form.module_name }}
-        {% if form.module_name.errors %}
+        {{ form2.module_name }}
+        {% if form2.module_name.errors %}
             <div class="errorMessage">
-            {% for error in form.module_name.errors %}
+            {% for error in form2.module_name.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -76,44 +76,6 @@
         
     </form>
 	
-	<div style="font-size:300%;">Update a module.</div>
-	<form class="updateModuleForm">
 	
-		<div class="formField">
-        {{ form.module_code }}
-        {% if form.module_code.errors %}
-            <div class="errorMessage">
-            {% for error in form.module_code.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
-        </div>
-		
-		<div class="formField">
-        {{ form.module_name }}
-        {% if form.module_name.errors %}
-            <div class="errorMessage">
-            {% for error in form.module_name.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
-        </div>
-		
-        <div class="formField">
-        {{ form.quota }}
-        {% if form.quota.errors %}
-            <div class="errorMessage">
-            {% for error in form.quota.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
-        </div>
-
-        <button id="updateButton" formmethod="post">Update Module</button>
-        
-    </form>
 </body>
 </html>
