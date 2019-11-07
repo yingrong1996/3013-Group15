@@ -382,7 +382,7 @@ def render_landing_page():
 
     query = """CREATE TABLE IF NOT EXISTS lecturing(
             prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
-            module_code VARCHAR REFERENCES lessons(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM lecturing;"
@@ -398,7 +398,7 @@ def render_landing_page():
     ('P68799892', 'CS4444');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES lessons(module_code) on delete cascade PRIMARY KEY);"
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) on delete cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM labtut;"
     db.session.execute(query)
