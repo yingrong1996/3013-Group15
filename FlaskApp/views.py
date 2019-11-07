@@ -575,12 +575,18 @@ def render_add_module_page():
         module_name = form.module_name.data
         quota = form.quota.data
         supervisor = form.supervisor.data
+        prerequisite = form.prerequisite.data.str.replace(',', ' ')
+        prerequisite = prerequisite.split()
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
         db.session.execute(query)
         query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}')"\
                 .format(supervisor, module_code)
         db.session.execute(query)
+        for module in prerequisite:
+            query = "INSERT INTO prerequisite(module_code, prerequisite) VALUES ('{}', '{}')"\
+                .format(module_code, module)
+            db.session.execute(query)
         db.session.commit()
     return render_template("addmodule.html", form=form)
 
