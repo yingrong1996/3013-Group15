@@ -425,6 +425,11 @@ def render_landing_page():
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
 
+@view.route("/search", methods = ["GET", "POST"])
+def render_prerequisite_page():
+    query = "SELECT * FROM prerequisites;"
+    result = db.session.execute(query)
+    return render_template("prerequisite.html", data = result)
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
@@ -442,7 +447,7 @@ def render_search_page():
                 ON m.module_code = s.module_code
                 LEFT JOIN web_users w
                 ON s.prof_id = w.user_id
-                WHERE m.module_code LIKE '%{}%'
+                WHERE m.module_code LIKE '%{}%';
             """.format(search)
         elif filter == 'Quota Met':
             query = """
