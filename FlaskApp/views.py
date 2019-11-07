@@ -18,11 +18,17 @@ def load_user(username):
 def render_landing_page():
     query = "CREATE TABLE IF NOT EXISTS web_user(username VARCHAR PRIMARY KEY NOT NULL, preferred_name VARCHAR, password VARCHAR NOT NULL);"
     db.session.execute(query)
+    query = "CREATE TABLE IF NOT EXISTS registration(module_code VARCHAR PRIMARY KEY NOT NULL, student_id VARCHAR NOT NULL);"
+    db.session.execute(query)
+    query = "DELETE FROM registration;"
+    db.session.execute(query)
+    query = "INSERT INTO registration (module_code, student_id) VALUES ('CS6666', 'A1');"
+    db.session.execute(query)
     query = "CREATE TABLE IF NOT EXISTS modules(module_code VARCHAR PRIMARY KEY NOT NULL, name VARCHAR NOT NULL, prof_id VARCHAR NOT NULL, quota INT NOT NULL);"
     db.session.execute(query)
     query = "DELETE FROM modules;"
-    db.session.execute(query);
-    query = "INSERT INTO modules (module_code, name, prof_id, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 300), ('CS5555', 'Master Coding', 'Dr Ming', 200), ('CS6666', 'Godlike Coding', 'Dr Ee', 100);"
+    db.session.execute(query)
+    query = "INSERT INTO modules (module_code, name, prof_id, quota) VALUES ('CS1111', 'Intro to Coding', 'Dr Heng', 600), ('CS2222', 'Basic Coding', 'Dr Eng', 500), ('CS3333', 'Intermediate Coding', 'Dr Ling', 400), ('CS4444', 'Advanced Coding', 'Dr Ping', 300), ('CS5555', 'Master Coding', 'Dr Ming', 200), ('CS6666', 'Godlike Coding', 'Dr Ee', 1);"
     db.session.execute(query)
     db.session.commit()
     return "<h1>CS2102</h1>\
@@ -31,17 +37,97 @@ def render_landing_page():
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
-    hprint("search")
     form = SearchForm()
+    filters = ['None', 'Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites']
     if form.validate_on_submit():
         hprint("valid")
         search = form.search.data
-        query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
+        filter = request.form.get('filter_list')
+        if filter == 'None':
+            query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
+        else if filter == 'Quota Met':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota <= a.num;
+            """
+        else if filter == 'Quota Not Met':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota > a.num;
+            """
+        else if filter == 'Currently Available':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota <= a.num;
+            """
+        else if filter == 'Not Available':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota <= a.num;
+            """
+        else if filter == 'No Prerequisites':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota <= a.num;
+            """
+        else if filter == 'Has Prerequisites':
+            query = """
+                SELECT m1.module_code
+                FROM Modules m1
+                LEFT JOIN
+                (SELECT m.module_code, COUNT(*) as num
+                FROM modules m
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
+                GROUP BY m.module_code) a
+                ON m1.module_code = a.module_code
+                WHERE m1.quota <= a.num;
+            """
         result = db.session.execute(query).fetchall()
-        return render_template("search.html", form = form, data = result)
+        return render_template("search.html", form = form, data = result, filters = filters)
     else:
         hprint(form.errors)
-    return render_template("search.html", form = form)
+    return render_template("search.html", form = form, filters = filters)
 
 
 @view.route("/registration", methods=["GET", "POST"])
