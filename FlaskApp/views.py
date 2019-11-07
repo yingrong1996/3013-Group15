@@ -568,7 +568,7 @@ def render_module_page():
         query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
         db.session.execute(query)
-        db.session.commit()'
+        db.session.commit()
         hprint("Deleted")
 ##    elif form3.validate_on_submit():
 ##        module_code = form.module_code.data
