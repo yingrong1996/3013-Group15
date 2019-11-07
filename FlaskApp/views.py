@@ -56,8 +56,8 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE m1.quota <= a.num;
-            """
+                WHERE m1.quota <= a.num AND module_code LIKE '%{}%';
+            """.format(search)
         elif filter == 'Quota Not Met':
             query = """
                 SELECT m1.*
@@ -69,24 +69,19 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE m1.quota > a.num OR a.num IS NULL;
-            """
+                WHERE (m1.quota > a.num OR a.num IS NULL) AND module_code LIKE '%{}%';
+            """.format(search)
         elif filter == 'Currently Available':
             query = """
-                SELECT m1.module_code
-                FROM Modules m1
+                SELECT m.*
+                FROM Modules m
                 LEFT JOIN
-                (SELECT m.module_code, COUNT(*) as num
-                FROM modules m
-                INNER JOIN registration r 
-                ON m.module_code = r.module_code
-                GROUP BY m.module_code) a
-                ON m1.module_code = a.module_code
-                WHERE m1.quota <= a.num;
-            """
+                rounds r
+                ON m.start_date = r.start_date
+            """.format(search)
         elif filter == 'Not Available':
             query = """
-                SELECT m1.module_code
+                SELECT m1.*
                 FROM Modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
@@ -99,7 +94,7 @@ def render_search_page():
             """
         elif filter == 'No Prerequisites':
             query = """
-                SELECT m1.module_code
+                SELECT m1.*
                 FROM Modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
@@ -112,7 +107,7 @@ def render_search_page():
             """
         elif filter == 'Has Prerequisites':
             query = """
-                SELECT m1.module_code
+                SELECT m1.*
                 FROM Modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
