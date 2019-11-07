@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user
 
@@ -435,7 +437,7 @@ def render_search_page():
     form = SearchForm()
     filters = ['Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites', 'None']
     if form.validate_on_submit():
-        hprint("valid")
+        date = datetime.now()
         search = form.search.data
         filter = request.form.get('filter_list')
         if filter == 'None':
@@ -470,11 +472,12 @@ def render_search_page():
             query = """
                 SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
                 FROM modules m1
-                LEFT JOIN
-                rounds r
-                ON m.start_date >= r.start_date AND m.start_date < r.end_date
-                WHERE m.module_code LIKE '%{}%'
-            """.format(search)
+                LEFT JOIN available a
+                ON m1.module_code = a.module_code
+                LEFT JOIN rounds r
+                ON r.start_date <= {} AND r.end_date > {}
+                WHERE m1.module_code LIKE '%{}%';
+            """.format(date, date, search)
         elif filter == 'Not Available':
             query = """
                 SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
@@ -482,7 +485,7 @@ def render_search_page():
                 LEFT JOIN
                 rounds r
                 ON m.start_date < r.start_date OR m.start_date >= r.end_date
-                WHERE m.module_code LIKE '%{}%'
+                WHERE m.module_code LIKE '%{}%';
             """.format(search)
         elif filter == 'No Prerequisites':
             query = """
