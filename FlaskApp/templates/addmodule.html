@@ -55,6 +55,17 @@
             </div>
         {% endif %}
         </div>
+		
+		<div class="formField">
+        {{ form.prerequisite }}
+        {% if form.prerequisite.errors %}
+            <div class="errorMessage">
+            {% for error in form.prerequisite.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
 
 		<button id="addModuleButton" formmethod="post">Add Module</button>
         
