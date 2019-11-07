@@ -425,7 +425,7 @@ def render_landing_page():
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
 
-@view.route("/search", methods = ["GET", "POST"])
+@view.route("/prerequisites", methods = ["GET", "POST"])
 def render_prerequisite_page():
     query = "SELECT * FROM prerequisites;"
     result = db.session.execute(query)
