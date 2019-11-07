@@ -30,9 +30,9 @@ def render_landing_page():
     query = "DELETE FROM web_users;"
     db.session.execute(query)
     query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
-    ('A2345678', 'Ali', 'adminpassword'),
-    ('S3456789', 'Bob', 'studentpassword'),
-    ('P4567890', 'Charlie', 'profpassword'),
+    ('A23456789', 'Ali', 'adminpassword'),
+    ('S34567890', 'Bob', 'studentpassword'),
+    ('P45678901', 'Charlie', 'profpassword'),
     ('S37132455', 'Hoyt', 'gWg7qwSJ2S'),
     ('S49083365', 'Alfonso', 'Xq1l1FxphUdK'),
     ('S69940317', 'Audrey', '9UeGk6Eo6s'),
