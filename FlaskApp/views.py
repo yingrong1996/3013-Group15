@@ -435,7 +435,15 @@ def render_search_page():
         search = form.search.data
         filter = request.form.get('filter_list')
         if filter == 'None':
-            query = "SELECT module_code, name, prof_id, quota FROM modules WHERE module_code LIKE '%{}%'".format(search)
+            query = """
+                SELECT m.module_code, m.name, m.quota, w.preferred_name
+                FROM modules m
+                LEFT JOIN supervises s
+                ON m.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE module_code LIKE '%{}%'
+            """.format(search)
         elif filter == 'Quota Met':
             query = """
                 SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
