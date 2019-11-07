@@ -151,6 +151,15 @@ def render_landing_page():
     ('P35809956', 'FoE'),
     ('P53579939', 'FoE');"""
     db.session.execute(query)
+    
+    query = """CREATE TABLE IF NOT EXISTS rounds(
+            start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, 
+            end_date DATE CHECK(end_date > start_date));"""
+    db.session.execute(query)
+    query = "DELETE FROM rounds;"
+    db.session.execute(query)
+    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-13');"
+    db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
             module_code VARCHAR, module_name VARCHAR NOT NULL,
@@ -389,15 +398,6 @@ def render_landing_page():
     query = """INSERT INTO assists(student_id, module_code) VALUES
     ('S37132455', 'CS1111'),
     ('S49083365', 'CS1111');"""
-    db.session.execute(query)
-
-    query = """CREATE TABLE IF NOT EXISTS rounds(
-            start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, 
-            end_date DATE CHECK(end_date > start_date));"""
-    db.session.execute(query)
-    query = "DELETE FROM rounds;"
-    db.session.execute(query)
-    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-13');"
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS registration(
