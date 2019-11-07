@@ -38,7 +38,7 @@ def render_landing_page():
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
     form = SearchForm()
-    filters = ['None', 'Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites']
+    filters = ['Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites', 'None']
     if form.validate_on_submit():
         hprint("valid")
         search = form.search.data
@@ -47,7 +47,7 @@ def render_search_page():
             query = "SELECT * FROM modules WHERE module_code LIKE '%{}%'".format(search)
         elif filter == 'Quota Met':
             query = """
-                SELECT m1.module_code
+                SELECT m1.*
                 FROM Modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
@@ -60,7 +60,7 @@ def render_search_page():
             """
         elif filter == 'Quota Not Met':
             query = """
-                SELECT m1.module_code
+                SELECT m1.*
                 FROM Modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
