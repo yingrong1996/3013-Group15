@@ -169,17 +169,35 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query)
-    query = """INSERT INTO modules(module_code, module_name, quota, start_date) VALUES 
-    ('CS1111', 'Intro to Coding', 20, '2019-11-07'), 
-    ('CG1111', 'Engineering Principles', 10, '2019-11-07'),
-    ('CS2222', 'Basic Coding', 20, '2019-11-07'), 
-    ('CS3333', 'Intermediate Coding', 10, '2019-11-07'), 
-    ('CS4444', 'Advanced Coding', 5, '2019-11-07'), 
-    ('CS5555', 'Master Coding', 2, '2019-11-07'), 
-    ('CS6666', 'Godlike Coding', 1, '2019-11-07'),
-    ('CS1111', 'Intro to Coding', 20, '2019-11-20'), 
-    ('CG1111', 'Engineering Principles', 10, '2019-11-20'),
-    ('GEQ1000', 'CSU is Life', 20, '2019-11-07');"""
+    query = """INSERT INTO modules(module_code, module_name, quota) VALUES 
+    ('CS1111', 'Intro to Coding', 20), 
+    ('CG1111', 'Engineering Principles', 10),
+    ('CS2222', 'Basic Coding', 20), 
+    ('CS3333', 'Intermediate Coding', 10), 
+    ('CS4444', 'Advanced Coding', 5), 
+    ('CS5555', 'Master Coding', 2), 
+    ('CS6666', 'Godlike Coding', 1),
+    ('GEQ1000', 'CSU is Life', 20);"""
+    db.session.execute(query)
+    
+    query = """CREATE TABLE IF NOT EXISTS available(
+            module_code VARCHAR
+            start_date DATE REFERENCES rounds(start_date) on delete cascade,
+            PRIMARY KEY (module_code, start_date));"""
+    db.session.execute(query)
+    query = "DELETE FROM available;"
+    db.session.execute(query)
+    query = """INSERT INTO available(module_code, module_name, quota, start_date) VALUES 
+    ('CS1111', '2019-11-07'), 
+    ('CG1111', '2019-11-07'),
+    ('CS2222', '2019-11-07'), 
+    ('CS3333', '2019-11-07'), 
+    ('CS4444', '2019-11-07'), 
+    ('CS5555', '2019-11-07'), 
+    ('CS6666', '2019-11-07'),
+    ('CS1111', '2019-11-20'), 
+    ('CG1111', '2019-11-20'),
+    ('GEQ1000','2019-11-07');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
@@ -191,7 +209,7 @@ def render_landing_page():
     db.session.execute(query)
     query = """INSERT INTO supervises(prof_id, module_code) VALUES
     ('P45678901', 'CS1111'),
-    ('P45678901', 'CS2222'),    
+    ('P45678901', 'CS2222'),
     ('P48491547', 'CS4444'),
     ('P68799892', 'CS3333'),
     ('P62707222', 'CS5555'),
