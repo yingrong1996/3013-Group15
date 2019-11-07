@@ -77,14 +77,14 @@ def render_landing_page():
     ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id));"
+    query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id));"
     db.session.execute(query)
     query = "DELETE FROM admins;"
     db.session.execute(query)
     query = "INSERT INTO admins(admin_id) VALUES (A23456789);"
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS students(student_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id), major VARCHAR NOT NULL);"
+    query = "CREATE TABLE IF NOT EXISTS students(student_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id), major VARCHAR NOT NULL);"
     db.session.execute(query)
     query = "DELETE FROM students;"
     db.session.execute(query)
@@ -132,7 +132,7 @@ def render_landing_page():
     ('S01154352', 'CS');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS professors(prof_id VARCHAR PRIMARY KEY REFERENCES web_user(user_id), faculty VARCHAR NOT NULL);"
+    query = "CREATE TABLE IF NOT EXISTS professors(prof_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id), faculty VARCHAR NOT NULL);"
     db.session.execute(query)
     query = "DELETE FROM professors;"
     db.session.execute(query)
@@ -459,12 +459,12 @@ def render_registration_page():
         username = form.username.data
         preferred_name = form.preferred_name.data
         password = form.password.data
-        query = "SELECT * FROM web_user WHERE username = '{}'".format(username)
+        query = "SELECT * FROM web_users WHERE username = '{}'".format(username)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
             form.username.errors.append("{} is already in use.".format(username))
         else:
-            query = "INSERT INTO web_user(username, preferred_name, password) VALUES ('{}', '{}', '{}')"\
+            query = "INSERT INTO web_users(username, preferred_name, password) VALUES ('{}', '{}', '{}')"\
                 .format(username, preferred_name, password)
             db.session.execute(query)
             db.session.commit()
