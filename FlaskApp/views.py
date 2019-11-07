@@ -56,7 +56,7 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE m1.quota <= a.num AND module_code LIKE '%{}%';
+                WHERE m1.quota <= a.num AND m1.module_code LIKE '%{}%';
             """.format(search)
         elif filter == 'Quota Not Met':
             query = """
@@ -69,7 +69,7 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE (m1.quota > a.num OR a.num IS NULL) AND module_code LIKE '%{}%';
+                WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%{}%';
             """.format(search)
         elif filter == 'Currently Available':
             query = """
