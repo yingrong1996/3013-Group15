@@ -43,7 +43,10 @@
         {% endif %}
         </div>
 
-        <input type="submit" value="Add Module">
+		<div class="formField">
+		{{ form2.submit1 }}
+        <input type="submit" value="Add Module" formmethod="post">
+		</div>
         
     </form>
 	
@@ -72,7 +75,10 @@
         {% endif %}
         </div>
 
-        <input type="submit" value="Delete Module">
+		<div class="formField">
+		{{ form2.submit2 }}
+        <input type="submit" value="Delete Module" formmethod="post">
+		</div>
         
     </form>
 	
