@@ -570,7 +570,7 @@ def render_login_page():
         if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
-            return redirect(url_for("view.render_privileged_page"))
+            return redirect(url_for("/userhome"))
     return render_template("login.html", form=form)
 
 
@@ -602,12 +602,6 @@ def render_module_page():
 ##        query = "UPDATE modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
 ##                .format(module_code, module_name)
     return render_template("adminmodule.html", form1=form1, form2=form2)
-
-
-@view.route("/privileged-page", methods=["GET"])
-@login_required
-def render_privileged_page():
-    return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
 
 
 @view.route("/logout", methods=["GET"])
