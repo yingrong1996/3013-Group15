@@ -419,7 +419,7 @@ def render_landing_page():
 
     query = """CREATE TABLE IF NOT EXISTS registration(
             student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code REFERENCES modules(module_code) on delete cascade);"""
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade);"""
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
