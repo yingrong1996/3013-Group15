@@ -552,18 +552,19 @@ def render_module_page():
         quota = form1.quota.data
         query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
+        db.session.execute(query)
     elif form2.validate_on_submit():
         module_code = form2.module_code.data
         module_name = form2.module_name.data
         query = "DELETE FROM modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
                 .format(module_code, module_name)
+        db.session.execute(query)
 ##    elif form3.validate_on_submit():
 ##        module_code = form.module_code.data
 ##        module_name = form.module_name.data
 ##        quota = form.quota.data
 ##        query = "UPDATE modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
 ##                .format(module_code, module_name)
-    db.session.execute(query)
     return render_template("adminmodule.html", form1=form1, form2=form2)
 
 
