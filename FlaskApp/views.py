@@ -181,7 +181,7 @@ def render_landing_page():
     db.session.execute(query)
     
     query = """CREATE TABLE IF NOT EXISTS available(
-            module_code VARCHAR
+            module_code VARCHAR,
             start_date DATE REFERENCES rounds(start_date) on delete cascade,
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
