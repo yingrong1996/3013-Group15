@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="static/css/style-simple.css">
 </head>
 <body>
-    <div>Please enter module details.</div>
+    <div style="font-size:300%;">Add a module.</div>
     <form class="addModuleForm">
 	
 		<div class="formField">
@@ -44,6 +44,75 @@
         </div>
 
         <button id="addButton" formmethod="post">Add Module</button>
+        
+    </form>
+	
+	<div style="font-size:300%;">Delete a module.</div>
+	<form class="deleteModuleForm">
+	
+		<div class="formField">
+        {{ form.module_code }}
+        {% if form.module_code.errors %}
+            <div class="errorMessage">
+            {% for error in form.module_code.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+		
+		<div class="formField">
+        {{ form.module_name }}
+        {% if form.module_name.errors %}
+            <div class="errorMessage">
+            {% for error in form.module_name.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+
+        <button id="deleteButton" formmethod="post">Delete Module</button>
+        
+    </form>
+	
+	<div style="font-size:300%;">Update a module.</div>
+	<form class="updateModuleForm">
+	
+		<div class="formField">
+        {{ form.module_code }}
+        {% if form.module_code.errors %}
+            <div class="errorMessage">
+            {% for error in form.module_code.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+		
+		<div class="formField">
+        {{ form.module_name }}
+        {% if form.module_name.errors %}
+            <div class="errorMessage">
+            {% for error in form.module_name.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+		
+        <div class="formField">
+        {{ form.quota }}
+        {% if form.quota.errors %}
+            <div class="errorMessage">
+            {% for error in form.quota.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+
+        <button id="updateButton" formmethod="post">Update Module</button>
         
     </form>
 </body>

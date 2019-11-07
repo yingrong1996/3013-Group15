@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, AddModuleForm, DeleteModuleForm
 from FlaskApp.models import WebUser
 from FlaskApp.utility import hprint
 
@@ -540,18 +540,31 @@ def render_login_page():
     return render_template("login.html", form=form)
 
 
-@view.route("/Admin/addmodule", methods=["GET", "POST"])
+@view.route("/Admin/module", methods=["GET", "POST"])
 #@roles_required('Admin')
-def render_add_module_page():
-    form = AddModuleForm()
-    if form.validate_on_submit():
+def render_module_page():
+    form1 = AddModuleForm()
+    form2 = DeleteModuleForm()
+##    form3 = UpdateModuleForm()
+    if form1.validate_on_submit():
         module_code = form.module_code.data
         module_name = form.module_name.data
         quota = form.quota.data
-        query =  query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+        query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
                 .format(module_code, module_name, quota)
+    elif form2.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        query = "DELETE FROM modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
+                .format(module_code, module_name)
+##    elif form3.validate_on_submit():
+##        module_code = form.module_code.data
+##        module_name = form.module_name.data
+##        quota = form.quota.data
+##        query = "UPDATE modules(module_code, module_name, quota) WHERE module_code='{}' OR module_name='{}'"\
+##                .format(module_code, module_name)
     db.session.execute(query)
-    return render_template("addmodule.html", form=form)
+    return render_template("adminmodule.html", form=form)
 
 
 @view.route("/privileged-page", methods=["GET"])
