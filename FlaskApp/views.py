@@ -540,6 +540,20 @@ def render_login_page():
     return render_template("login.html", form=form)
 
 
+@view.route("/Admin/addmodule", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_add_module_page():
+    form = AddModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        quota = form.quota.data
+        query =  query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+                .format(module_code, module_name, quota)
+    db.session.execute(query)
+    return render_template("addmodule.html", form=form)
+
+
 @view.route("/privileged-page", methods=["GET"])
 @login_required
 def render_privileged_page():
