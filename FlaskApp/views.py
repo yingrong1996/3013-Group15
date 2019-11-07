@@ -442,7 +442,7 @@ def render_search_page():
                 ON m.module_code = s.module_code
                 LEFT JOIN web_users w
                 ON s.prof_id = w.user_id
-                WHERE module_code LIKE '%{}%'
+                WHERE m.module_code LIKE '%{}%'
             """.format(search)
         elif filter == 'Quota Met':
             query = """
