@@ -584,7 +584,7 @@ def render_add_module_page():
                 .format(supervisor, module_code)
         db.session.execute(query)
         for module in prerequisite:
-            query = "INSERT INTO prerequisite(module_code, prerequisite) VALUES ('{}', '{}')"\
+            query = "INSERT INTO prerequisites(module_code, prerequisite) VALUES ('{}', '{}')"\
                 .format(module_code, module)
             db.session.execute(query)
         db.session.commit()
