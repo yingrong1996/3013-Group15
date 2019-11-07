@@ -165,7 +165,7 @@ def render_landing_page():
             module_code VARCHAR,
             module_name VARCHAR NOT NULL,
             quota INT NOT NULL CHECK (quota>0),
-            PRIMARY KEY (module_code, start_date));"""
+            PRIMARY KEY (module_code));"""
     db.session.execute(query)
     query = "DELETE FROM modules;"
     db.session.execute(query)
