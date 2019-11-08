@@ -567,6 +567,7 @@ def render_search_page():
     return render_template("search.html", form = form, filters = filters)
 
 @view.route("/prof", methods = ["GET", "POST"])
+#@roles_required('Professor')
 def render_prof_page():
     query1 = """
         SELECT m.module_code, m.module_name, w.preferred_name, m.quota
@@ -588,9 +589,10 @@ def render_prof_page():
     """.format(current_user.user_id)
     result1 = db.session.execute(query1).fetchall()
     result2 = db.session.execute(query2).fetchall()
-    return render_template("prof.html", form = form, data1 = result1, data2 = result2)
+    return render_template("prof.html", data1 = result1, data2 = result2)
 
 @view.route("/stulist", methods = ["GET", "POST"])
+#@roles_required('Professor')
 def render_stulist_page():
     form = SearchForm()
     if form.validate_on_submit():
