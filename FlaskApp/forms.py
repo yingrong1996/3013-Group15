@@ -89,3 +89,15 @@ class AddModuleForm(FlaskForm):
         validators=[Optional()],
         render_kw={'placeholder': 'prerequisite_code1, prerequisite_code2...'}
     )
+
+class ManualAcceptForm(FlaskForm):
+    student_id = StringField(
+        label='Student ID',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Student ID'}
+    )
+    module_code = StringField(
+        label='Module code',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Module code'}
+    )

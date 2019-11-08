@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, ManualAcceptForm
 from FlaskApp.models import WebUser
 from FlaskApp.utility import hprint
 
@@ -421,6 +421,24 @@ def render_landing_page():
     db.session.execute(query)
     query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000'), ('S29167213', 'CS6666');"
     db.session.execute(query)
+    query = """CREATE OR REPLACE FUNCTION prereqcheck()
+            RETURNS TRIGGER AS $$ BEGIN
+            If Exists (
+                select prerequisite from prerequisites where prerequisites.module_code=NEW.module_code
+                Except
+                select module_code from took where took.student_id=NEW.student_id
+            ) Then
+                Return NULL;
+            End If;
+            Return NEW;
+            End;
+            $$ Language plpgsql; """
+    db.session.execute(query)
+    query = """CREATE TRIGGER prereq
+            BEFORE INSERT ON Takes
+            FOR EACH ROW
+            EXECUTE PROCEDURE prereqcheck();"""
+    db.session.execute(query)
     db.session.commit()
     return "<h1>CS2102</h1>\
     <h2>Flask App started successfully!</h2>"
@@ -591,6 +609,25 @@ def render_add_module_page():
     return render_template("addmodule.html", form=form)
 
 
+@view.route("/manual", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_manual_accept_page():
+    for = ManualAcceptForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        student_id = form.student_id.data
+        query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')"\
+                .format(student_id, module_code)
+        db.session.execute(query)
+        query = """select prerequisite from prerequisites where prerequisites.module_code='{}'
+                Except
+                select module_code from took where took.student_id='{}';"""\.format(module_code, student_id)
+        result = db.session.execute(query)
+        db.session.commit()
+    return render_template("manual.html", form = form, data = result)
+        
+
+    
 @view.route("/logout", methods=["GET"])
 @login_required
 def logout():
