@@ -433,9 +433,9 @@ def render_landing_page():
             End If;
             Return NEW;
             End;
-            $$ Language plpgsql; """
+            $$ Language plpgsql;"""
     db.session.execute(query)
-    query = "DROP TRIGGER IF EXISTS prereq;"
+    query = "DROP TRIGGER IF EXISTS prereq ON Takes CASCADE;"
     db.session.execute(query)
     query = """CREATE TRIGGER prereq
             BEFORE INSERT ON Takes
