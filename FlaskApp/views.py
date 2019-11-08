@@ -513,37 +513,27 @@ def render_search_page():
 
 @view.route("/prof", methods = ["GET", "POST"])
 def render_prof_page():
-    form = SearchForm()
-    filters = ['Supervise', 'Lecturing']
-    if form.validate_on_submit():
-        date = datetime.datetime.now()
-        search = form.search.data
-        filter = request.form.get('filter_list')
-        if filter == 'Surpervise':
-            query = """
-                SELECT m.module_code, m.module_name, m.preferred_name, m.quota
-                FROM modules m
-                INNER JOIN supervises s
-                ON m.module_code = s.module_code
-                INNER JOIN web_users w
-                ON s.prof_id = w.user_id
-                WHERE m.prof_id LIKE '%{}%'
-            """.format(search)
-        elif filter == 'Lecturing':
-            query = """
-                SELECT m.module_code, m.module_name, m.preferred_name, m.quota
-                FROM modules m
-                INNER JOIN lecturing l
-                ON m.module_code = l.module_code
-                INNER JOIN web_users w
-                ON s.prof_id = w.user_id
-                WHERE m.prof_id LIKE '%{}%'
-            """.format(search)
-        result = db.session.execute(query).fetchall()
-        return render_template("prof.html", form = form, data = result, filters = filters)
-    else:
-        hprint(form.errors)
-    return render_template("prof.html", form = form, filters = filters)
+    query1 = """
+        SELECT m.module_code, m.module_name, w.preferred_name, m.quota
+        FROM modules m
+        INNER JOIN supervises s
+        ON m.module_code = s.module_code
+        INNER JOIN web_users w
+        ON s.prof_id = w.user_id
+        WHERE s.prof_id = {}
+    """.format(current_user.user_id)
+    query2 = """
+        SELECT m.module_code, m.module_name, w.preferred_name, m.quota
+        FROM modules m
+        INNER JOIN lecturing l
+        ON m.module_code = l.module_code
+        INNER JOIN web_users w
+        ON l.prof_id = w.user_id
+        WHERE l.prof_id = {}
+    """.format(current_user.user_id)
+    result1 = db.session.execute(query).fetchall()
+    result2 = db.session.execute(query).fetchall()
+    return render_template("prof.html", form = form, data1 = result1, data2 = result2)
 
 @view.route("/stulist", methods = ["GET", "POST"])
 def render_stulist_page():
@@ -552,13 +542,13 @@ def render_stulist_page():
         date = datetime.datetime.now()
         search = form.search.data
         query = """
-            SELECT m.module_code, m.module_name, m.preferred_name 
+            SELECT m.module_code, m.module_name, w.preferred_name 
             FROM modules m
             INNER JOIN takes t
             ON m.module_code = t.module_code
             INNER JOIN web_users w
-            ON s.student_id = w.user_id
-            WHERE m.module_code LIKE '%{}%'
+            ON t.student_id = w.user_id
+            WHERE m.module_code = '%{}%'
         """.format(search)
         result = db.session.execute(query).fetchall()
         return render_template("stulist.html", form = form, data = result)
