@@ -221,8 +221,8 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM takes;"
     db.session.execute(query)
+    # ('S34567890', 'CS6666')
     query = """INSERT INTO takes(student_id, module_code) VALUES
-    ('S34567890', 'CS6666'),
     ('S37132455', 'CS5555'),
     ('S49083365', 'CS5555'),
     ('S69940317', 'CS4444'),
@@ -261,8 +261,8 @@ def render_landing_page():
     ('S45630599', 'CS1111'),
     ('S16005132', 'CS1111'),
     ('S58494691', 'CS1111'),
-    ('S28946726', 'CS1111'),
     ('S01154352', 'CS1111');"""
+    # ('S28946726', 'CS1111')
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS took(
@@ -328,6 +328,7 @@ def render_landing_page():
     db.session.execute(query)
     query = """INSERT INTO prerequisites(module_code, prerequisite) VALUES
     ('CS6666', 'CS5555'),
+    ('CS6666', 'GEQ1000'),
     ('CS5555', 'CS4444'),
     ('CS4444', 'CS3333'),
     ('CS3333', 'CS2222'),
@@ -433,7 +434,9 @@ def render_landing_page():
             End If;
             Return NEW;
             End;
-            $$ Language plpgsql; """
+            $$ Language plpgsql;"""
+    db.session.execute(query)
+    query = "DROP TRIGGER IF EXISTS prereq ON Takes CASCADE;"
     db.session.execute(query)
     query = """CREATE TRIGGER prereq
             BEFORE INSERT ON Takes
@@ -675,7 +678,8 @@ def render_manual_accept_page():
                 .format(module_code, student_id)
         result = db.session.execute(query)
         db.session.commit()
-    return render_template("manual.html", form = form, data = result)
+        return render_template("manual.html", form = form, data = result)
+    return render_template("manual.html", form = form)
         
 
     
