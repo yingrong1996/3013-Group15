@@ -509,6 +509,20 @@ def render_search_page():
             query = """
                 SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
+                LEFT JOIN available a
+                ON m1.module_code = a.module_code
+                LEFT JOIN rounds r
+                ON a.start_date = r.start_date AND r.start_date <= '{}' AND r.end_date > '{}'
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE r.start_date IS NOT NULL AND r.end_date IS NOT NULL AND m1.module_code LIKE '%{}%';
+            """.format(date, date, search)
+        elif filter == 'Not Available':
+            query = """
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
+                FROM modules m1
                 LEFT JOIN supervises s
                 ON m1.module_code = s.module_code
                 LEFT JOIN web_users w
@@ -523,20 +537,6 @@ def render_search_page():
                 ON a1.start_date = r1.start_date AND r1.start_date <= '{}' AND r1.end_date > '{}'
                 WHERE r1.start_date IS NOT NULL AND r1.end_date IS NOT NULL AND m2.module_code LIKE '%{}%');
             """.format(search, date, date, search)
-        elif filter == 'Not Available':
-            query = """
-                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
-                FROM modules m1
-                LEFT JOIN available a
-                ON m1.module_code = a.module_code
-                LEFT JOIN rounds r
-                ON a.start_date = r.start_date AND r.start_date > '{}' OR r.end_date < '{}'
-                LEFT JOIN supervises s
-                ON m1.module_code = s.module_code
-                LEFT JOIN web_users w
-                ON s.prof_id = w.user_id
-                WHERE m1.module_code LIKE '%{}%';
-            """.format(date, date, search)
         elif filter == 'No Prerequisites':
             query = """
                 SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
