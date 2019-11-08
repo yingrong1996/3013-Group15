@@ -14,7 +14,7 @@ def agrees_terms_and_conditions(form, field):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField(
+    user_id = StringField(
         label='Name',
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name'}
@@ -32,7 +32,7 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField(
+    user_id = StringField(
         label='Name',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Name', 'class': 'input100'}
@@ -90,6 +90,7 @@ class AddModuleForm(FlaskForm):
         render_kw={'placeholder': 'prerequisite_code1, prerequisite_code2...'}
     )
 
+
 class ManualAcceptForm(FlaskForm):
     student_id = StringField(
         label='Student ID',
@@ -100,4 +101,11 @@ class ManualAcceptForm(FlaskForm):
         label='Module code',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Module code'}
+    )
+      
+class StudentForm(FlaskForm):
+    user_name = StringField(
+        label='Name',
+        validators=[Optional()],
+        render_kw={'placeholder': 'Name'}
     )
