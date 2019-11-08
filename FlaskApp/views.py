@@ -566,6 +566,61 @@ def render_search_page():
         return render_template("search.html", form = form, data = result, filters = filters)
     return render_template("search.html", form = form, filters = filters)
 
+@view.route("/prof", methods = ["GET", "POST"])
+def render_prof_page():
+    form = SearchForm()
+    filters = ['Supervise', 'Lecturing']
+    if form.validate_on_submit():
+        date = datetime.datetime.now()
+        search = form.search.data
+        filter = request.form.get('filter_list')
+        if filter == 'Surpervise':
+            query = """
+                SELECT m.module_code, m.module_name, m.preferred_name, m.quota
+                FROM modules m
+                INNER JOIN supervises s
+                ON m.module_code = s.module_code
+                INNER JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m.prof_id LIKE '%{}%'
+            """.format(search)
+        elif filter == 'Lecturing':
+            query = """
+                SELECT m.module_code, m.module_name, m.preferred_name, m.quota
+                FROM modules m
+                INNER JOIN lecturing l
+                ON m.module_code = l.module_code
+                INNER JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m.prof_id LIKE '%{}%'
+            """.format(search)
+        result = db.session.execute(query).fetchall()
+        return render_template("prof.html", form = form, data = result, filters = filters)
+    else:
+        hprint(form.errors)
+    return render_template("prof.html", form = form, filters = filters)
+
+@view.route("/stulist", methods = ["GET", "POST"])
+def render_stulist_page():
+    form = SearchForm()
+    if form.validate_on_submit():
+        date = datetime.datetime.now()
+        search = form.search.data
+        query = """
+            SELECT m.module_code, m.module_name, m.preferred_name 
+            FROM modules m
+            INNER JOIN takes t
+            ON m.module_code = t.module_code
+            INNER JOIN web_users w
+            ON s.student_id = w.user_id
+            WHERE m.module_code LIKE '%{}%'
+        """.format(search)
+        result = db.session.execute(query).fetchall()
+        return render_template("stulist.html", form = form, data = result)
+    else:
+        hprint(form.errors)
+    return render_template("stulist.html", form = form)
+
 
 @view.route("/registration", methods=["GET", "POST"])
 def render_registration_page():
