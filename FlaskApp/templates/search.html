@@ -5,6 +5,7 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
+<div>
 <div>Please enter a module code or part of one.</div>
 <form class="searchForm">
     {{ form.hidden_tag() }}
@@ -47,4 +48,5 @@
     </tbody>
     </table>
 </form>
+</div>
 {% endblock %}

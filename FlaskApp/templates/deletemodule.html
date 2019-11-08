@@ -5,6 +5,7 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
+<div>
 <div style="font-size:300%;">Delete a module.</div>
 <form class="deleteModuleForm">
     {{ form.hidden_tag() }}
@@ -33,4 +34,5 @@
 
     <button id="deleteModuleButton" formmethod="post">Delete Module</button>
 </form>
+</div>
 {% endblock %}

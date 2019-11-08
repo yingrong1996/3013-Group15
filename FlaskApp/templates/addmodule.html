@@ -5,6 +5,7 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
+<div>
 <div style="font-size:300%;">Add a module.</div>
 <form class="addModuleForm">
     {{ form.hidden_tag() }}
@@ -66,4 +67,5 @@
 
     <button id="addModuleButton" formmethod="post">Add Module</button>
 </form>
+</div>
 {% endblock %}
