@@ -1,18 +1,19 @@
 import datetime
 
 from flask import Blueprint, redirect, render_template, url_for, request
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, ManualAcceptForm
-from FlaskApp.models import WebUser
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentForm, ManualAcceptForm
+from FlaskApp.models import web_users
+
 from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
 
 @login_manager.user_loader
-def load_user(username):
-    user = WebUser.query.filter_by(username=username).first()
+def load_user(user_id):
+    user = web_users.query.filter_by(user_id=user_id).first()
     return user or current_user
 
 
@@ -454,7 +455,7 @@ def render_search_page():
     form = SearchForm()
     filters = ['Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites', 'None']
     if form.validate_on_submit():
-        date = datetime.datetime.now()
+        date = datetime.datetime.now().date()
         search = form.search.data
         filter = request.form.get('filter_list')
         if filter == 'None':
@@ -465,11 +466,11 @@ def render_search_page():
                 ON m.module_code = s.module_code
                 LEFT JOIN web_users w
                 ON s.prof_id = w.user_id
-                WHERE m.module_code LIKE '%{}%';
+                WHERE m.module_code LIKE '%{}%'
             """.format(search)
         elif filter == 'Quota Met':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, w.preferred_name, m1.quota
                 FROM modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
@@ -478,11 +479,15 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE m1.quota <= a.num AND m1.module_code LIKE '%{}%';
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.quota <= a.num AND m1.module_code LIKE '%CS%';
             """.format(search)
         elif filter == 'Quota Not Met':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, w.preferred_name, m1.quota
                 FROM modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
@@ -491,46 +496,68 @@ def render_search_page():
                 ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%{}%';
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%CS%';
             """.format(search)
         elif filter == 'Currently Available':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
                 LEFT JOIN available a
                 ON m1.module_code = a.module_code
                 LEFT JOIN rounds r
-                ON r.start_date <= {} AND r.end_date > {}
-                WHERE m1.module_code LIKE '%{}%';
+                ON a.start_date = r.start_date AND r.start_date <= '{}' AND r.end_date > '{}'
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE r.start_date IS NOT NULL AND r.end_date IS NOT NULL AND m1.module_code LIKE '%{}%';
             """.format(date, date, search)
         elif filter == 'Not Available':
             query = """
-                SELECT m1.module_code, m1.name, m1 .prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
-                LEFT JOIN
-                rounds r
-                ON m.start_date < r.start_date OR m.start_date >= r.end_date
-                WHERE m.module_code LIKE '%{}%';
-            """.format(search)
+                LEFT JOIN available a
+                ON m1.module_code = a.module_code
+                LEFT JOIN rounds r
+                ON a.start_date = r.start_date AND r.start_date > '{}' OR r.end_date < '{}'
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%';
+            """.format(date, date, search)
         elif filter == 'No Prerequisites':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
-                FROM modules m1 WHERE m1.module_code LIKE '%{}%' AND m1.module_code NOT IN
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
+                FROM modules m1
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%' AND m1.module_code NOT IN
                 (SELECT m.module_code FROM modules m
                 INNER JOIN prerequisites p
                 ON m1.module_code = p.module_code)
             """.format(search)
         elif filter == 'Has Prerequisites':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%' AND m1.module_code IN
+                (SELECT m.module_code FROM modules m
                 INNER JOIN prerequisites p
-                ON m1.module_code = p.module_code
-                WHERE m1.module_code LIKE '%{}%'
+                ON m1.module_code = p.module_code)
             """.format(search)
         result = db.session.execute(query).fetchall()
         return render_template("search.html", form = form, data = result, filters = filters)
-
     return render_template("search.html", form = form, filters = filters)
 
 
@@ -538,16 +565,16 @@ def render_search_page():
 def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
-        username = form.username.data
+        user_id = form.user_id.data
         preferred_name = form.preferred_name.data
         password = form.password.data
-        query = "SELECT * FROM web_users WHERE username = '{}'".format(username)
+        query = "SELECT * FROM web_users WHERE user_id = '{}'".format(user_id)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
-            form.username.errors.append("{} is already in use.".format(username))
+            form.user_id.errors.append("{} is already in use.".format(user_id))
         else:
-            query = "INSERT INTO web_users(username, preferred_name, password) VALUES ('{}', '{}', '{}')"\
-                .format(username, preferred_name, password)
+            query = "INSERT INTO web_users(user_id, preferred_name, password) VALUES ('{}', '{}', '{}')"\
+                .format(user_id, preferred_name, password)
             db.session.execute(query)
             db.session.commit()
             return "You have successfully signed up!"
@@ -558,16 +585,16 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()
     if form.is_submitted():
-        hprint("username entered: {}".format(form.username.data))
-        hprint("password entered: {}".format(form.password.data))
+        print("username entered: {}".format(form.user_id.data))
+        print("password entered: {}".format(form.password.data))
     if form.validate_on_submit():
-        user = WebUser.query.filter_by(username=form.username.data).first()
-        password = WebUser.query.filter_by(password=form.password.data).first()
+        user = web_users.query.filter_by(user_id=form.user_id.data).first()
+        password = web_users.query.filter_by(password=form.password.data).first()
         if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
-            return redirect(url_for("/userhome"))
-    return render_template("login.html", form=form)
+            return redirect("/userhome")
+    return render_template("login_test.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])
@@ -608,6 +635,25 @@ def render_add_module_page():
         db.session.commit()
     return render_template("addmodule.html", form=form)
 
+@view.route("/student", methods = ["GET", "POST"])
+#@roles_required('Student')
+def render_student_page():
+    form = StudentForm()
+    filters = ['Modules Currently Taking', 'Modules Taken in Past Semesters', 'Modules Pending Approval', 'Apply for Module']
+    if form.validate_on_submit():
+        user_name = form.user_name.data
+        filter = request.form.get('filter_list')
+        if filter == 'Modules Currently Taking':
+            query = "SELECT * FROM takes WHERE student_id = '{}';".format(user_name)
+        elif filter == 'Modules Taken in Past Semesters':
+            query = "SELECT * FROM took WHERE student_id = '{}'".format(user_name)
+        elif filter == 'Modules Pending Approval':
+            query = "SELECT * FROM registration WHERE student_id = '{}'".format((user_name))
+
+        result = db.session.execute(query).fetchall()
+        return render_template("student.html", form = form, data = result, filters = filters)
+
+    return render_template("student.html", form = form, filters = filters)
 
 @view.route("/manual", methods=["GET", "POST"])
 #@roles_required('Admin')
