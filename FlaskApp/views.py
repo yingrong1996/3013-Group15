@@ -648,16 +648,16 @@ def render_student_page():
     filters = ['Modules Currently Taking', 'Modules Taken in Past Semesters', 'Modules Pending Approval', 'Apply for Module']
     if form.validate_on_submit():
         hprint(current_user.user_id)
-        user_name = form.user_name.data
+        module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Modules Currently Taking':
-            query = "SELECT * FROM takes WHERE student_id = '{}';".format(user_name)
+            query = "SELECT * FROM takes WHERE student_id = '{}';".format(module_code)
         elif filter == 'Modules Taken in Past Semesters':
-            query = "SELECT * FROM took WHERE student_id = '{}'".format(user_name)
+            query = "SELECT * FROM took WHERE student_id = '{}'".format(module_code)
         elif filter == 'Modules Pending Approval':
-            query = "SELECT * FROM registration WHERE student_id = '{}'".format((user_name))
+            query = "SELECT * FROM registration WHERE student_id = '{}'".format(module_code)
         elif filter == 'Apply for Module':
-            query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, user_name)
+            query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
 
         result = db.session.execute(query).fetchall()
         return render_template("student.html", form = form, data = result, filters = filters)

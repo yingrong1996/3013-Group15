@@ -104,8 +104,8 @@ class ManualAcceptForm(FlaskForm):
     )
       
 class StudentForm(FlaskForm):
-    user_name = StringField(
-        label='Name',
+    module_code = StringField(
+        label='Module code',
         validators=[Optional()],
-        render_kw={'placeholder': 'Name'}
+        render_kw={'placeholder': 'Module code'}
     )
