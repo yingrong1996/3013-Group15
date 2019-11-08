@@ -590,11 +590,25 @@ def render_add_module_page():
         db.session.commit()
     return render_template("addmodule.html", form=form)
 
-@view.route("/takes", methods = ["GET", "POST"])
-def render_takes_page():
-    query = "SELECT * FROM takes WHERE student_id = user;"
-    result = db.session.execute(query)
-    return render_template("takes.html", data = result)
+@view.route("/student", methods = ["GET", "POST"])
+#@roles_required('Student')
+def render_student_page():
+    form = StudentForm()
+    filters = ['Modules Currently Taking', 'Modules Taken in Past Semesters', 'Modules Pending Approval', 'Apply for Module']
+    if form.validate_on_submit():
+        user_name = form.user_name.data
+        filter = request.form.get('filter_list')
+        if filter == 'Modules Currently Taking':
+            query = "SELECT * FROM takes WHERE student_id = '{}';".format(user_name)
+        elif filter == 'Modules Taken in Past Semesters':
+            query = "SELECT * FROM took WHERE student_id = '{}'".format(user_name)
+        elif filter == 'Modules Pending Approval':
+            query = "SELECT * FROM registration WHERE student_id = '{}'".format((user_name))
+
+        result = db.session.execute(query).fetchall()
+        return render_template("student.html", form = form, data = result, filters = filters)
+
+    return render_template("student.html", form = form, filters = filters)
 
 @view.route("/logout", methods=["GET"])
 @login_required
