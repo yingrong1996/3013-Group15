@@ -444,8 +444,7 @@ def render_landing_page():
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
     db.session.commit()
-    return "<h1>CS2102</h1>\
-    <h2>Flask App started successfully!</h2>"
+    return redirect("/registration")
 
 @view.route("/prerequisites", methods = ["GET", "POST"])
 def render_prerequisite_page():
