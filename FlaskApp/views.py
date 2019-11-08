@@ -590,6 +590,11 @@ def render_add_module_page():
         db.session.commit()
     return render_template("addmodule.html", form=form)
 
+@view.route("/takes", methods = ["GET", "POST"])
+def render_prerequisite_page():
+    query = "SELECT * FROM takes WHERE student_id = user;"
+    result = db.session.execute(query)
+    return render_template("takes.html", data = result)
 
 @view.route("/logout", methods=["GET"])
 @login_required
