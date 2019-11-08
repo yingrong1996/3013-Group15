@@ -575,7 +575,7 @@ def render_prof_page():
         ON m.module_code = s.module_code
         INNER JOIN web_users w
         ON s.prof_id = w.user_id
-        WHERE s.prof_id = {}
+        WHERE s.prof_id = '{}'
     """.format(current_user.user_id)
     query2 = """
         SELECT m.module_code, m.module_name, w.preferred_name, m.quota
@@ -584,7 +584,7 @@ def render_prof_page():
         ON m.module_code = l.module_code
         INNER JOIN web_users w
         ON l.prof_id = w.user_id
-        WHERE l.prof_id = {}
+        WHERE l.prof_id = '{}'
     """.format(current_user.user_id)
     result1 = db.session.execute(query1).fetchall()
     result2 = db.session.execute(query2).fetchall()
