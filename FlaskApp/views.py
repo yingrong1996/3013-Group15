@@ -651,11 +651,11 @@ def render_student_page():
         module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Modules Currently Taking':
-            query = "SELECT * FROM takes WHERE student_id = '{}' AND module_code = '{}';".format(current_user.user_id, module_code)
+            query = "SELECT * FROM takes WHERE student_id = '{}' AND module_code LIKE '%{}%';".format(current_user.user_id, module_code)
         elif filter == 'Modules Taken in Past Semesters':
-            query = "SELECT * FROM took WHERE student_id = '{}' AND module_code = '{}';".format(current_user.user_id, module_code)
+            query = "SELECT * FROM took WHERE student_id = '{}' AND module_code LIKE '%{}%';".format(current_user.user_id, module_code)
         elif filter == 'Modules Pending Approval':
-            query = "SELECT * FROM registration WHERE student_id = '{}' AND module_code = '{}';".format(current_user.user_id, module_code)
+            query = "SELECT * FROM registration WHERE student_id = '{}' AND module_code LIKE '%{}%';".format(current_user.user_id, module_code)
         elif filter == 'Apply for Module':
             query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
 
