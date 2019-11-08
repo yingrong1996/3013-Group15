@@ -10,10 +10,10 @@
 <form class="StudentForm">
     {{ form.hidden_tag() }}
     <div class="formField">
-    {{ form.user_name }}
-    {% if form.user_name.errors %}
+    {{ form.module_code }}
+    {% if form.module_code.errors %}
         <div class="errorMessage">
-        {% for error in form.user_name.errors %}
+        {% for error in form.module_code.errors %}
             <li>{{ error }}</li>
         {% endfor %}
         </div>
