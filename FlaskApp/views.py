@@ -667,7 +667,8 @@ def render_manual_accept_page():
         db.session.execute(query)
         query = """select prerequisite from prerequisites where prerequisites.module_code='{}'
                 Except
-                select module_code from took where took.student_id='{}';"""\.format(module_code, student_id)
+                select module_code from took where took.student_id='{}';"""\
+                .format(module_code, student_id)
         result = db.session.execute(query)
         db.session.commit()
     return render_template("manual.html", form = form, data = result)
