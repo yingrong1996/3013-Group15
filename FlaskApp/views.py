@@ -647,7 +647,7 @@ def render_student_page():
     form = StudentForm()
     filters = ['Modules Currently Taking', 'Modules Taken in Past Semesters', 'Modules Pending Approval', 'Apply for Module']
     if form.validate_on_submit():
-        hprint("current login ID: ", current_user.user_id)
+        hprint(current_user.user_id)
         user_name = form.user_name.data
         filter = request.form.get('filter_list')
         if filter == 'Modules Currently Taking':
