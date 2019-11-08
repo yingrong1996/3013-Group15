@@ -103,7 +103,7 @@ class ManualAcceptForm(FlaskForm):
         render_kw={'placeholder': 'Module code'}
     )
       
-class StudentForm(FlaskForm):
+class StudentRecordForm(FlaskForm):
     module_code = StringField(
         label='Module code',
         validators=[Optional()],
