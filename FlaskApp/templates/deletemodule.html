@@ -1,43 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Module</title>
-
-    <link rel="stylesheet" href="static/css/style-simple.css">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Delete Modules{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div style="font-size:300%;">Delete a module.</div>
+<form class="deleteModuleForm">
+    {{ form.hidden_tag() }}
     
-	<div style="font-size:300%;">Delete a module.</div>
-	<form class="deleteModuleForm">
-		{{ form.hidden_tag() }}
-		
-		<div class="formField">
-        {{ form.module_code }}
-        {% if form.module_code.errors %}
-            <div class="errorMessage">
-            {% for error in form.module_code.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
+    <div class="formField">
+    {{ form.module_code }}
+    {% if form.module_code.errors %}
+        <div class="errorMessage">
+        {% for error in form.module_code.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
         </div>
-		
-		<div class="formField">
-        {{ form.module_name }}
-        {% if form.module_name.errors %}
-            <div class="errorMessage">
-            {% for error in form.module_name.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
+    {% endif %}
+    </div>
+    
+    <div class="formField">
+    {{ form.module_name }}
+    {% if form.module_name.errors %}
+        <div class="errorMessage">
+        {% for error in form.module_name.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
         </div>
+    {% endif %}
+    </div>
 
-		<button id="deleteModuleButton" formmethod="post">Delete Module</button>
-        
-    </form>
-	
-	
-</body>
-</html>
+    <button id="deleteModuleButton" formmethod="post">Delete Module</button>
+</form>
+{% endblock %}
