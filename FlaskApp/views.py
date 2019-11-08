@@ -566,8 +566,8 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()
     if form.is_submitted():
-        hprint("username entered: {}".format(form.user_id.data))
-        hprint("password entered: {}".format(form.password.data))
+        print("username entered: {}".format(form.user_id.data))
+        print("password entered: {}".format(form.password.data))
     if form.validate_on_submit():
         user = web_users.query.filter_by(user_id=form.user_id.data).first()
         password = web_users.query.filter_by(password=form.password.data).first()
