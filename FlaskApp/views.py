@@ -436,7 +436,7 @@ def render_search_page():
     form = SearchForm()
     filters = ['Quota Met', 'Quota Not Met', 'Currently Available', 'Not Available', 'No Prerequisites', 'Has Prerequisites', 'None']
     if form.validate_on_submit():
-        date = datetime.datetime.now()
+        date = datetime.datetime.now().date()
         search = form.search.data
         filter = request.form.get('filter_list')
         if filter == 'None':
@@ -447,72 +447,98 @@ def render_search_page():
                 ON m.module_code = s.module_code
                 LEFT JOIN web_users w
                 ON s.prof_id = w.user_id
-                WHERE m.module_code LIKE '%{}%';
+                WHERE m.module_code LIKE '%{}%'
             """.format(search)
         elif filter == 'Quota Met':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, w.preferred_name, m1.quota
                 FROM modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
                 FROM modules m
-                INNER JOIN takes t
-                ON m.module_code = t.module_code
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE m1.quota <= a.num AND m1.module_code LIKE '%{}%';
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.quota <= a.num AND m1.module_code LIKE '%CS%';
             """.format(search)
         elif filter == 'Quota Not Met':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, w.preferred_name, m1.quota
                 FROM modules m1
                 LEFT JOIN
                 (SELECT m.module_code, COUNT(*) as num
                 FROM modules m
-                INNER JOIN takes t
-                ON m.module_code = t.module_code
+                INNER JOIN registration r 
+                ON m.module_code = r.module_code
                 GROUP BY m.module_code) a
                 ON m1.module_code = a.module_code
-                WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%{}%';
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE (m1.quota > a.num OR a.num IS NULL) AND m1.module_code LIKE '%CS%';
             """.format(search)
         elif filter == 'Currently Available':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
                 LEFT JOIN available a
                 ON m1.module_code = a.module_code
                 LEFT JOIN rounds r
-                ON r.start_date <= {} AND r.end_date > {}
-                WHERE m1.module_code LIKE '%{}%';
+                ON a.start_date = r.start_date AND r.start_date <= '{}' AND r.end_date > '{}'
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE r.start_date IS NOT NULL AND r.end_date IS NOT NULL AND m1.module_code LIKE '%{}%';
             """.format(date, date, search)
         elif filter == 'Not Available':
             query = """
-                SELECT m1.module_code, m1.name, m1 .prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
-                LEFT JOIN
-                rounds r
-                ON m.start_date < r.start_date OR m.start_date >= r.end_date
-                WHERE m.module_code LIKE '%{}%';
-            """.format(search)
+                LEFT JOIN available a
+                ON m1.module_code = a.module_code
+                LEFT JOIN rounds r
+                ON a.start_date = r.start_date AND r.start_date > '{}' OR r.end_date < '{}'
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%';
+            """.format(date, date, search)
         elif filter == 'No Prerequisites':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
-                FROM modules m1 WHERE m1.module_code LIKE '%{}%' AND m1.module_code NOT IN
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
+                FROM modules m1
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%' AND m1.module_code NOT IN
                 (SELECT m.module_code FROM modules m
                 INNER JOIN prerequisites p
                 ON m1.module_code = p.module_code)
             """.format(search)
         elif filter == 'Has Prerequisites':
             query = """
-                SELECT m1.module_code, m1.name, m1.prof_id, m1.quota
+                SELECT m1.module_code, m1.module_name, m1.quota, w.preferred_name
                 FROM modules m1
+                LEFT JOIN supervises s
+                ON m1.module_code = s.module_code
+                LEFT JOIN web_users w
+                ON s.prof_id = w.user_id
+                WHERE m1.module_code LIKE '%{}%' AND m1.module_code IN
+                (SELECT m.module_code FROM modules m
                 INNER JOIN prerequisites p
-                ON m1.module_code = p.module_code
-                WHERE m1.module_code LIKE '%{}%'
+                ON m1.module_code = p.module_code)
             """.format(search)
         result = db.session.execute(query).fetchall()
         return render_template("search.html", form = form, data = result, filters = filters)
-
     return render_template("search.html", form = form, filters = filters)
 
 
