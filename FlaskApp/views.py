@@ -444,7 +444,7 @@ def render_landing_page():
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
     db.session.commit()
-    return redirect("/login")
+    return redirect("/registration")
 
 @view.route("/prerequisites", methods = ["GET", "POST"])
 def render_prerequisite_page():
