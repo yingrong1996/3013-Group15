@@ -328,6 +328,7 @@ def render_landing_page():
     db.session.execute(query)
     query = """INSERT INTO prerequisites(module_code, prerequisite) VALUES
     ('CS6666', 'CS5555'),
+    ('CS6666', 'GEQ1000'),
     ('CS5555', 'CS4444'),
     ('CS4444', 'CS3333'),
     ('CS3333', 'CS2222'),
@@ -672,6 +673,8 @@ def render_manual_accept_page():
                 select module_code from took where took.student_id='{}';"""\
                 .format(module_code, student_id)
         result = db.session.execute(query)
+        if not result:
+            result = "None"
         db.session.commit()
         return render_template("manual.html", form = form, data = result)
     return render_template("manual.html", form = form)
