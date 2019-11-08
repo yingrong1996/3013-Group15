@@ -674,7 +674,7 @@ def render_manual_accept_page():
                 .format(module_code, student_id)
         result = db.session.execute(query)
         if not result:
-            result = "None"
+            result = ["None"]
         db.session.commit()
         return render_template("manual.html", form = form, data = result)
     return render_template("manual.html", form = form)
