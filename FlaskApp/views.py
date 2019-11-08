@@ -548,8 +548,8 @@ def render_login_page():
         if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
-            return redirect(url_for("/userhome"))
-    return render_template("login.html", form=form)
+            return redirect("/userhome")
+    return render_template("login_test.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])
