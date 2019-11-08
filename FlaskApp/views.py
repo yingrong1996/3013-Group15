@@ -1,18 +1,18 @@
 import datetime
 
 from flask import Blueprint, redirect, render_template, url_for, request
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentForm
-from FlaskApp.models import WebUser
+from FlaskApp.models import web_users
 from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
 
 @login_manager.user_loader
-def load_user(username):
-    user = WebUser.query.filter_by(username=username).first()
+def load_user(user_id):
+    user = web_users.query.filter_by(user_id=user_id).first()
     return user or current_user
 
 
@@ -520,16 +520,16 @@ def render_search_page():
 def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
-        username = form.username.data
+        user_id = form.user_id.data
         preferred_name = form.preferred_name.data
         password = form.password.data
-        query = "SELECT * FROM web_users WHERE username = '{}'".format(username)
+        query = "SELECT * FROM web_users WHERE user_id = '{}'".format(user_id)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
-            form.username.errors.append("{} is already in use.".format(username))
+            form.user_id.errors.append("{} is already in use.".format(user_id))
         else:
-            query = "INSERT INTO web_users(username, preferred_name, password) VALUES ('{}', '{}', '{}')"\
-                .format(username, preferred_name, password)
+            query = "INSERT INTO web_users(user_id, preferred_name, password) VALUES ('{}', '{}', '{}')"\
+                .format(user_id, preferred_name, password)
             db.session.execute(query)
             db.session.commit()
             return "You have successfully signed up!"
@@ -540,11 +540,11 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()
     if form.is_submitted():
-        hprint("username entered: {}".format(form.username.data))
+        hprint("username entered: {}".format(form.user_id.data))
         hprint("password entered: {}".format(form.password.data))
     if form.validate_on_submit():
-        user = WebUser.query.filter_by(username=form.username.data).first()
-        password = WebUser.query.filter_by(password=form.password.data).first()
+        user = web_users.query.filter_by(user_id=form.user_id.data).first()
+        password = web_users.query.filter_by(password=form.password.data).first()
         if user and password:
             # TODO: You may want to verify if password is correct
             login_user(user)
