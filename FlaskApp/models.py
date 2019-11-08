@@ -1,8 +1,8 @@
 from FlaskApp.__init__ import db
 
 
-class WebUser(db.Model):
-    username = db.Column(db.String, primary_key=True)
+class web_users(db.Model):
+    user_id = db.Column(db.String, primary_key=True)
     preferred_name = db.Column(db.String, nullable=True)
     password = db.Column(db.String, nullable=False)
 
@@ -16,4 +16,4 @@ class WebUser(db.Model):
         return False
 
     def get_id(self):
-        return self.username
+        return self.user_id
