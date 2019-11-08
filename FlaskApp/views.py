@@ -635,6 +635,7 @@ def render_registration_page():
 
 
 @view.route("/login", methods=["GET", "POST"])
+@login_required
 def render_login_page():
     form = LoginForm()
     if form.is_submitted():
