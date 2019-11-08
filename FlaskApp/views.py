@@ -612,7 +612,7 @@ def render_add_module_page():
 @view.route("/manual", methods=["GET", "POST"])
 #@roles_required('Admin')
 def render_manual_accept_page():
-    for = ManualAcceptForm()
+    form = ManualAcceptForm()
     if form.validate_on_submit():
         module_code = form.module_code.data
         student_id = form.student_id.data
