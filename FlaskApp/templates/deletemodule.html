@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Delete Modules{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div>
+<div style="font-size:300%;">Delete a module.</div>
+<form class="deleteModuleForm">
+    {{ form.hidden_tag() }}
+    
+    <div class="formField">
+    {{ form.module_code }}
+    {% if form.module_code.errors %}
+        <div class="errorMessage">
+        {% for error in form.module_code.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+    
+    <div class="formField">
+    {{ form.module_name }}
+    {% if form.module_name.errors %}
+        <div class="errorMessage">
+        {% for error in form.module_name.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+
+    <button id="deleteModuleButton" formmethod="post">Delete Module</button>
+</form>
+</div>
+{% endblock %}

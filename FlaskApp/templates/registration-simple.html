@@ -11,10 +11,10 @@
         {{ form.hidden_tag() }}
 
         <div class="formField">
-        {{ form.username }}
-        {% if form.username.errors %}
+        {{ form.user_id }}
+        {% if form.user_id.errors %}
             <div class="errorMessage">
-            {% for error in form.username.errors %}
+            {% for error in form.user_id.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
@@ -45,6 +45,6 @@
 
         <button id="registerButton" formmethod="post">register</button>
     </form>
-    <p>Already registered? <a href="#">Login</a></p>
+    <p>Already registered? <a href="/login">Login</a></p>
 </body>
 </html>

@@ -1,46 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Student List</title>
-
-    <link rel="stylesheet" href="static/css/style-simple.css">
-</head>
-<body>
-    <div>Please enter a module code to show list of student taking module.</div>
-    <form class="searchForm">
-        {{ form.hidden_tag() }}
-        <div class="formField">
-        {{ form.search }}
-        {% if form.search.errors %}
-            <div class="errorMessage">
-            {% for error in form.search.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
+{% extends "base.html" %}
+{% block title %}Student List{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div>Please enter a module code to show list of student taking module.</div>
+<form class="searchForm">
+    {{ form.hidden_tag() }}
+    <div class="formField">
+    {{ form.search }}
+    {% if form.search.errors %}
+        <div class="errorMessage">
+        {% for error in form.search.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
         </div>
-        <br/>
-        <button id="searchButton" formmethod="post">Search</button>
-        <br/>
-        <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="80%" align="center">
-        <thead align="left">
-            <tr>
-                <th>Module Code</th>
-                <th>Name</th>
-                <th>Student Name</th>
-            </tr>
-        </thead>					 
-        <tbody align="left">					  
-            {% for x in data%}
-            <tr> 						
-                <td>{{x.module_code}}</td>
-                <td>{{x.name}}</td>
-                <td>{{x.preferred_name}}</td>																				
-            </tr>
-            {% endfor %}													
-        </tbody>
-        </table>
-    </form>
-</body>
-</html>
+    {% endif %}
+    </div>
+    <br/>
+    <button id="searchButton" formmethod="post">Search</button>
+    <br/>
+    <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="80%" align="center">
+    <thead align="left">
+        <tr>
+            <th>Module Code</th>
+            <th>Name</th>
+            <th>Student Name</th>
+        </tr>
+    </thead>					 
+    <tbody align="left">					  
+        {% for x in data%}
+        <tr> 						
+            <td>{{x.module_code}}</td>
+            <td>{{x.name}}</td>
+            <td>{{x.preferred_name}}</td>																				
+        </tr>
+        {% endfor %}													
+    </tbody>
+    </table>
+</form>
+{% endblock %}
