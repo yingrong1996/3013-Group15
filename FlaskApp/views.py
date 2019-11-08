@@ -586,8 +586,8 @@ def render_prof_page():
         ON l.prof_id = w.user_id
         WHERE l.prof_id = {}
     """.format(current_user.user_id)
-    result1 = db.session.execute(query).fetchall()
-    result2 = db.session.execute(query).fetchall()
+    result1 = db.session.execute(query1).fetchall()
+    result2 = db.session.execute(query2).fetchall()
     return render_template("prof.html", form = form, data1 = result1, data2 = result2)
 
 @view.route("/stulist", methods = ["GET", "POST"])
@@ -603,7 +603,7 @@ def render_stulist_page():
             ON m.module_code = t.module_code
             INNER JOIN web_users w
             ON t.student_id = w.user_id
-            WHERE m.module_code = '%{}%'
+            WHERE m.module_code LIKE '%{}%'
         """.format(search)
         result = db.session.execute(query).fetchall()
         return render_template("stulist.html", form = form, data = result)
