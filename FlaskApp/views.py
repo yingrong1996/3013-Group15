@@ -221,8 +221,8 @@ def render_landing_page():
     db.session.execute(query)
     query = "DELETE FROM takes;"
     db.session.execute(query)
+    # ('S34567890', 'CS6666')
     query = """INSERT INTO takes(student_id, module_code) VALUES
-    ('S34567890', 'CS6666'),
     ('S37132455', 'CS5555'),
     ('S49083365', 'CS5555'),
     ('S69940317', 'CS4444'),
@@ -261,8 +261,8 @@ def render_landing_page():
     ('S45630599', 'CS1111'),
     ('S16005132', 'CS1111'),
     ('S58494691', 'CS1111'),
-    ('S28946726', 'CS1111'),
     ('S01154352', 'CS1111');"""
+    # ('S28946726', 'CS1111')
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS took(
