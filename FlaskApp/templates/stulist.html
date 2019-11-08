@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Allocated Modules</title>
+    <title>Student List</title>
 
     <link rel="stylesheet" href="static/css/style-simple.css">
 </head>
 <body>
-    <div>Please enter your ID.</div>
+    <div>Please enter a module code to show list of student taking module.</div>
     <form class="searchForm">
         {{ form.hidden_tag() }}
         <div class="formField">
@@ -21,12 +21,6 @@
         {% endif %}
         </div>
         <br/>
-        <select name=filter_list method="GET" action="/">
-            {% for filter in filters %}
-            <option value= "{{filter}}" SELECTED>{{filter}}</option>"
-            {% endfor %}
-        </select>
-        <br/>
         <button id="searchButton" formmethod="post">Search</button>
         <br/>
         <table id="datatable-keytable" class="table table-striped table-bordered jambo_table bulk_action" width="80%" align="center">
@@ -34,8 +28,7 @@
             <tr>
                 <th>Module Code</th>
                 <th>Name</th>
-                <th>Professor</th>
-                <th>Quota</th>
+                <th>Student Name</th>
             </tr>
         </thead>					 
         <tbody align="left">					  
@@ -43,8 +36,7 @@
             <tr> 						
                 <td>{{x.module_code}}</td>
                 <td>{{x.name}}</td>
-                <td>{{x.preferred_name}}</td>													
-                <td>{{x.quota}}</td>								
+                <td>{{x.preferred_name}}</td>																				
             </tr>
             {% endfor %}													
         </tbody>
