@@ -470,13 +470,13 @@ def initialize():
 
     query = """CREATE OR REPLACE FUNCTION insert_students()
         RETURNS TRIGGER AS $$ BEGIN
-        IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) 
+        IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code)) 
         THEN
             Return NEW;
         ELSE
             INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);
         END IF;
-        RETURN NEW;
+        RETURN NULL;
         END;
         $$ Language plpgsql;"""
     db.session.execute(query)
