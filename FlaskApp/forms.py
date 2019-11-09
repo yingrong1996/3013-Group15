@@ -15,14 +15,14 @@ def agrees_terms_and_conditions(form, field):
 
 class RegistrationForm(FlaskForm):
     user_id = StringField(
-        label='Name',
-        validators=[InputRequired(), is_valid_name],
-        render_kw={'placeholder': 'Name'}
+        label='User ID',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'user_id'}
     )
     preferred_name = StringField(
-        label='Preferred name',
+        label='Name',
         validators=[is_valid_name],
-        render_kw={'placeholder': 'Preferred name'}
+        render_kw={'placeholder': 'Name'}
     )
     password = PasswordField(
         label='Password',

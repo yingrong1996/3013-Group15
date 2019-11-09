@@ -33,10 +33,10 @@
         </div>
 
         <div class="formField">
-        {{ form.preferred_name }}
-        {% if form.preferred_name.errors %}
+        {{ form.name }}
+        {% if form.name.errors %}
             <div class="errorMessage">
-            {% for error in form.preferred_name.errors %}
+            {% for error in form.name.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
             </div>
