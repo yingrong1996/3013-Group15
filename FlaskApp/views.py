@@ -199,7 +199,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
             prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
