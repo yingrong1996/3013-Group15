@@ -472,7 +472,7 @@ def initialize():
         RETURNS TRIGGER AS $$ BEGIN
         IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) 
         THEN
-            Return NEW;        
+            INSERT INTO takes(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);     
         ELSE
             INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);        
         END IF;
@@ -485,6 +485,7 @@ def initialize():
     query = """CREATE TRIGGER insert_students
             BEFORE INSERT ON takes
             FOR EACH ROW
+            WHEN (pg_trigger_depth() < 1)            
             EXECUTE PROCEDURE insert_students();"""
     db.session.execute(query)
     db.session.commit()
