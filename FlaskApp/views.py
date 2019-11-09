@@ -469,11 +469,9 @@ def initialize():
     query = """CREATE OR REPLACE FUNCTION insert_students()
             RETURNS trigger AS $$ BEGIN
             IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) >= (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
-               INSERT INTO takes(student_id, module_code)
-                VALUES(NEW.student_id, NEW.module_code);
+               INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);               
             ELSE
-                INSERT INTO registration(student_id, module_code)
-                VALUES(NEW.student_id, NEW.module_code);
+               INSERT INTO takes(student_id, module_code) VALUES (NEW.student_id, NEW.module_code); 
             END IF;
             RETURN NEW;
             END;
