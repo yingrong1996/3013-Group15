@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StudentModule</title>
+
+    <link rel="stylesheet" href="static/css/style-simple.css">
+</head>
+<body>
+    <form class="studentModuleForm">
+        {{ form.hidden_tag() }}
+
+        <div class="formField">
+        {{ form.module_code }}
+        {% if form.module_code.errors %}
+            <div class="errorMessage">
+            {% for error in form.module_code.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+
+        <button id="studentModuleButton" formmethod="post">register</button>
+    </form>
+</body>
+</html>

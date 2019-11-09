@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, StudentModuleForm
 from FlaskApp.models import web_users
 
 from FlaskApp.utility import hprint
@@ -703,8 +703,20 @@ def render_student_page():
             query = "SELECT * FROM registration WHERE student_id = '{}' AND module_code LIKE '%{}%';".format(current_user.user_id, module_code)
         result = db.session.execute(query).fetchall()
         return render_template("studentrecord.html", form = form, data = result, filters = filters)
-
     return render_template("studentrecord.html", form = form, filters = filters)
+
+
+@view.route("/studentmodule", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_student_module_page():
+    form = StudentModuleForm()
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        query = "INSERT INTO modules(module_code, module_name) VALUES ('{}', '{}')"\
+                .format(current_user.user_id, module_code)
+        db.session.execute(query)
+        db.session.commit()
+    return render_template("studentmodule.html", form=form)
 
 @view.route("/manual", methods=["GET", "POST"])
 #@roles_required('Admin')

@@ -109,3 +109,10 @@ class StudentRecordForm(FlaskForm):
         validators=[Optional()],
         render_kw={'placeholder': 'Module code'}
     )
+
+class StudentModuleForm(FlaskForm):
+    module_code = StringField(
+        label='Module code',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Module code'}
+    )
