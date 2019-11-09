@@ -152,15 +152,6 @@ def initialize():
     ('P35809956', 'FoE'),
     ('P53579939', 'FoE');"""
     db.session.execute(query)
-    
-    query = """CREATE TABLE IF NOT EXISTS rounds(
-            start_date DATE CHECK (start_date > '1900-01-01') PRIMARY KEY, 
-            end_date DATE CHECK(end_date > start_date));"""
-    db.session.execute(query)
-    query = "DELETE FROM rounds;"
-    db.session.execute(query)
-    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-23'), ('2019-11-11', '2019-11-19');"
-    db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
             module_code VARCHAR,
@@ -184,29 +175,30 @@ def initialize():
     
     query = """CREATE TABLE IF NOT EXISTS available(
             module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE,
-            start_date DATE REFERENCES rounds(start_date) ON DELETE CASCADE,
+            start_date DATE CHECK (start_date > '1900-01-01'),
+            end_date DATE CHECK(end_date > start_date)
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM available;"
     db.session.execute(query)
     query = """INSERT INTO available(module_code, start_date) VALUES 
-    ('CS1111', '2019-11-07'), 
-    ('CG1111', '2019-11-07'),
-    ('CS2222', '2019-11-07'), 
-    ('CS3333', '2019-11-07'), 
-    ('CS4444', '2019-11-07'), 
-    ('CS5555', '2019-11-07'), 
-    ('CS6666', '2019-11-07'),
-    ('CS1111', '2019-11-11'), 
-    ('CG1111', '2019-11-11'),
-    ('CS2222', '2019-11-11'), 
-    ('CS3333', '2019-11-11'), 
-    ('CS4444', '2019-11-11'), 
-    ('CS5555', '2019-11-11'), 
-    ('CS6666', '2019-11-11'),    
-    ('CS1111', '2019-11-20'), 
-    ('CG1111', '2019-11-20'),
-    ('GEQ1000','2019-11-07');"""
+    ('CS1111', '2019-11-07', '2019-11-10'), 
+    ('CG1111', '2019-11-07', '2019-11-10'),
+    ('CS2222', '2019-11-07', '2019-11-10'), 
+    ('CS3333', '2019-11-07', '2019-11-10'), 
+    ('CS4444', '2019-11-07', '2019-11-10'), 
+    ('CS5555', '2019-11-07', '2019-11-10'), 
+    ('CS6666', '2019-11-07', '2019-11-10'),
+    ('CS1111', '2019-11-11', '2019-11-19'), 
+    ('CG1111', '2019-11-11', '2019-11-19'),
+    ('CS2222', '2019-11-11', '2019-11-19'), 
+    ('CS3333', '2019-11-11', '2019-11-19'), 
+    ('CS4444', '2019-11-11', '2019-11-19'), 
+    ('CS5555', '2019-11-11', '2019-11-19'), 
+    ('CS6666', '2019-11-11', '2019-11-19'),    
+    ('CS1111', '2019-11-20', '2019-11-23'), 
+    ('CG1111', '2019-11-20', '2019-11-23'),
+    ('GEQ1000','2019-11-07', '2019-11-09');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
@@ -570,7 +562,7 @@ def render_search_page():
                 FROM modules m1
                 LEFT JOIN available a
                 ON m1.module_code = a.module_code
-                LEFT JOIN rounds r
+                LEFT JOIN available r
                 ON a.start_date = r.start_date AND r.start_date <= '{}' AND r.end_date > '{}'
                 LEFT JOIN supervises s
                 ON m1.module_code = s.module_code
@@ -592,7 +584,7 @@ def render_search_page():
                 FROM modules m2
                 LEFT JOIN available a1
                 ON m2.module_code = a1.module_code
-                LEFT JOIN rounds r1
+                LEFT JOIN available r1
                 ON a1.start_date = r1.start_date AND r1.start_date <= '{}' AND r1.end_date > '{}'
                 WHERE r1.start_date IS NOT NULL AND r1.end_date IS NOT NULL AND m2.module_code LIKE '%{}%');
             """.format(search, date, date, search)
@@ -794,7 +786,7 @@ def render_student_module_page():
         module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Register for Module':
-            query = "SELECT COUNT(*) FROM available a NATURAL JOIN rounds r WHERE a.module_code = '{}' AND '{}' > r.start_date AND '{}' < r.end_date".format(module_code, currentdate, currentdate)
+            query = "SELECT COUNT(*) FROM available WHERE module_code = '{}' AND '{}' > start_date AND '{}' < end_date".format(module_code, currentdate, currentdate)
             checkDate = db.session.execute(query).fetchall()
             hprint(checkDate[0][0])
             if (checkDate[0][0]):
