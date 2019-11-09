@@ -183,7 +183,7 @@ def initialize():
     db.session.execute(query)
     
     query = """CREATE TABLE IF NOT EXISTS available(
-            module_code VARCHAR,
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE,
             start_date DATE REFERENCES rounds(start_date) ON DELETE CASCADE,
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
