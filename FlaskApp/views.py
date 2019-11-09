@@ -779,10 +779,12 @@ def render_student_module_page():
         module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Register for Module':
-#            query = "SELECT COUNT(*) FROM takes WHERE module_code = '{}'".format(module_code)
-#            currentenroll = db.session.execute(query).fetchall()
-#            query = "SELECT quota FROM modules WHERE module_code = '{}'".format(module_code)
-#            quota = db.session.execute(query).fetchall()
+            query = "SELECT COUNT(*) FROM takes WHERE module_code = '{}'".format(module_code)
+            currentenroll = db.session.execute(query).fetchall()
+            query = "SELECT quota FROM modules WHERE module_code = '{}'".format(module_code)
+            quota = db.session.execute(query).fetchall()
+            hprint(currentenroll)
+            hprint(quota)
 #            if (currentenroll > quota):
             query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
 #            else:
