@@ -176,7 +176,7 @@ def initialize():
     query = """CREATE TABLE IF NOT EXISTS available(
             module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE,
             start_date DATE CHECK (start_date > '1900-01-01'),
-            end_date DATE CHECK(end_date > start_date)
+            end_date DATE CHECK(end_date > start_date),
             PRIMARY KEY (module_code, start_date));"""
     db.session.execute(query)
     query = "DELETE FROM available;"
