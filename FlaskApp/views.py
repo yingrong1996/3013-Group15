@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Blueprint, redirect, render_template, url_for, request
+from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
@@ -16,9 +16,9 @@ def load_user(user_id):
     user = web_users.query.filter_by(user_id=user_id).first()
     return user or current_user
 
-
-@view.route("/", methods=["GET"])
-def render_landing_page():
+@view.before_app_first_request
+def initialize():
+    hprint('init')
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
             preferred_name VARCHAR, 
@@ -444,13 +444,19 @@ def render_landing_page():
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
     db.session.commit()
+
+
+@view.route("/", methods=["GET"])
+def render_landing_page():
     return redirect("/registration")
+
 
 @view.route("/prerequisites", methods = ["GET", "POST"])
 def render_prerequisite_page():
     query = "SELECT * FROM prerequisites;"
     result = db.session.execute(query)
     return render_template("prerequisite.html", data = result)
+
 
 @view.route("/search", methods = ["GET", "POST"])
 def render_search_page():
@@ -566,6 +572,7 @@ def render_search_page():
         return render_template("search.html", form = form, data = result, filters = filters)
     return render_template("search.html", form = form, filters = filters)
 
+
 @view.route("/prof", methods = ["GET", "POST"])
 #@roles_required('Professor')
 def render_prof_page():
@@ -630,7 +637,7 @@ def render_registration_page():
                 .format(user_id, preferred_name, password)
             db.session.execute(query)
             db.session.commit()
-            return "You have successfully signed up!"
+            return redirect("/login")
     return render_template("registration-simple.html", form=form)
 
 
