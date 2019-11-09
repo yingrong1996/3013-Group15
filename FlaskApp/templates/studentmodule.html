@@ -20,8 +20,13 @@
             </div>
         {% endif %}
         </div>
+    <select name=filter_list method="GET" action="/">
+        {% for filter in filters %}
+        <option value= "{{filter}}" SELECTED>{{filter}}</option>"
+        {% endfor %}
+    </select>
 
-        <button id="studentModuleButton" formmethod="post">register</button>
+        <button id="studentModuleButton" formmethod="post">submit</button>
     </form>
 </body>
 </html>
