@@ -468,7 +468,7 @@ def initialize():
     db.session.execute(query) 
     db.session.commit()
 
-   query = """CREATE OR REPLACE FUNCTION insert_students()
+    query = """CREATE OR REPLACE FUNCTION insert_students()
         RETURNS TRIGGER AS $$ BEGIN
         IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) 
         THEN
