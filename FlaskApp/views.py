@@ -660,13 +660,13 @@ def render_login_page():
 def render_update_page():
     form = UpdateForm()
     if form.validate_on_submit():
-        new_module_code = form.new_module_code.data
-        old_module_code = form.old_module_code.data
+        new = form.new.data
+        old = form.old.data
         query = "UPDATE modules SET module_code='{}' WHERE module_code='{}'"\
-                .format(new_module_code, old_module_code)
+                .format(new, old)
         db.session.execute(query)
         db.session.commit()
-        if old_module_code and new_module_code:
+        if old and new:
             return redirect("/userhome")
     return render_template("update.html", form=form)
 

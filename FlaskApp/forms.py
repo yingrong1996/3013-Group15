@@ -52,12 +52,12 @@ class SearchForm(FlaskForm):
     )
     
 class UpdateForm(FlaskForm):
-    old = StringField(
+    new = StringField(
         label='new',
         validators=[InputRequired()],
         render_kw={'placeholder': 'new'}
     )
-    new = StringField(
+    old = StringField(
         label='old',
         validators=[InputRequired()],
         render_kw={'placeholder': 'old'}
