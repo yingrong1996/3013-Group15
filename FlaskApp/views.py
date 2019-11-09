@@ -469,21 +469,21 @@ def initialize():
     db.session.commit()
 
     query = """CREATE OR REPLACE FUNCTION insert_students()
-            RETURNS TRIGGER AS $$ BEGIN
-            IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) >= (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
-                DELETE FROM takes WHERE student_id = NEW.student_id AND module_code = NEW.module_code;
-               INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);               
-            ELSE
-               Return NEW;
-            END IF;
-            RETURN NEW;
-            END;
-            $$ Language plpgsql;"""
+        RETURNS TRIGGER AS $$ BEGIN
+        IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) 
+        THEN
+            INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);
+        ELSE
+            Return NEW;
+        END IF;
+        RETURN NULL;
+        END;
+        $$ Language plpgsql;"""
     db.session.execute(query)
     query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
     db.session.execute(query)
     query = """CREATE TRIGGER insert_students
-            AFTER INSERT ON takes
+            BEFORE INSERT ON takes
             FOR EACH ROW
             EXECUTE PROCEDURE insert_students();"""
     db.session.execute(query)
@@ -779,12 +779,21 @@ def render_student_module_page():
         module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Register for Module':
+            query = "SELECT COUNT(*) FROM takes WHERE module_code = '{}'".format(module_code)
+            currentenroll = db.session.execute(query).fetchall()
+            query = "SELECT quota FROM modules WHERE module_code = '{}'".format(module_code)
+            quota = db.session.execute(query).fetchall()
+            hprint(currentenroll)
+            hprint(quota)
+#            if (currentenroll > quota):
             query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
+#            else:
+#                query = "INSERT INTO registration(student_id, module_code) VALUES ('{}', '{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
         elif filter == 'Drop Module':
             query = "DELETE FROM takes WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
-            query = "DELETE FROM registrations WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
+            query = "DELETE FROM registration WHERE student_id='{}' AND module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
         db.session.commit()
     return render_template("studentmodule.html", form=form, filters = filters)
