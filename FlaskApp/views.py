@@ -471,6 +471,7 @@ def initialize():
     query = """CREATE OR REPLACE FUNCTION insert_students()
             RETURNS TRIGGER AS $$ BEGIN
             IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) >= (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
+                DELETE FROM takes WHERE student_id = NEW.student_id AND module_code = NEW.module_code
                INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);               
             ELSE
                Return NEW;
@@ -482,7 +483,7 @@ def initialize():
     query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
     db.session.execute(query)
     query = """CREATE TRIGGER insert_students
-            BEFORE INSERT ON takes
+            AFTER INSERT ON takes
             FOR EACH ROW
             EXECUTE PROCEDURE insert_students();"""
     db.session.execute(query)
