@@ -4,7 +4,6 @@ from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm, StudentModuleForm
 from FlaskApp.models import web_users
 
