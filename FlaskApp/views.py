@@ -178,6 +178,7 @@ def initialize():
     ('CS4444', 'Advanced Coding', 5), 
     ('CS5555', 'Master Coding', 2), 
     ('CS6666', 'Godlike Coding', 1),
+    ('CS1234', 'BEEP BOOP BEEP', 10),
     ('GEQ1000', 'CSU is Life', 20);"""
     db.session.execute(query)
     
@@ -221,7 +222,8 @@ def initialize():
     ('P48491547', 'CS4444'),
     ('P68799892', 'CS3333'),
     ('P62707222', 'CS5555'),
-    ('P62707222', 'CS6666'),    
+    ('P62707222', 'CS6666'),
+    ('P68799892', 'CS1234),    
     ('P35809956', 'CG1111');"""
     db.session.execute(query)
 
@@ -232,7 +234,6 @@ def initialize():
     db.session.execute(query)
     query = "DELETE FROM takes;"
     db.session.execute(query)
-    # ('S34567890', 'CS6666')
     query = """INSERT INTO takes(student_id, module_code) VALUES
     ('S49083365', 'CS5555'),
     ('S69940317', 'CS4444'),
