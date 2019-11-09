@@ -806,8 +806,12 @@ def render_manual_accept_page():
     if form.validate_on_submit():
         module_code = form.module_code.data
         student_id = form.student_id.data
+        query = "ALTER TABLE takes DISABLE TRIGGER insert_students;"
+        db.session.execute(query)
         query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')"\
                 .format(student_id, module_code)
+        db.session.execute(query)
+        query = "ALTER TABLE takes ENABLE TRIGGER insert_students;"
         db.session.execute(query)
         query = """select prerequisite from prerequisites where prerequisites.module_code='{}'
                 Except
