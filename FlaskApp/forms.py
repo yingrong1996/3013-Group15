@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'user_id'}
     )
-    preferred_name = StringField(
+    name = StringField(
         label='Name',
         validators=[is_valid_name],
         render_kw={'placeholder': 'Name'}
