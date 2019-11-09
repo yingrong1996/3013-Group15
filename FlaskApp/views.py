@@ -443,6 +443,29 @@ def initialize():
             FOR EACH ROW
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
+    
+    query = """CREATE OR REPLACE FUNCTION duplicateWebUserCheck()
+        RETURNS TRIGGER AS $$ BEGIN
+        If Exists (
+            select 1 from web_users w where w.user_id=NEW.user_id
+            ) Then
+            Return NULL;
+        End If;
+        Return NEW;
+        End;
+        $$ Language plpgsql;"""
+    db.session.execute(query)
+    
+    query = """CREATE TRIGGER prevent_duplicate_accounts
+            BEFORE INSERT ON web_users
+            FOR EACH ROW
+            EXECUTE PROCEDURE duplicateWebUserCheck();"""
+    db.session.execute(query)
+    
+    
+    
+    
+    
     db.session.commit()
 
 
