@@ -719,7 +719,7 @@ def render_student_module_page():
     form = StudentModuleForm()
     if form.validate_on_submit():
         module_code = form.module_code.data
-        query = "INSERT INTO takes(student_name, module_code) VALUES ('{}', '{}')"\
+        query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')"\
                 .format(current_user.user_id, module_code)
         db.session.execute(query)
         db.session.commit()
