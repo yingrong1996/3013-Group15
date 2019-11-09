@@ -657,7 +657,7 @@ def render_login_page():
 
 @view.route("/updatecode", methods=["GET", "POST"])
 #@roles_required('Admin')
-def render_update_module_page():
+def render_update_code_page():
     form = UpdateModuleForm()
     if form.validate_on_submit():
         new_module_code = form.new_module_code.data
@@ -668,7 +668,7 @@ def render_update_module_page():
         db.session.commit()
         if old_module_code and new_module_code:
             return redirect("/userhome")
-    return render_template("updatemodule.html", form=form)
+    return render_template("updatecode.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])
