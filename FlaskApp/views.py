@@ -681,15 +681,15 @@ def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
         user_id = form.user_id.data
-        preferred_name = form.preferred_name.data
+        preferred_name = form.name.data
         password = form.password.data
         query = "SELECT * FROM web_users WHERE user_id = '{}'".format(user_id)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
             form.user_id.errors.append("{} is already in use.".format(user_id))
         else:
-            query = "INSERT INTO web_users(user_id, preferred_name, password) VALUES ('{}', '{}', '{}')"\
-                .format(user_id, preferred_name, password)
+            query = "INSERT INTO web_users(user_id, name, password) VALUES ('{}', '{}', '{}')"\
+                .format(user_id, name, password)
             db.session.execute(query)
             db.session.commit()
             return redirect("/login")
