@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Update Module Code{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div>
+<div style="font-size:300%;">Update Module Code.</div>
+<form class="UpdateForm">
+    {{ form.hidden_tag() }}
+    
+    <div class="formField">
+    {{ form.new}}
+    {% if form.new.errors %}
+        <div class="errorMessage">
+        {% for error in form.new.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+    
+    <div class="formField">
+    {{ form.old}}
+    {% if form.old.errors %}
+        <div class="errorMessage">
+        {% for error in form.old.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+    
+    <button id="UpdateModuleButton" formmethod="post">Update Module</button>
+</form>
+</div>
+{% endblock %}

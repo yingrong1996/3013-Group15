@@ -4,7 +4,8 @@ from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, StudentModuleForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm
+from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm, StudentModuleForm
 from FlaskApp.models import web_users
 
 from FlaskApp.utility import hprint
@@ -199,7 +200,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
             prof_id VARCHAR REFERENCES professors(prof_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
@@ -216,7 +217,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS takes(
             student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM takes;"
@@ -267,7 +268,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS took(
             student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM took;"
@@ -321,7 +322,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS prerequisites(
             module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
-            prerequisite VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            prerequisite VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE,
             PRIMARY KEY(module_code, prerequisite));"""
     db.session.execute(query)
     query = "DELETE FROM prerequisites;"
@@ -336,7 +337,7 @@ def initialize():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS lessons(
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             day INT CHECK (day > 0 AND day < 6), 
             time INT CHECK (time >= 0 AND time <= 23), 
             location VARCHAR, 
@@ -370,8 +371,7 @@ def initialize():
     ('CG1111', '5', '12', 'COM1-B1'),
     ('CG1111', '5', '13', 'COM1-B1');"""
     db.session.execute(query)
-
-    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE PRIMARY KEY);"
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM lectures;"
     db.session.execute(query)
@@ -380,7 +380,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS lecturing(
             prof_id VARCHAR REFERENCES professors(prof_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM lecturing;"
@@ -395,8 +395,7 @@ def initialize():
     ('P35809956', 'CG1111'),
     ('P68799892', 'CS4444');"""
     db.session.execute(query)
-
-    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE PRIMARY KEY);"
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM labtut;"
     db.session.execute(query)
@@ -405,7 +404,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS assists(
             student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM assists;"
@@ -417,7 +416,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS registration(
             student_id VARCHAR REFERENCES students(student_id) ON DELETE CASCADE, 
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE);"""
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE);"""
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
@@ -444,6 +443,25 @@ def initialize():
             FOR EACH ROW
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
+    
+    query = """CREATE OR REPLACE FUNCTION duplicateWebUserCheck()
+        RETURNS TRIGGER AS $$ BEGIN
+        If Exists (
+            select 1 from web_users w where w.user_id=NEW.user_id
+            ) Then
+            Return NULL;
+        End If;
+        Return NEW;
+        End;
+        $$ Language plpgsql;"""
+    db.session.execute(query)
+    query = "DROP TRIGGER IF EXISTS prevent_duplicate_accounts ON web_users CASCADE;"
+    db.session.execute(query)
+    query = """CREATE TRIGGER prevent_duplicate_accounts
+            BEFORE INSERT ON web_users
+            FOR EACH ROW
+            EXECUTE PROCEDURE duplicateWebUserCheck();"""
+    db.session.execute(query) 
     db.session.commit()
 
     query = """CREATE OR REPLACE FUNCTION insert_students()
@@ -677,6 +695,19 @@ def render_login_page():
             login_user(user)
             return redirect("/userhome")
     return render_template("login_test.html", form=form)
+
+@view.route("/update", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_update_page():
+    form = UpdateForm()
+    if form.validate_on_submit():
+        new = form.new.data
+        old = form.old.data
+        query = "UPDATE modules SET module_code='{}' WHERE module_code='{}'"\
+                .format(new, old)
+        db.session.execute(query)
+        db.session.commit()
+    return render_template("update.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])

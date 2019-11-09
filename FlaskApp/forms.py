@@ -50,6 +50,18 @@ class SearchForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Search'}
     )
+    
+class UpdateForm(FlaskForm):
+    new = StringField(
+        label='new',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'new'}
+    )
+    old = StringField(
+        label='old',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'old'}
+    )
 
 class DeleteModuleForm(FlaskForm):
     module_code = StringField(
