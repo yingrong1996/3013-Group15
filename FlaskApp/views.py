@@ -217,7 +217,7 @@ def initialize():
     db.session.execute(query)
     query = "DELETE FROM available;"
     db.session.execute(query)
-    query = """INSERT INTO available(module_code, start_date) VALUES 
+    query = """INSERT INTO available(module_code, start_date, end_date) VALUES 
     ('CS1111', '2019-11-07', '2019-11-10'), 
     ('CG1111', '2019-11-07', '2019-11-10'),
     ('CS2222', '2019-11-07', '2019-11-10'), 
