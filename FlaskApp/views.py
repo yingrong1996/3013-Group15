@@ -688,7 +688,7 @@ def render_registration_page():
         if exists_user:
             form.user_id.errors.append("{} is already in use.".format(user_id))
         else:
-            query = "INSERT INTO web_users(user_id, name, password) VALUES ('{}', '{}', '{}')"\
+            query = "INSERT INTO web_users(user_id, preferred_name, password) VALUES ('{}', '{}', '{}')"\
                 .format(user_id, name, password)
             db.session.execute(query)
             db.session.commit()
