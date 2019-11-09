@@ -16,8 +16,9 @@ def load_user(user_id):
     user = web_users.query.filter_by(user_id=user_id).first()
     return user or current_user
 
-@view.before_first_request
+@view.before_app_first_request
 def initialize():
+    hprint('init')
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
             preferred_name VARCHAR, 
