@@ -717,13 +717,18 @@ def render_student_page():
 #@roles_required('Admin')
 def render_student_module_page():
     form = StudentModuleForm()
+    filters = ['Register for Module', 'Drop Module']
     if form.validate_on_submit():
         module_code = form.module_code.data
-        query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')"\
-                .format(current_user.user_id, module_code)
+        filter = request.form.get('filter_list')
+        if filter == 'Register for Module':
+            query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
+        elif filter == 'Drop Module':
+            query = "DELETE FROM takes WHERE ('{}', '{}')".format(current_user.user_id, module_code)
         db.session.execute(query)
         db.session.commit()
     return render_template("studentmodule.html", form=form)
+
 
 @view.route("/manual", methods=["GET", "POST"])
 #@roles_required('Admin')
