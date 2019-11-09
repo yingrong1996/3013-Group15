@@ -469,15 +469,15 @@ def initialize():
     db.session.commit()
 
    query = """CREATE OR REPLACE FUNCTION insert_students()
-          RETURNS TRIGGER AS $$ BEGIN
-            IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
-                Return NEW;
-            ELSE
-                INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);
-            END IF;
-            RETURN NEW;
-            END;
-            $$ Language plpgsql;"""
+        RETURNS TRIGGER AS $$ BEGIN
+        IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) < (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
+            Return NEW;
+        ELSE
+            INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);
+        END IF;
+        RETURN NEW;
+        END;
+        $$ Language plpgsql;"""
     db.session.execute(query)
     query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
     db.session.execute(query)
