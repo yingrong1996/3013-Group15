@@ -455,17 +455,13 @@ def initialize():
         End;
         $$ Language plpgsql;"""
     db.session.execute(query)
-    
+    query = "DROP TRIGGER IF EXISTS prevent_duplicate_accounts ON web_users CASCADE;"
+    db.session.execute(query)
     query = """CREATE TRIGGER prevent_duplicate_accounts
             BEFORE INSERT ON web_users
             FOR EACH ROW
             EXECUTE PROCEDURE duplicateWebUserCheck();"""
-    db.session.execute(query)
-    
-    
-    
-    
-    
+    db.session.execute(query) 
     db.session.commit()
 
 
