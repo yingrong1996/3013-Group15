@@ -473,7 +473,7 @@ def initialize():
             IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) >= (SELECT quota FROM modules WHERE module_code = NEW.module_code)) THEN
                INSERT INTO registration(student_id, module_code) VALUES (NEW.student_id, NEW.module_code);               
             ELSE
-               Return NULL;
+               Return NEW;
             END IF;
             RETURN NEW;
             END;
