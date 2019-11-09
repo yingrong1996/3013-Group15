@@ -656,7 +656,7 @@ def render_prof_page():
 #@roles_required('Professor')
 def render_stulist_page():
     form = SearchForm()
-    if (current_user.user_id[0] == 'P'):
+    if (current_user.user_id[0] == 'P' or current_user.user_id[0] == 'A'):
         if form.validate_on_submit():
             date = datetime.datetime.now()
             search = form.search.data
