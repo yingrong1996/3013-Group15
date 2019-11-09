@@ -7,14 +7,14 @@
 {% block content %}
 <div>
 <div style="font-size:300%;">Update Module Code.</div>
-<form class="UpdateModuleForm">
+<form class="UpdateForm">
     {{ form.hidden_tag() }}
     
     <div class="formField">
-    {{ form.new_module_code }}
-    {% if form.new_module_code.errors %}
+    {{ form.new}}
+    {% if form.new.errors %}
         <div class="errorMessage">
-        {% for error in form.new_module_code.errors %}
+        {% for error in form.new.errors %}
             <li>{{ error }}</li>
         {% endfor %}
         </div>
@@ -22,10 +22,10 @@
     </div>
     
     <div class="formField">
-    {{ form.old_module_code }}
-    {% if form.old_module_code.errors %}
+    {{ form.old}}
+    {% if form.old.errors %}
         <div class="errorMessage">
-        {% for error in form.old_module_code.errors %}
+        {% for error in form.old.errors %}
             <li>{{ error }}</li>
         {% endfor %}
         </div>
