@@ -19,39 +19,39 @@ def load_user(user_id):
 @view.before_app_first_request
 def initialize():
     hprint('init')
-    query = "DROP TABLE IF EXISTS registrations;"
+    query = "DROP TABLE IF EXISTS registrations CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS assists;"
+    query = "DROP TABLE IF EXISTS assists CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS labtuts;"
+    query = "DROP TABLE IF EXISTS labtuts CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS lecturing;"
+    query = "DROP TABLE IF EXISTS lecturing CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS lectures;"
+    query = "DROP TABLE IF EXISTS lectures CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS lessons;"
+    query = "DROP TABLE IF EXISTS lessons CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS prerequisites;"
+    query = "DROP TABLE IF EXISTS prerequisites CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS took;"
+    query = "DROP TABLE IF EXISTS took CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS takes;"
+    query = "DROP TABLE IF EXISTS takes CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS supervises;"
+    query = "DROP TABLE IF EXISTS supervises CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS available;"
+    query = "DROP TABLE IF EXISTS available CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS modules;"
+    query = "DROP TABLE IF EXISTS modules CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS rounds;"
+    query = "DROP TABLE IF EXISTS rounds CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS professors;"
+    query = "DROP TABLE IF EXISTS professors CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS students;"
+    query = "DROP TABLE IF EXISTS students CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS admin;"
+    query = "DROP TABLE IF EXISTS admin CASCADE;"
     db.session.execute(query)
-    query = "DROP TABLE IF EXISTS web_users;"
+    query = "DROP TABLE IF EXISTS web_users CASCADE;"
     db.session.execute(query)
 
 
