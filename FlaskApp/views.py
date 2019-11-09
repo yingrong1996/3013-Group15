@@ -655,10 +655,10 @@ def render_login_page():
             return redirect("/userhome")
     return render_template("login_test.html", form=form)
 
-@view.route("/updatecode", methods=["GET", "POST"])
+@view.route("/update", methods=["GET", "POST"])
 #@roles_required('Admin')
-def render_update_code_page():
-    form = UpdateModuleForm()
+def render_update_page():
+    form = UpdateForm()
     if form.validate_on_submit():
         new_module_code = form.new_module_code.data
         old_module_code = form.old_module_code.data
@@ -668,7 +668,7 @@ def render_update_code_page():
         db.session.commit()
         if old_module_code and new_module_code:
             return redirect("/userhome")
-    return render_template("updatecode.html", form=form)
+    return render_template("update.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])
