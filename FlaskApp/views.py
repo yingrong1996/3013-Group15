@@ -727,7 +727,7 @@ def render_student_module_page():
             query = "DELETE FROM takes WHERE ('{}', '{}')".format(current_user.user_id, module_code)
         db.session.execute(query)
         db.session.commit()
-    return render_template("studentmodule.html", form=form)
+    return render_template("studentmodule.html", form=form, filters = filters)
 
 
 @view.route("/manual", methods=["GET", "POST"])
