@@ -227,7 +227,6 @@ def initialize():
     db.session.execute(query)
     # ('S34567890', 'CS6666')
     query = """INSERT INTO takes(student_id, module_code) VALUES
-    ('S37132455', 'CS5555'),
     ('S49083365', 'CS5555'),
     ('S69940317', 'CS4444'),
     ('S10702156', 'CS4444'),
@@ -286,6 +285,7 @@ def initialize():
     ('S37132455', 'CS2222'),
     ('S37132455', 'CS3333'),
     ('S37132455', 'CS4444'),
+    ('S37132455', 'CS5555'),
     ('S49083365', 'CS1111'),
     ('S49083365', 'CS2222'),
     ('S49083365', 'CS3333'),
