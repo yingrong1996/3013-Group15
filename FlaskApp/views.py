@@ -323,7 +323,7 @@ def initialize():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS prerequisites(
-            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE, 
+            module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE, 
             prerequisite VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE,
             PRIMARY KEY(module_code, prerequisite));"""
     db.session.execute(query)
