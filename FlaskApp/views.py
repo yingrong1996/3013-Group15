@@ -681,7 +681,7 @@ def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
         user_id = form.user_id.data
-        preferred_name = form.name.data
+        name = form.name.data
         password = form.password.data
         query = "SELECT * FROM web_users WHERE user_id = '{}'".format(user_id)
         exists_user = db.session.execute(query).fetchone()
