@@ -78,6 +78,9 @@ def initialize():
     ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
     db.session.execute(query)
 
+    query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
+    db.session.execute(query)
+    
     query = "CREATE TABLE IF NOT EXISTS admins(admin_id VARCHAR PRIMARY KEY REFERENCES web_users(user_id) ON DELETE CASCADE);"
     db.session.execute(query)
     query = "DELETE FROM admins;"
