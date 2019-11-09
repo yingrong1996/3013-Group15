@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
     )
     name = StringField(
         label='Name',
-        validators=[is_valid_name],
+        validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name'}
     )
     password = PasswordField(
