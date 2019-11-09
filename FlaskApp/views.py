@@ -464,7 +464,7 @@ def initialize():
     db.session.execute(query) 
     db.session.commit()
 
-    query = """CREATE OR REPLACE FUNCTION insert_students()
+"""    query = """CREATE OR REPLACE FUNCTION insert_students()
             RETURNS trigger AS $$ BEGIN
             IF ((SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) current >= modules.quota) THEN
                INSERT INTO takes(student_id, module_code)
@@ -485,7 +485,7 @@ def initialize():
             EXECUTE PROCEDURE insert_students();"""
     db.session.execute(query)
     db.session.commit()
-
+"""
 
 @view.route("/", methods=["GET"])
 def render_landing_page():
