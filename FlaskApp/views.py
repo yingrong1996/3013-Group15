@@ -477,8 +477,8 @@ def initialize():
 #            END;
 #            $$ Language plpgsql;"""
 #    db.session.execute(query)
-#    query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
-#    db.session.execute(query)
+    query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
+    db.session.execute(query)
 #    query = """CREATE TRIGGER insert_students
 #            BEFORE INSERT ON takes
 #            FOR EACH ROW
