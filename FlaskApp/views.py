@@ -790,7 +790,7 @@ def render_student_module_page():
         filter = request.form.get('filter_list')
         if filter == 'Register for Module':
             query = "SELECT COUNT(*) FROM available a NATURAL JOIN rounds r WHERE a.module_code = '{}' AND '{}' > r.start_date AND '{}' < r.end_date".format(module_code, currentdate, currentdate)
-            checkDate = db.session.execute(query)
+            checkDate = db.session.execute(query).fetchall()
             hprint(checkDate)
             if (checkDate):
                 query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
