@@ -19,6 +19,42 @@ def load_user(user_id):
 @view.before_app_first_request
 def initialize():
     hprint('init')
+    query = "DROP TABLE IF EXISTS registrations;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS assists;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS labtuts;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS lecturing;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS lectures;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS lessons;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS prerequisites;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS took;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS takes;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS supervises;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS available;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS modules;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS rounds;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS professors;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS students;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS admin;"
+    db.session.execute(query)
+    query = "DROP TABLE IF EXISTS web_users;"
+    db.session.execute(query)
+
+
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
             preferred_name VARCHAR, 
