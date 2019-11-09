@@ -74,6 +74,7 @@ def initialize():
     ('P68799892', 'Carol', 'CSmbs3wN'),
     ('P62707222', 'Azalia', 'kE9AXLUzZxi7'),
     ('P35809956', 'Nayda', 'OJfhCpgkLeG'),
+    ('S00000000', 'Khai', 'password'),
     ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
     db.session.execute(query)
 
@@ -443,6 +444,7 @@ def initialize():
     query = """CREATE TRIGGER prereq
             BEFORE INSERT ON Takes
             FOR EACH ROW
+            WHEN (pg_trigger_depth() = 0)
             EXECUTE PROCEDURE prereqcheck();"""
     db.session.execute(query)
     
