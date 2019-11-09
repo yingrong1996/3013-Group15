@@ -353,7 +353,7 @@ def initialize():
             day INT CHECK (day > 0 AND day < 6), 
             time INT CHECK (time >= 0 AND time <= 23), 
             location VARCHAR, 
-            PRIMARY KEY (module_code, day, time, location));"""
+            PRIMARY KEY (day, time, location));"""
     db.session.execute(query)
     query = "DELETE FROM lessons;"
     db.session.execute(query)
