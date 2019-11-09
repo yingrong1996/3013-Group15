@@ -199,7 +199,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS supervises(
             prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM supervises;"
@@ -216,7 +216,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS takes(
             student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM takes;"
@@ -267,7 +267,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS took(
             student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM took;"
@@ -320,8 +320,8 @@ def initialize():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS prerequisites(
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
-            prerequisite VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
+            prerequisite VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY(module_code, prerequisite));"""
     db.session.execute(query)
     query = "DELETE FROM prerequisites;"
@@ -336,7 +336,7 @@ def initialize():
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS lessons(
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             day INT CHECK (day > 0 AND day < 6), 
             time INT CHECK (time >= 0 AND time <= 23), 
             location VARCHAR, 
@@ -371,7 +371,7 @@ def initialize():
     ('CG1111', '5', '13', 'COM1-B1');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES modules(module_code) on delete cascade PRIMARY KEY);"
+    query = "CREATE TABLE IF NOT EXISTS lectures(module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM lectures;"
     db.session.execute(query)
@@ -380,7 +380,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS lecturing(
             prof_id VARCHAR REFERENCES professors(prof_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY (prof_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM lecturing;"
@@ -396,7 +396,7 @@ def initialize():
     ('P68799892', 'CS4444');"""
     db.session.execute(query)
 
-    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) on delete cascade PRIMARY KEY);"
+    query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade PRIMARY KEY);"
     db.session.execute(query)
     query = "DELETE FROM labtut;"
     db.session.execute(query)
@@ -405,7 +405,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS assists(
             student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade, 
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade, 
             PRIMARY KEY(student_id, module_code));"""
     db.session.execute(query)
     query = "DELETE FROM assists;"
@@ -417,7 +417,7 @@ def initialize():
 
     query = """CREATE TABLE IF NOT EXISTS registration(
             student_id VARCHAR REFERENCES students(student_id) on delete cascade, 
-            module_code VARCHAR REFERENCES modules(module_code) on delete cascade);"""
+            module_code VARCHAR REFERENCES modules(module_code) on delete cascade on update cascade);"""
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
@@ -654,6 +654,21 @@ def render_login_page():
             login_user(user)
             return redirect("/userhome")
     return render_template("login_test.html", form=form)
+
+@view.route("/updatecode", methods=["GET", "POST"])
+#@roles_required('Admin')
+def render_update_module_page():
+    form = UpdateModuleForm()
+    if form.validate_on_submit():
+        new_module_code = form.new_module_code.data
+        old_module_code = form.old_module_code.data
+        query = "UPDATE modules SET module_code='{}' WHERE module_code='{}'"\
+                .format(new_module_code, old_module_code)
+        db.session.execute(query)
+        db.session.commit()
+        if old_module_code and new_module_code:
+            return redirect("/userhome")
+    return render_template("updatemodule.html", form=form)
 
 
 @view.route("/deletemodule", methods=["GET", "POST"])
