@@ -159,7 +159,7 @@ def initialize():
     db.session.execute(query)
     query = "DELETE FROM rounds;"
     db.session.execute(query)
-    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-23');"
+    query = "INSERT INTO rounds(start_date, end_date) VALUES ('2019-11-07', '2019-11-10'), ('2019-11-20', '2019-11-23'), ('2019-11-11', '2019-11-19');"
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
@@ -196,6 +196,13 @@ def initialize():
     ('CS4444', '2019-11-07'), 
     ('CS5555', '2019-11-07'), 
     ('CS6666', '2019-11-07'),
+    ('CS1111', '2019-11-11'), 
+    ('CG1111', '2019-11-11'),
+    ('CS2222', '2019-11-11'), 
+    ('CS3333', '2019-11-11'), 
+    ('CS4444', '2019-11-11'), 
+    ('CS5555', '2019-11-11'), 
+    ('CS6666', '2019-11-11'),    
     ('CS1111', '2019-11-20'), 
     ('CG1111', '2019-11-20'),
     ('GEQ1000','2019-11-07');"""
@@ -776,13 +783,18 @@ def render_student_page():
 #@roles_required('Student')
 def render_student_module_page():
     form = StudentModuleForm()
+    currentdate = datetime.datetime.now().date()
     filters = ['Register for Module', 'Drop Module']
     if form.validate_on_submit():
         module_code = form.module_code.data
         filter = request.form.get('filter_list')
         if filter == 'Register for Module':
-            query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
-            db.session.execute(query)
+            query = "SELECT COUNT(*) FROM available a NATURAL JOIN rounds r WHERE a.module_code = '{}' AND '{}' > r.start_date AND '{}' < r.end_date".format(module_code, currentdate, currentdate)
+            checkDate = db.session.execute(query)
+            hprint(checkDate)
+            if (checkDate):
+                query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
+                db.session.execute(query)
         elif filter == 'Drop Module':
             query = "DELETE FROM takes WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
