@@ -423,6 +423,7 @@ def initialize():
     db.session.execute(query)
     query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000'), ('S29167213', 'CS6666');"
     db.session.execute(query)
+
     query = """CREATE OR REPLACE FUNCTION prereqcheck()
             RETURNS TRIGGER AS $$ BEGIN
             If Exists (
@@ -442,6 +443,28 @@ def initialize():
             BEFORE INSERT ON Takes
             FOR EACH ROW
             EXECUTE PROCEDURE prereqcheck();"""
+    db.session.execute(query)
+    db.session.commit()
+
+    query = """CREATE OR REPLACE FUNCTION insert_students()
+            RETURNS trigger AS $$ BEGIN
+            IF (SELECT COUNT(*) FROM takes WHERE module_code = NEW.module_code) THEN
+                INSERT INTO takes(student_id, module_code)
+                VALUES(NEW.student_id, NEW.module_code);
+            ELSE
+                INSERT INTO registration(student_id, module_code)
+                VALUES(NEW.student_id, NEW.module_code);
+            END IF;
+            RETURN NEW;
+            END;
+            $$ Language plpgsql;"""
+    db.session.execute(query)
+    query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
+    db.session.execute(query)
+    query = """CREATE TRIGGER insert_students
+            BEFORE INSERT ON takes
+            FOR EACH ROW
+            EXECUTE PROCEDURE insert_students();"""
     db.session.execute(query)
     db.session.commit()
 
@@ -714,7 +737,7 @@ def render_student_page():
 
 
 @view.route("/studentmodule", methods=["GET", "POST"])
-#@roles_required('Admin')
+#@roles_required('Student')
 def render_student_module_page():
     form = StudentModuleForm()
     filters = ['Register for Module', 'Drop Module']
