@@ -666,8 +666,6 @@ def render_update_page():
                 .format(new, old)
         db.session.execute(query)
         db.session.commit()
-        if old and new:
-            return redirect("/userhome")
     return render_template("update.html", form=form)
 
 
