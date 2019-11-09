@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>StudentModule</title>
+{% extends "base.html" %}
+{% block title %}Student Module{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<form class="studentModuleForm">
+    {{ form.hidden_tag() }}
 
-    <link rel="stylesheet" href="static/css/style-simple.css">
-</head>
-<body>
-    <form class="studentModuleForm">
-        {{ form.hidden_tag() }}
-
-        <div class="formField">
-        {{ form.module_code }}
-        {% if form.module_code.errors %}
-            <div class="errorMessage">
-            {% for error in form.module_code.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-            </div>
-        {% endif %}
-        </div>
-    <select name=filter_list method="GET" action="/">
-        {% for filter in filters %}
-        <option value= "{{filter}}" SELECTED>{{filter}}</option>"
+    <div class="formField">
+    {{ form.module_code }}
+    {% if form.module_code.errors %}
+        <div class="errorMessage">
+        {% for error in form.module_code.errors %}
+            <li>{{ error }}</li>
         {% endfor %}
-    </select>
+        </div>
+    {% endif %}
+    </div>
+<select name=filter_list method="GET" action="/">
+    {% for filter in filters %}
+    <option value= "{{filter}}" SELECTED>{{filter}}</option>"
+    {% endfor %}
+</select>
 
-        <button id="studentModuleButton" formmethod="post">submit</button>
-    </form>
-</body>
-</html>
+    <button id="studentModuleButton" formmethod="post">submit</button>
+</form>
+{% endblock %}
