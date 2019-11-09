@@ -791,7 +791,7 @@ def render_student_module_page():
         elif filter == 'Drop Module':
             query = "DELETE FROM takes WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
-            query = "DELETE FROM registrations WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
+            query = "DELETE FROM registrations WHERE student_id='{}' AND module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
         db.session.commit()
     return render_template("studentmodule.html", form=form, filters = filters)
