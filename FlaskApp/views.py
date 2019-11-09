@@ -10,14 +10,13 @@ from FlaskApp.models import web_users
 from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
-app = Flask(__name__)
 
 @login_manager.user_loader
 def load_user(user_id):
     user = web_users.query.filter_by(user_id=user_id).first()
     return user or current_user
 
-@app.before_first_request
+@view.before_first_request
 def initialize():
     query = """CREATE TABLE IF NOT EXISTS web_users(
             user_id VARCHAR PRIMARY KEY, 
