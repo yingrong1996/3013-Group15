@@ -783,8 +783,7 @@ def render_student_module_page():
             currentenroll = db.session.execute(query).fetchall()
             query = "SELECT quota FROM modules WHERE module_code = '{}'".format(module_code)
             quota = db.session.execute(query).fetchall()
-            hprint(currentenroll)
-            hprint(quota)
+            hprint(currentenroll < quota)
 #            if (currentenroll > quota):
             query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
 #            else:
