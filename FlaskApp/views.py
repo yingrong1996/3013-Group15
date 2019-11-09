@@ -205,7 +205,7 @@ def render_registration_page():
                 .format(user_id, preferred_name, password)
             db.session.execute(query)
             db.session.commit()
-            return "You have successfully signed up!"
+            return redirect("/login")
     return render_template("registration-simple.html", form=form)
 
 
