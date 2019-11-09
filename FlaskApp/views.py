@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Blueprint, redirect, render_template, url_for, request
+from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
 
 from FlaskApp.__init__ import db, login_manager
@@ -10,6 +10,7 @@ from FlaskApp.models import web_users
 from FlaskApp.utility import hprint
 
 view = Blueprint("view", __name__)
+app = Flask(__name__)
 
 @login_manager.user_loader
 def load_user(user_id):
