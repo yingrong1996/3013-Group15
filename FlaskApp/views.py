@@ -714,13 +714,14 @@ def render_login_page():
 #@roles_required('Admin')
 def render_update_page():
     form = UpdateForm()
-    if form.validate_on_submit():
-        new = form.new.data
-        old = form.old.data
-        query = "UPDATE modules SET module_code='{}' WHERE module_code='{}'"\
-                .format(new, old)
-        db.session.execute(query)
-        db.session.commit()
+    if (current_user.user_id[0] == 'A'):
+        if form.validate_on_submit():
+            new = form.new.data
+            old = form.old.data
+            query = "UPDATE modules SET module_code='{}' WHERE module_code='{}'"\
+                    .format(new, old)
+            db.session.execute(query)
+            db.session.commit()
     return render_template("update.html", form=form)
 
 
@@ -728,13 +729,14 @@ def render_update_page():
 #@roles_required('Admin')
 def render_delete_module_page():
     form = DeleteModuleForm()
-    if form.validate_on_submit():
-        module_code = form.module_code.data
-        module_name = form.module_name.data
-        query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
-                .format(module_code, module_name)
-        db.session.execute(query)
-        db.session.commit()
+    if (current_user.user_id[0] == 'A'):
+        if form.validate_on_submit():
+            module_code = form.module_code.data
+            module_name = form.module_name.data
+            query = "DELETE FROM modules WHERE module_code='{}' OR module_name='{}'"\
+                    .format(module_code, module_name)
+            db.session.execute(query)
+            db.session.commit()
     return render_template("deletemodule.html", form=form)
 
 
@@ -742,24 +744,25 @@ def render_delete_module_page():
 #@roles_required('Admin')
 def render_add_module_page():
     form = AddModuleForm()
-    if form.validate_on_submit():
-        module_code = form.module_code.data
-        module_name = form.module_name.data
-        quota = form.quota.data
-        supervisor = form.supervisor.data
-        prerequisite = form.prerequisite.data.replace(',', ' ')
-        prerequisite = prerequisite.split()
-        query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
-                .format(module_code, module_name, quota)
-        db.session.execute(query)
-        query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}')"\
-                .format(supervisor, module_code)
-        db.session.execute(query)
-        for module in prerequisite:
-            query = "INSERT INTO prerequisites(module_code, prerequisite) VALUES ('{}', '{}')"\
-                .format(module_code, module)
+    if (current_user.user_id[0] == 'A'):
+        if form.validate_on_submit():
+            module_code = form.module_code.data
+            module_name = form.module_name.data
+            quota = form.quota.data
+            supervisor = form.supervisor.data
+            prerequisite = form.prerequisite.data.replace(',', ' ')
+            prerequisite = prerequisite.split()
+            query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
+                    .format(module_code, module_name, quota)
             db.session.execute(query)
-        db.session.commit()
+            query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}')"\
+                    .format(supervisor, module_code)
+            db.session.execute(query)
+            for module in prerequisite:
+                query = "INSERT INTO prerequisites(module_code, prerequisite) VALUES ('{}', '{}')"\
+                    .format(module_code, module)
+                db.session.execute(query)
+            db.session.commit()
     return render_template("addmodule.html", form=form)
 
 @view.route("/studentrecord", methods = ["GET", "POST"])
