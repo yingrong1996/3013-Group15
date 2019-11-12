@@ -63,6 +63,9 @@ def initialize():
     query = "DELETE FROM web_users;"
     db.session.execute(query)
     query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
+    ('J12345678', 'Student1', 'password'),
+    ('J23456789', 'Student2', 'password'),
+    ('J34567890', 'Student3', 'password'),
     ('A23456789', 'Ali', 'adminpassword'),
     ('S34567890', 'Bob', 'studentpassword'),
     ('P45678901', 'Charlie', 'profpassword'),
@@ -132,6 +135,9 @@ def initialize():
     db.session.execute(query)
     query = """INSERT INTO students(student_id, major) VALUES
     ('S34567890', 'CEG'),
+    ('J34567890', 'CEG'),
+    ('J23456789', 'CEG'),
+    ('J12345678', 'CEG'),
     ('S37132455', 'CS'),
     ('S49083365', 'IS'),
     ('S69940317', 'CEG'),
@@ -198,7 +204,11 @@ def initialize():
     query = "DELETE FROM modules;"
     db.session.execute(query)
     query = """INSERT INTO modules(module_code, module_name, quota) VALUES 
-    ('CS1111', 'Intro to Coding', 20), 
+    ('CS1111', 'Intro to Coding', 20),
+    ('DEL1000', 'To Be Deleted', 20),
+    ('PRE1001', 'Prereq1', 20),
+    ('PRE1002', 'Prereq2', 20),
+    ('POS1001', 'Posreq1', 1),
     ('CG1111', 'Engineering Principles', 10),
     ('CS2222', 'Basic Coding', 20), 
     ('CS3333', 'Intermediate Coding', 10), 
@@ -218,7 +228,11 @@ def initialize():
     query = "DELETE FROM available;"
     db.session.execute(query)
     query = """INSERT INTO available(module_code, start_date, end_date) VALUES 
-    ('CS1111', '2019-11-07', '2019-11-10'), 
+    ('CS1111', '2019-11-07', '2019-11-10'),
+    ('POS1001', '2019-11-07', '2019-11-10'),
+    ('PRE1001', '2019-11-07', '2019-11-10'),
+    ('PRE1002', '2019-11-07', '2019-11-10'),
+    ('DEL1000', '2019-11-07', '2019-11-10'),
     ('CG1111', '2019-11-07', '2019-11-10'),
     ('CS2222', '2019-11-07', '2019-11-10'), 
     ('CS3333', '2019-11-07', '2019-11-10'), 
@@ -246,6 +260,10 @@ def initialize():
     db.session.execute(query)
     query = """INSERT INTO supervises(prof_id, module_code) VALUES
     ('P45678901', 'CS1111'),
+    ('P45678901', 'DEL1000'),
+    ('P45678901', 'POS1001'),
+    ('P45678901', 'PRE1001'),
+    ('P45678901', 'PRE1002'),
     ('P45678901', 'CS2222'),
     ('P48491547', 'CS4444'),
     ('P68799892', 'CS3333'),
@@ -264,6 +282,7 @@ def initialize():
     db.session.execute(query)
     query = """INSERT INTO takes(student_id, module_code) VALUES
     ('S49083365', 'CS5555'),
+    ('J12345678', 'POS1001'),
     ('S69940317', 'CS4444'),
     ('S10702156', 'CS4444'),
     ('S10797599', 'CS3333'),
@@ -301,7 +320,6 @@ def initialize():
     ('S16005132', 'CS1111'),
     ('S58494691', 'CS1111'),
     ('S01154352', 'CS1111');"""
-    # ('S28946726', 'CS1111')
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS took(
@@ -313,6 +331,10 @@ def initialize():
     db.session.execute(query)
     query = """INSERT INTO took(student_id, module_code) VALUES
     ('S34567890', 'CS1111'),
+    ('J12345678', 'PRE1001'),
+    ('J12345678', 'PRE1002'),
+    ('J34567890', 'PRE1001'),
+    ('J34567890', 'PRE1002'),
     ('S34567890', 'CS2222'),
     ('S34567890', 'CS3333'),
     ('S34567890', 'CS4444'),
@@ -370,6 +392,8 @@ def initialize():
     query = """INSERT INTO prerequisites(module_code, prerequisite) VALUES
     ('CS6666', 'CS5555'),
     ('CS6666', 'GEQ1000'),
+    ('POS1001', 'PRE1001'),
+    ('POS1001', 'PRE1002'),
     ('CS5555', 'CS4444'),
     ('CS4444', 'CS3333'),
     ('CS3333', 'CS2222'),
@@ -388,6 +412,10 @@ def initialize():
     query = """INSERT INTO lessons(module_code, day, time, location) VALUES
     ('CS6666', '1', '10', 'LT1'),
     ('CS6666', '1', '11', 'LT1'),
+    ('POS1001', '1', '9', 'LT1'),
+    ('PRE1001', '2', '9', 'LT1'),
+    ('PRE1002', '3', '9', 'LT1'),
+    ('DEL1000', '4', '9', 'LT1'),
     ('CS6666', '3', '10', 'COM1-01'),
     ('CS5555', '2', '10', 'LT1'),
     ('CS5555', '2', '11', 'LT1'),
@@ -427,6 +455,10 @@ def initialize():
     db.session.execute(query)
     query = """INSERT INTO lecturing(prof_id, module_code) VALUES
     ('P45678901', 'CS1111'),
+    ('P45678901', 'DEL1000'),
+    ('P45678901', 'POS1001'),
+    ('P45678901', 'PRE1001'),
+    ('P45678901', 'PRE1002'),
     ('P45678901', 'CS2222'),    
     ('P48491547', 'CS4444'),
     ('P68799892', 'CS3333'),
