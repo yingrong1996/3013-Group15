@@ -1,4 +1,4 @@
-import datetime
+ximport datetime
 
 from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
@@ -829,7 +829,7 @@ def render_student_module_page():
                 query = "INSERT INTO takes(student_id, module_code) VALUES ('{}', '{}')".format(current_user.user_id, module_code)
                 db.session.execute(query)
         elif filter == 'Drop Module':
-            query = "DELETE FROM takes WHERE student_id='{}' OR module_code='{}'".format(current_user.user_id, module_code)
+            query = "DELETE FROM takes WHERE student_id='{}' AND module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
             query = "DELETE FROM registration WHERE student_id='{}' AND module_code='{}'".format(current_user.user_id, module_code)
             db.session.execute(query)
