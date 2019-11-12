@@ -208,7 +208,7 @@ def initialize():
     ('DEL1000', 'To Be Deleted', 20),
     ('PRE1001', 'Prereq1', 20),
     ('PRE1002', 'Prereq2', 20),
-    ('POS1001', 'Prereq1', 1),
+    ('POS1001', 'Posreq1', 1),
     ('CG1111', 'Engineering Principles', 10),
     ('CS2222', 'Basic Coding', 20), 
     ('CS3333', 'Intermediate Coding', 10), 
