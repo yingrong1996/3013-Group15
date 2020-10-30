@@ -2,7 +2,7 @@ import datetime
 
 from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
-
+from flask import abort,make_response
 from FlaskApp.__init__ import db, login_manager
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm, StudentModuleForm
 from FlaskApp.models import web_users
@@ -892,8 +892,26 @@ def render_manual_accept_page():
         return render_template("manual.html", form = form, data = result)
     return render_template("manual.html", form = form)
         
+#Gonna Do all the API stuff here
+@view.route('/API/Test', methods=['POST'])
+def Auth():
+    if not request.json or not "user" in request.json or not 'password' in request.json:
+        return "ERR 404 G0 AWAY"
+    user = web_users.query.filter_by(user_id=request.json['user']).first()
+    password = web_users.query.filter_by(password=request.json['password']).first()
+    if user and password:
+    #Auth process if ok, return next API call
+        #able to do any task here?
+        return "Auth Success"
+    else:
+        return "Auth Fail"
 
-    
+@view.route('/API/Success',methods=['POST'])
+def AuthS():
+    return "KEY"
+
+
+
 @view.route("/logout", methods=["GET"])
 @login_required
 def logout():

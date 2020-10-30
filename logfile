@@ -1,0 +1,42 @@
+LOG:  database system was shut down at 2020-10-25 14:48:39 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  role "postgres" does not exist
+FATAL:  database "ubuntu" does not exist
+FATAL:  database "ubuntu" does not exist
+FATAL:  database "ubuntu" does not exist
+ERROR:  syntax error at or near "cd" at character 1
+STATEMENT:  cd testdb
+	psql testdb
+	testdb
+	pg_global
+	connect pg_gloobal
+	connect pg_global
+	c testdb
+	connect testdb
+	connect testdb
+	connect testdb ubuntu
+	select * from students
+	select * from students
+	help
+	?
+	select * from *
+	insert into web_users
+	select * from web_user;
+ERROR:  syntax error at or near "*" at character 15
+STATEMENT:  select * from *
+	insert into web_users
+	select * from web_user;
+ERROR:  syntax error at or near "*" at character 15
+STATEMENT:  select * from *
+	insert into web_users
+	select * from web_user;
+ERROR:  column "cs5555" does not exist at character 40
+STATEMENT:  select * from takes where module_code =CS5555;
+ERROR:  syntax error at or near "exit" at character 1
+STATEMENT:  exit
+	select * from takes where module_code ='CS5555';
+ERROR:  syntax error at or near "exit" at character 1
+STATEMENT:  exit
+	select * from takes where module_code ='CS5555';

@@ -13,7 +13,7 @@ app.register_blueprint(view)
 
 
 # Config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/testdb"
 app.config['SECRET_KEY'] = 'A random key to use CRF for forms'
 
 # Initialize other components
@@ -24,6 +24,6 @@ login_manager.init_app(app)
 if __name__ == "__main__":
     app.run(
         debug=True,
-        host='localhost',
+        host='172.31.20.21',
         port=5000
     )
