@@ -63,58 +63,31 @@ def initialize():
     query = "DELETE FROM web_users;"
     db.session.execute(query)
     query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
-    ('J12345678', 'Student1', 'password'),
-    ('J23456789', 'Student2', 'password'),
-    ('J34567890', 'Student3', 'password'),
-    ('A23456789', 'Ali', 'adminpassword'),
-    ('S34567890', 'Bob', 'studentpassword'),
-    ('P45678901', 'Charlie', 'profpassword'),
-    ('S37132455', 'Hoyt', 'gWg7qwSJ2S'),
-    ('S49083365', 'Alfonso', 'Xq1l1FxphUdK'),
-    ('S69940317', 'Audrey', '9UeGk6Eo6s'),
-    ('S10702156', 'Kadeem', 'TH4ZShsSQyk'),
-    ('S10797599', 'Addison', 'VOoQPnLk'),
-    ('S29260258', 'Alan', 'DixPKZrX'),
-    ('S77113792', 'Chloe', 'mX5SXrRebF'),
-    ('S45831058', 'Tanisha', 'HUHm9WtawRLb'),
-    ('S46268848', 'Shoshana', 'rSpsosmlp'),
-    ('S90704597', 'Jennifer', 'UrfPZ2'),
-    ('S62553855', 'Ariel', 'HgCEKcsoUNn'),
-    ('S38183148', 'Meredith', 'TrZqjhC92'),
-    ('S69415105', 'Branden', 'Ap556lVx'),
-    ('S06577699', 'Edan', '5P2CwQGDfve'),
-    ('S04174038', 'Colin', 'xd6aCxamOm'),
-    ('S72184175', 'Desirae', 'rK2YHcf465yh'),
-    ('S84819297', 'Wyoming', 'BBFgjUGP'),
-    ('S17317326', 'Burke', '6tEm5s6C0fL'),
-    ('S23192964', 'Isaiah', 'wd87rDD'),
-    ('S29167213', 'Hop', 'ADhPXqD'),
-    ('S27096888', 'Xenos', 'ZjiViM0NAQG'),
-    ('S80890371', 'Yuli', 'nftGRs3d9A3'),
-    ('S75527240', 'Dominic', 'NGa2jrc5'),
-    ('S38624753', 'Francesca', 'RcUyDxc'),
-    ('S85884267', 'Richard', 'nNhS8mtMDOu5'),
-    ('S73452376', 'Dakota', '90vdWR'),
-    ('S97672292', 'Gloria', 'Xx8IvrGrCkD'),
-    ('S40008988', 'Jack', 'k25vMvb9l'),
-    ('S61330047', 'Justine', 'VJZzwjR'),
-    ('S93854165', 'Thomas', 'tL2PVYheeA9x'),
-    ('S35540141', 'Melvin', 'Wh4fP54uDdP'),
-    ('S62075673', 'Ezekiel', 'ug7hHIi'),
-    ('S61409011', 'Jade', 'kSlr1OM'),
-    ('S60121089', 'Xander', 'wWQgnkb6'),
-    ('S91590043', 'Tiger', '87HPquwlyi9t'),
-    ('S45630599', 'Baxter', 'gutyswlT6lZ5'),
-    ('S16005132', 'Ulla', 'iRpDnzLJJs54'),
-    ('S58494691', 'Hedy', 'nDbPWJ90uVLP'),
-    ('S28946726', 'Aladdin', 'JGIWEaW33Rx'),
-    ('S01154352', 'Cherokee', 'HGGJxTMD'),
-    ('P48491547', 'Maia', 'Ll97fw8M'),
-    ('P68799892', 'Carol', 'CSmbs3wN'),
-    ('P62707222', 'Azalia', 'kE9AXLUzZxi7'),
-    ('P35809956', 'Nayda', 'OJfhCpgkLeG'),
-    ('S00000000', 'Khai', 'password'),
-    ('P53579939', 'Ray', 'Y8Tbyc9ge7');"""
+    ('S0000000', 'Mccarthy', '123456'),
+    ('S0000001', 'Crawford', '123456789'),
+    ('S0000002', 'O'Brien', 'qwerty'),
+    ('S0000003', 'Hunt', 'password'),
+    ('S0000004', 'Adkins', '1234567'),
+    ('S0000005', 'Burke', '12345678'),
+    ('S0000006', 'Berry', '12345'),
+    ('S0000007', 'Holmes', 'iloveyou'),
+    ('S0000008', 'Edwards', '111111'),
+    ('S0000009', 'Mcbride', '123123'),
+    ('S0000010', 'Snyder', 'abc123'),
+    ('S0000011', 'Greene', 'qwerty123'),
+    ('S0000012', 'Benson', '1q2w3e4r'),
+    ('S0000013', 'Perez', 'qwerty123'),
+    ('S0000014', 'Fleming', 'qwertyuiop'),
+    ('S0000015', 'Abbott', '654321'),
+    ('S0000016', 'Miller', '555555'),
+    ('S0000017', 'Kelley', 'lovely'),
+    ('S0000018', 'Elliott', '7777777'),
+    ('S0000019', 'Walton', 'welcome'),
+    ('S0000020', 'Todd', '888888'),
+    ('P0000000', 'Hubbard', 'princess'),
+    ('P0000001', 'Rivera', 'dragon'),
+    ('P0000002', 'Johnston', 'password1'),
+    ('A0000000', 'Jimenez', 'admin'));"""
     db.session.execute(query)
 
     query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
@@ -134,50 +107,27 @@ def initialize():
     query = "DELETE FROM students;"
     db.session.execute(query)
     query = """INSERT INTO students(student_id, major) VALUES
-    ('S34567890', 'CEG'),
-    ('J34567890', 'CEG'),
-    ('J23456789', 'CEG'),
-    ('J12345678', 'CEG'),
-    ('S37132455', 'CS'),
-    ('S49083365', 'IS'),
-    ('S69940317', 'CEG'),
-    ('S10702156', 'CS'),
-    ('S10797599', 'IS'),
-    ('S29260258', 'CEG'),
-    ('S77113792', 'CS'),
-    ('S45831058', 'IS'),
-    ('S46268848', 'CEG'),
-    ('S90704597', 'CS'),
-    ('S62553855', 'IS'),
-    ('S38183148', 'CEG'),
-    ('S69415105', 'CS'),
-    ('S06577699', 'IS'),
-    ('S04174038', 'CEG'),
-    ('S72184175', 'CS'),
-    ('S84819297', 'IS'),
-    ('S17317326', 'CEG'),
-    ('S23192964', 'CS'),
-    ('S29167213', 'IS'),
-    ('S27096888', 'CEG'),
-    ('S80890371', 'CS'),
-    ('S75527240', 'IS'),
-    ('S38624753', 'CEG'),
-    ('S85884267', 'CS'),
-    ('S73452376', 'IS'),
-    ('S97672292', 'CEG'),
-    ('S40008988', 'CS'),
-    ('S61330047', 'IS'),
-    ('S93854165', 'CEG'),
-    ('S35540141', 'CS'),
-    ('S62075673', 'IS'),
-    ('S61409011', 'CEG'),
-    ('S60121089', 'CS'),
-    ('S91590043', 'IS'),
-    ('S45630599', 'CEG'),
-    ('S16005132', 'CS'),
-    ('S58494691', 'IS'),
-    ('S28946726', 'CEG'),
-    ('S01154352', 'CS');"""
+    ('S0000000', 'CEG'),
+    ('S0000001', 'CS'),
+    ('S0000002', 'CEG'),
+    ('S0000003', 'CEG'),
+    ('S0000004', 'IS'),
+    ('S0000005', 'CEG'),
+    ('S0000006', 'CS'),
+    ('S0000007', 'CEG'),
+    ('S0000008', 'CEG'),
+    ('S0000009', 'IS'),
+    ('S0000010', 'CEG'),
+    ('S0000011', 'CEG'),
+    ('S0000012', 'CEG'),
+    ('S0000013', 'CS'),
+    ('S0000014', 'CEG'),
+    ('S0000015', 'CEG'),
+    ('S0000016', 'CS'),
+    ('S0000017', 'CS'),
+    ('S0000018', 'CEG'),
+    ('S0000019', 'IS'),
+    ('S0000020', 'CEG');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS professors(
@@ -187,12 +137,9 @@ def initialize():
     query = "DELETE FROM professors;"
     db.session.execute(query)
     query = """INSERT INTO professors(prof_id, faculty) VALUES
-    ('P45678901', 'SoC'),
-    ('P48491547', 'SoC'),
-    ('P68799892', 'SoC'),
-    ('P62707222', 'SoC'),
-    ('P35809956', 'FoE'),
-    ('P53579939', 'FoE');"""
+    ('P0000000', 'SoC'),
+    ('P0000001', 'SoC'),
+    ('P0000002', 'FoE');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS modules(
@@ -259,18 +206,18 @@ def initialize():
     query = "DELETE FROM supervises;"
     db.session.execute(query)
     query = """INSERT INTO supervises(prof_id, module_code) VALUES
-    ('P45678901', 'CS1111'),
-    ('P45678901', 'DEL1000'),
-    ('P45678901', 'POS1001'),
-    ('P45678901', 'PRE1001'),
-    ('P45678901', 'PRE1002'),
-    ('P45678901', 'CS2222'),
-    ('P48491547', 'CS4444'),
-    ('P68799892', 'CS3333'),
-    ('P62707222', 'CS5555'),
-    ('P62707222', 'CS6666'),
-    ('P68799892', 'CS1234'),    
-    ('P35809956', 'CG1111');"""
+    ('P0000000', 'CS1111'),
+    ('P0000000', 'CS2222'),
+    ('P0000000', 'CS3333'),
+    ('P0000000', 'CS4444'),
+    ('P0000001', 'CS5555'),
+    ('P0000001', 'CS6666'),
+    ('P0000001', 'CS1234'),
+    ('P0000002', 'DEL1000'),
+    ('P0000002', 'POS1001'),
+    ('P0000002', 'PRE1001'),
+    ('P0000002', 'PRE1002'),
+    ('P0000002', 'CG1111');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS takes(
@@ -281,45 +228,7 @@ def initialize():
     query = "DELETE FROM takes;"
     db.session.execute(query)
     query = """INSERT INTO takes(student_id, module_code) VALUES
-    ('S49083365', 'CS5555'),
-    ('J12345678', 'POS1001'),
-    ('S69940317', 'CS4444'),
-    ('S10702156', 'CS4444'),
-    ('S10797599', 'CS3333'),
-    ('S29260258', 'CS3333'),
-    ('S77113792', 'CS3333'),
-    ('S45831058', 'CS3333'),
-    ('S46268848', 'CS3333'),
-    ('S90704597', 'CS3333'),
-    ('S62553855', 'CS2222'),
-    ('S38183148', 'CS2222'),
-    ('S69415105', 'CS2222'),
-    ('S06577699', 'CS2222'),
-    ('S04174038', 'CS2222'),
-    ('S72184175', 'CS2222'),
-    ('S84819297', 'CS2222'),
-    ('S17317326', 'CS2222'),
-    ('S23192964', 'CS2222'),
-    ('S29167213', 'CS2222'),
-    ('S27096888', 'CS2222'),
-    ('S80890371', 'CS2222'),
-    ('S75527240', 'CS2222'),
-    ('S38624753', 'CG1111'),
-    ('S85884267', 'CG1111'),
-    ('S73452376', 'CS1111'),
-    ('S97672292', 'CS1111'),
-    ('S40008988', 'CS1111'),
-    ('S61330047', 'CS1111'),
-    ('S93854165', 'CS1111'),
-    ('S35540141', 'CS1111'),
-    ('S62075673', 'CS1111'),
-    ('S61409011', 'CS1111'),
-    ('S60121089', 'CS1111'),
-    ('S91590043', 'CS1111'),
-    ('S45630599', 'CS1111'),
-    ('S16005132', 'CS1111'),
-    ('S58494691', 'CS1111'),
-    ('S01154352', 'CS1111');"""
+    ('S0000000', 'CS6666');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS took(
@@ -330,56 +239,20 @@ def initialize():
     query = "DELETE FROM took;"
     db.session.execute(query)
     query = """INSERT INTO took(student_id, module_code) VALUES
-    ('S34567890', 'CS1111'),
-    ('J12345678', 'PRE1001'),
-    ('J12345678', 'PRE1002'),
-    ('J34567890', 'PRE1001'),
-    ('J34567890', 'PRE1002'),
-    ('S34567890', 'CS2222'),
-    ('S34567890', 'CS3333'),
-    ('S34567890', 'CS4444'),
-    ('S34567890', 'CS5555'),
-    ('S37132455', 'CS1111'),
-    ('S37132455', 'CS2222'),
-    ('S37132455', 'CS3333'),
-    ('S37132455', 'CS4444'),
-    ('S37132455', 'CS5555'),
-    ('S37132455', 'GEQ1000'),
-    ('S49083365', 'CS1111'),
-    ('S49083365', 'CS2222'),
-    ('S49083365', 'CS3333'),
-    ('S49083365', 'CS4444'),
-    ('S69940317', 'CS1111'),
-    ('S69940317', 'CS2222'),
-    ('S69940317', 'CS3333'),
-    ('S10702156', 'CS1111'),
-    ('S10702156', 'CS2222'),
-    ('S10702156', 'CS3333'),
-    ('S10797599', 'CS1111'),
-    ('S10797599', 'CS2222'),
-    ('S29260258', 'CS1111'),
-    ('S29260258', 'CS2222'),
-    ('S77113792', 'CS1111'),
-    ('S77113792', 'CS2222'),
-    ('S45831058', 'CS1111'),
-    ('S45831058', 'CS2222'),
-    ('S46268848', 'CS1111'),
-    ('S46268848', 'CS2222'),
-    ('S90704597', 'CS1111'),
-    ('S90704597', 'CS2222'),
-    ('S62553855', 'CS1111'),
-    ('S38183148', 'CS1111'),
-    ('S69415105', 'CS1111'),
-    ('S06577699', 'CS1111'),
-    ('S04174038', 'CS1111'),
-    ('S72184175', 'CS1111'),
-    ('S84819297', 'CS1111'),
-    ('S17317326', 'CS1111'),
-    ('S23192964', 'CS1111'),
-    ('S29167213', 'CS1111'),
-    ('S27096888', 'CS1111'),
-    ('S80890371', 'CS1111'),
-    ('S75527240', 'CS1111');"""
+    ('S0000000', 'CS1111'),
+    ('S0000000', 'PRE1001'),
+    ('S0000000', 'PRE1002'),
+    ('S0000000', 'CS2222'),
+    ('S0000000', 'CS3333'),
+    ('S0000000', 'CS4444'),
+    ('S0000000', 'CS5555'),
+    ('S0000000', 'GEQ1000');"""
+    ('S0000001', 'CS1111'),
+    ('S0000001', 'PRE1001'),
+    ('S0000001', 'PRE1002'),
+    ('S0000001', 'CS2222'),
+    ('S0000001', 'CS3333'),
+    ('S0000001', 'CS4444'),
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS prerequisites(
@@ -454,18 +327,18 @@ def initialize():
     query = "DELETE FROM lecturing;"
     db.session.execute(query)
     query = """INSERT INTO lecturing(prof_id, module_code) VALUES
-    ('P45678901', 'CS1111'),
-    ('P45678901', 'DEL1000'),
-    ('P45678901', 'POS1001'),
-    ('P45678901', 'PRE1001'),
-    ('P45678901', 'PRE1002'),
-    ('P45678901', 'CS2222'),    
-    ('P48491547', 'CS4444'),
-    ('P68799892', 'CS3333'),
-    ('P62707222', 'CS5555'),
-    ('P62707222', 'CS6666'),    
-    ('P35809956', 'CG1111'),
-    ('P68799892', 'CS4444');"""
+    ('P0000000', 'CS1111'),
+    ('P0000000', 'CS2222'),
+    ('P0000000', 'CS3333'),
+    ('P0000000', 'CS4444'),
+    ('P0000001', 'CS5555'),
+    ('P0000001', 'CS6666'),
+    ('P0000001', 'CS1234'),
+    ('P0000002', 'DEL1000'),
+    ('P0000002', 'POS1001'),
+    ('P0000002', 'PRE1001'),
+    ('P0000002', 'PRE1002'),
+    ('P0000002', 'CG1111');"""
     db.session.execute(query)
     query = "CREATE TABLE IF NOT EXISTS labtut(module_code VARCHAR REFERENCES modules(module_code) ON DELETE CASCADE ON UPDATE CASCADE PRIMARY KEY);"
     db.session.execute(query)
@@ -482,8 +355,8 @@ def initialize():
     query = "DELETE FROM assists;"
     db.session.execute(query)
     query = """INSERT INTO assists(student_id, module_code) VALUES
-    ('S37132455', 'CS1111'),
-    ('S49083365', 'CS1111');"""
+    ('S0000000', 'CS1111'),
+    ('S0000000', 'CS2222');"""
     db.session.execute(query)
 
     query = """CREATE TABLE IF NOT EXISTS registration(
@@ -492,7 +365,7 @@ def initialize():
     db.session.execute(query)
     query = "DELETE FROM registration;"
     db.session.execute(query)
-    query = "INSERT INTO registration(student_id, module_code) VALUES ('S10797599', 'GEQ1000'), ('S29167213', 'CS6666');"
+    query = "INSERT INTO registration(student_id, module_code) VALUES ('S0000000', 'GEQ1000'), ('S0000001', 'CS6666');"
     db.session.execute(query)
 
     query = """CREATE OR REPLACE FUNCTION prereqcheck()
