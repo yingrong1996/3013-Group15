@@ -40,3 +40,705 @@ STATEMENT:  exit
 ERROR:  syntax error at or near "exit" at character 1
 STATEMENT:  exit
 	select * from takes where module_code ='CS5555';
+ERROR:  syntax error at or near "Brien" at character 168
+STATEMENT:  INSERT INTO web_users(user_id, preferred_name, password) VALUES
+	    ('S0000000', 'Mccarthy', '123456'),
+	    ('S0000001', 'Crawford', '123456789'),
+	    ('S0000002', 'O'Brien', 'qwerty'),
+	    ('S0000003', 'Hunt', 'password'),
+	    ('S0000004', 'Adkins', '1234567'),
+	    ('S0000005', 'Burke', '12345678'),
+	    ('S0000006', 'Berry', '12345'),
+	    ('S0000007', 'Holmes', 'iloveyou'),
+	    ('S0000008', 'Edwards', '111111'),
+	    ('S0000009', 'Mcbride', '123123'),
+	    ('S0000010', 'Snyder', 'abc123'),
+	    ('S0000011', 'Greene', 'qwerty123'),
+	    ('S0000012', 'Benson', '1q2w3e4r'),
+	    ('S0000013', 'Perez', 'qwerty123'),
+	    ('S0000014', 'Fleming', 'qwertyuiop'),
+	    ('S0000015', 'Abbott', '654321'),
+	    ('S0000016', 'Miller', '555555'),
+	    ('S0000017', 'Kelley', 'lovely'),
+	    ('S0000018', 'Elliott', '7777777'),
+	    ('S0000019', 'Walton', 'welcome'),
+	    ('S0000020', 'Todd', '888888'),
+	    ('P0000000', 'Hubbard', 'princess'),
+	    ('P0000001', 'Rivera', 'dragon'),
+	    ('P0000002', 'Johnston', 'password1'),
+	    ('A0000000', 'Jimenez', 'admin'));
+ERROR:  syntax error at or near "Brien" at character 168
+STATEMENT:  INSERT INTO web_users(user_id, preferred_name, password) VALUES
+	    ('S0000000', 'Mccarthy', '123456'),
+	    ('S0000001', 'Crawford', '123456789'),
+	    ('S0000002', 'O'Brien', 'qwerty'),
+	    ('S0000003', 'Hunt', 'password'),
+	    ('S0000004', 'Adkins', '1234567'),
+	    ('S0000005', 'Burke', '12345678'),
+	    ('S0000006', 'Berry', '12345'),
+	    ('S0000007', 'Holmes', 'iloveyou'),
+	    ('S0000008', 'Edwards', '111111'),
+	    ('S0000009', 'Mcbride', '123123'),
+	    ('S0000010', 'Snyder', 'abc123'),
+	    ('S0000011', 'Greene', 'qwerty123'),
+	    ('S0000012', 'Benson', '1q2w3e4r'),
+	    ('S0000013', 'Perez', 'qwerty123'),
+	    ('S0000014', 'Fleming', 'qwertyuiop'),
+	    ('S0000015', 'Abbott', '654321'),
+	    ('S0000016', 'Miller', '555555'),
+	    ('S0000017', 'Kelley', 'lovely'),
+	    ('S0000018', 'Elliott', '7777777'),
+	    ('S0000019', 'Walton', 'welcome'),
+	    ('S0000020', 'Todd', '888888'),
+	    ('P0000000', 'Hubbard', 'princess'),
+	    ('P0000001', 'Rivera', 'dragon'),
+	    ('P0000002', 'Johnston', 'password1'),
+	    ('A0000000', 'Jimenez', 'admin'));
+ERROR:  syntax error at or near ")" at character 1045
+STATEMENT:  INSERT INTO web_users(user_id, preferred_name, password) VALUES
+	    ('S0000000', 'Mccarthy', '123456'),
+	    ('S0000001', 'Crawford', '123456789'),
+	    ('S0000002', 'OBrien', 'qwerty'),
+	    ('S0000003', 'Hunt', 'password'),
+	    ('S0000004', 'Adkins', '1234567'),
+	    ('S0000005', 'Burke', '12345678'),
+	    ('S0000006', 'Berry', '12345'),
+	    ('S0000007', 'Holmes', 'iloveyou'),
+	    ('S0000008', 'Edwards', '111111'),
+	    ('S0000009', 'Mcbride', '123123'),
+	    ('S0000010', 'Snyder', 'abc123'),
+	    ('S0000011', 'Greene', 'qwerty123'),
+	    ('S0000012', 'Benson', '1q2w3e4r'),
+	    ('S0000013', 'Perez', 'qwerty123'),
+	    ('S0000014', 'Fleming', 'qwertyuiop'),
+	    ('S0000015', 'Abbott', '654321'),
+	    ('S0000016', 'Miller', '555555'),
+	    ('S0000017', 'Kelley', 'lovely'),
+	    ('S0000018', 'Elliott', '7777777'),
+	    ('S0000019', 'Walton', 'welcome'),
+	    ('S0000020', 'Todd', '888888'),
+	    ('P0000000', 'Hubbard', 'princess'),
+	    ('P0000001', 'Rivera', 'dragon'),
+	    ('P0000002', 'Johnston', 'password1'),
+	    ('A0000000', 'Jimenez', 'admin'));
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  relation "web_user" does not exist at character 30
+STATEMENT:  SELECT w.preferred_name from web_user w
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+FATAL:  database "test" does not exist
+FATAL:  database "test" does not exist
+ERROR:  relation "test" does not exist at character 8
+STATEMENT:  UPDATE test SET testcol = 50 WHERE testcol = 5;
+LOG:  server process (PID 175783) was terminated by signal 11: Segmentation fault
+DETAIL:  Failed process was running: insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = uv_iocu_view.b;
+LOG:  terminating any other active server processes
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+LOG:  all server processes terminated; reinitializing
+LOG:  database system was interrupted; last known up at 2020-10-30 09:10:06 UTC
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  redo starts at 0/32F8A80
+LOG:  invalid record length at 0/331B120: wanted 24, got 0
+LOG:  redo done at 0/331B0F8
+LOG:  last completed transaction was at log time 2020-10-30 09:16:58.339589+00
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "ubuntu" does not exist
+ERROR:  relation "uv_iocu_tab" already exists
+STATEMENT:  create table uv_iocu_tab (a text unique, b float);
+ERROR:  duplicate key value violates unique constraint "uv_iocu_tab_a_key"
+DETAIL:  Key (a)=(xyxyxy) already exists.
+STATEMENT:  insert into uv_iocu_tab values ('xyxyxy', 0);
+ERROR:  relation "uv_iocu_view" already exists
+STATEMENT:  create view uv_iocu_view as
+	   select b, b+1 as c, a, '2.0'::text as two from uv_iocu_tab;
+LOG:  server process (PID 175802) was terminated by signal 11: Segmentation fault
+DETAIL:  Failed process was running: insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = uv_iocu_view.b;
+LOG:  terminating any other active server processes
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+LOG:  all server processes terminated; reinitializing
+LOG:  database system was interrupted; last known up at 2020-10-30 09:16:58 UTC
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  redo starts at 0/331B190
+LOG:  invalid record length at 0/331B260: wanted 24, got 0
+LOG:  redo done at 0/331B238
+LOG:  last completed transaction was at log time 2020-10-30 09:19:05.364273+00
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "uv_iocu_tab" already exists
+STATEMENT:  create table uv_iocu_tab (a text unique, b float);
+ERROR:  duplicate key value violates unique constraint "uv_iocu_tab_a_key"
+DETAIL:  Key (a)=(xyxyxy) already exists.
+STATEMENT:  insert into uv_iocu_tab values ('xyxyxy', 0);
+ERROR:  relation "uv_iocu_view" already exists
+STATEMENT:  create view uv_iocu_view as
+	   select b, b+1 as c, a, '2.0'::text as two from uv_iocu_tab;
+LOG:  server process (PID 175834) was terminated by signal 11: Segmentation fault
+DETAIL:  Failed process was running: insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = uv_iocu_view.b;
+LOG:  terminating any other active server processes
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+LOG:  all server processes terminated; reinitializing
+LOG:  database system was interrupted; last known up at 2020-10-30 09:19:05 UTC
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  redo starts at 0/331B2D0
+LOG:  invalid record length at 0/331B3D0: wanted 24, got 0
+LOG:  redo done at 0/331B3A8
+LOG:  last completed transaction was at log time 2020-10-30 09:25:44.377893+00
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "uv_iocu_tab" already exists
+STATEMENT:  create table uv_iocu_tab (a text unique, b float);
+ERROR:  duplicate key value violates unique constraint "uv_iocu_tab_a_key"
+DETAIL:  Key (a)=(xyxyxy) already exists.
+STATEMENT:  insert into uv_iocu_tab values ('xyxyxy', 0);
+ERROR:  relation "uv_iocu_view" already exists
+STATEMENT:  create view uv_iocu_view as
+	   select b, b+1 as c, a, '2.0'::text as two from uv_iocu_tab;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+FATAL:  role "test" does not exist
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  select * from base_tbl;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 1)
+	   on conflict (a) do update set b = excluded.b;
+ERROR:  invalid attribute number 4
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = cast(excluded.two as float);
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into uv_iocu_view (a, b) values ('xyxyxy', 3)
+	   on conflict (a) do update set b = excluded.b where excluded.c > 0;
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects integer.
+STATEMENT:  insert into uv_iocu_view (aa,bb) values (1,'y')
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*
+	   where excluded.aa > 0
+	   and excluded.bb != ''
+	   and excluded.cc is not null;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  table row type and query-specified row type do not match
+DETAIL:  Table row contains 2 attributes, but query expects 3.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set bb = 'Rejected: '||excluded.*;
+ERROR:  cannot insert into column "cc" of view "uv_iocu_view"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+STATEMENT:  insert into uv_iocu_view (aa) values (1)
+	   on conflict (aa) do update set cc = 'XXX';
+ERROR:  attribute 2 has wrong type
+DETAIL:  Table has type text, but query expects double precision.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.cc;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = rw_view1.cc;
+ERROR:  attribute 1 has wrong type
+DETAIL:  Table has type integer, but query expects text.
+STATEMENT:  insert into rw_view1 values ('yyy',2.0,1)
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view1 values ('zzz',2.0,1)
+	  on conflict (aa) do update set cc = 3.0;
+ERROR:  permission denied for relation base_tbl
+STATEMENT:  insert into rw_view2 (aa,bb) values (1,'xxx')
+	  on conflict (aa) do update set bb = excluded.bb;
+ERROR:  permission denied for relation rw_view1
+STATEMENT:  insert into rw_view4 (aa,bb) values (1,'yyy')
+	  on conflict (aa) do update set bb = excluded.bb;
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  column "module_code" does not exist at character 213
+STATEMENT:  CREATE VIEW view1 as                 SELECT module_name AS mn, module_code AS mc, quota AS q                 FROM modules;                 INSERT INTO view1 VALUES ('CS1111','CS1112')                 ON CONFLICT (module_code) DO UPDATE SET mc = view1.mc||'CS1111'
+ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000003', 'CS7777') ON CONFLICT (module_code) DO UPDATE SET prof_id = 'P0000003'
+ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000001', 'CS6666') ON CONFLICT (module_code) DO UPDATE SET prof_id = 'P0000001'
+ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+STATEMENT:  INSERT INTO prerequisites(module_code, prerequisite) VALUES ('CS6666', 'CS6666') ON CONFLICT (module_code) DO UPDATE SET prerequisite = 'CS6666'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_prof_id_fkey"
+DETAIL:  Key (prof_id)=(P0000003) is not present in table "professors".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000003', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000003'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_prof_id_fkey"
+DETAIL:  Key (prof_id)=(P0000003) is not present in table "professors".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000003', 'CS7777') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000003'
+ERROR:  permission denied for relation modules
+STATEMENT:  INSERT INTO modules(module_code, module_name, quota) VALUES ('CS7777', 'Testmod', '1234') ON CONFLICT (module_code) DO UPDATE SET module_name = 'Testmod', quota = '1234'
+ERROR:  permission denied for relation view1
+STATEMENT:  INSERT INTO view1 VALUES ('Testmod', '1234', 'CS6666') ON CONFLICT (mc) DO UPDATE SET mn = 'Testmod', q = '1234'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM modules
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM modules
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM modules;
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM view1;
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM view1;
+FATAL:  database "modules" does not exist
+FATAL:  database "module" does not exist
+FATAL:  database "modules" does not exist
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM modules;
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT module_code, module_name, quota FROM modules;
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT module_code, module_name, quota FROM modules WHERE module_name LIKE 'CS';
+ERROR:  role "view_user" already exists
+STATEMENT:  
+	        CREATE USER view_user;
+	        CREATE VIEW view1 AS SELECT module_name AS mn, quota AS q, module_code AS mc FROM modules;
+	        GRANT SELECT (mn, q, mc) on view1 to view_user;
+	        GRANT INSERT on view1 to view_user;
+	        GRANT UPDATE (mn, q) on view1 to view_user;
+	        SET SESSION AUTHORIZATION view_user;
+	        
+ERROR:  role "view_user" already exists
+STATEMENT:  
+	        CREATE USER view_user;
+	        CREATE VIEW view1 AS SELECT module_name AS mn, quota AS q, module_code AS mc FROM modules;
+	        GRANT SELECT (mn, q, mc) on view1 to view_user;
+	        GRANT INSERT on view1 to view_user;
+	        GRANT UPDATE (mn, q) on view1 to view_user;
+	        SET SESSION AUTHORIZATION view_user;
+	        
+ERROR:  view "view1" does not exist
+STATEMENT:  
+	        DROP VIEW view1;
+	        DROP USER view_user1;
+	        
+ERROR:  role "view_user1" does not exist
+STATEMENT:  
+	        DROP USER view_user1;
+	        
+ERROR:  role "view_user1" does not exist
+STATEMENT:  
+	        DROP USER view_user1;
+	        
+ERROR:  role "view_user1" does not exist
+STATEMENT:  
+	        DROP VIEW view1;
+	        DROP USER view_user1;
+	        
+ERROR:  role "view_user" does not exist
+STATEMENT:  
+	        DROP USER view_user;
+	        
+ERROR:  role "view_user" does not exist
+STATEMENT:  
+	        DROP USER view_user;
+	        
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS7777) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS7777') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS7777) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS7777') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  operator does not exist: character varying == unknown at character 41
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT * FROM modules WHERE module_code == 'CS7777'
+	;
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  role "view_user" already exists
+STATEMENT:  
+	        CREATE USER view_user;
+	        CREATE VIEW view1 AS SELECT module_name AS mn, quota AS q, module_code AS mc FROM modules;
+	        GRANT SELECT (mn, q, mc) on view1 to view_user;
+	        GRANT INSERT on view1 to view_user;
+	        GRANT UPDATE (mn, q) on view1 to view_user;
+	        SET SESSION AUTHORIZATION view_user;
+	        
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT * FROM modules
+	;
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS6666) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS6666') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
+ERROR:  compressed data is corrupted
+STATEMENT:  SELECT m.module_code, m.module_name, m.quota, w.preferred_name FROM modules m LEFT JOIN supervises s ON m.module_code = s.module_code LEFT JOIN web_users w ON s.prof_id = w.user_id;
+ERROR:  insert or update on table "supervises" violates foreign key constraint "supervises_module_code_fkey"
+DETAIL:  Key (module_code)=(CS7777) is not present in table "modules".
+STATEMENT:  INSERT INTO supervises(prof_id, module_code) VALUES ('P0000000', 'CS7777') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = 'P0000000'
