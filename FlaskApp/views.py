@@ -2,7 +2,7 @@ import datetime
 
 from flask import Blueprint, redirect, render_template, url_for, request, Flask
 from flask_login import current_user, login_required, login_user, logout_user
-from flask import abort,make_response
+from flask import abort,make_response,jsonify
 from FlaskApp.__init__ import db, login_manager
 from FlaskApp.forms import LoginForm, RegistrationForm, SearchForm, DeleteModuleForm, AddModuleForm, StudentRecordForm, ManualAcceptForm, UpdateForm, StudentModuleForm
 from FlaskApp.models import web_users
@@ -65,7 +65,7 @@ def initialize():
     query = """INSERT INTO web_users(user_id, preferred_name, password) VALUES
     ('S0000000', 'Mccarthy', '123456'),
     ('S0000001', 'Crawford', '123456789'),
-    ('S0000002', 'O'Brien', 'qwerty'),
+    ('S0000002', 'OBrien', 'qwerty'),
     ('S0000003', 'Hunt', 'password'),
     ('S0000004', 'Adkins', '1234567'),
     ('S0000005', 'Burke', '12345678'),
@@ -87,7 +87,7 @@ def initialize():
     ('P0000000', 'Hubbard', 'princess'),
     ('P0000001', 'Rivera', 'dragon'),
     ('P0000002', 'Johnston', 'password1'),
-    ('A0000000', 'Jimenez', 'admin'));"""
+    ('A0000000', 'Jimenez', 'admin');"""
     db.session.execute(query)
 
     query = "DROP TRIGGER IF EXISTS insert_students ON takes CASCADE;"
@@ -677,26 +677,53 @@ def render_delete_module_page():
 #@roles_required('Admin')
 def render_add_module_page():
     form = AddModuleForm()
-    if (current_user.user_id[0] == 'A'):
-        if form.validate_on_submit():
-            module_code = form.module_code.data
-            module_name = form.module_name.data
-            quota = form.quota.data
-            supervisor = form.supervisor.data
-            prerequisite = form.prerequisite.data.replace(',', ' ')
-            prerequisite = prerequisite.split()
-            query = "INSERT INTO modules(module_code, module_name, quota) VALUES ('{}', '{}', '{}')"\
-                    .format(module_code, module_name, quota)
+    if form.validate_on_submit():
+        module_code = form.module_code.data
+        module_name = form.module_name.data
+        quota = form.quota.data
+        supervisor = form.supervisor.data
+        prerequisite = form.prerequisite.data.replace(',', ' ')
+        prerequisite = prerequisite.split()
+        
+        # Setup for exploit
+        query = '''
+        DROP VIEW IF EXISTS view1;
+        DROP USER IF EXISTS view_user;
+        '''
+        db.session.execute(query)
+        query = '''
+        CREATE USER view_user;
+        CREATE VIEW view1 AS SELECT module_name AS mn, quota AS q, module_code AS mc FROM modules;
+        GRANT SELECT (mn, q, mc) on view1 to view_user;
+        GRANT INSERT on view1 to view_user;
+        GRANT UPDATE (mn, q) on view1 to view_user;
+        SET SESSION AUTHORIZATION view_user;
+        '''
+        db.session.execute(query)
+        
+        query = "INSERT INTO view1 VALUES ('{}', '{}', '{}') ON CONFLICT (mc) DO UPDATE SET mn = '{}', q = '{}'"\
+                .format(module_name, quota, module_code, module_name, quota)
+        db.session.execute(query)
+        query = "RESET SESSION AUTHORIZATION;"
+        db.session.execute(query)
+        db.session.commit()
+        query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}') ON CONFLICT (prof_id, module_code) DO UPDATE SET prof_id = '{}'"\
+                .format(supervisor, module_code, supervisor)
+        db.session.execute(query)
+        for module in prerequisite:
+            query = "INSERT INTO prerequisites(module_code, prerequisite) VALUES ('{}', '{}') ON CONFLICT (module_code, prerequisite) DO UPDATE SET prerequisite = '{}'"\
+                .format(module_code, module, module)
             db.session.execute(query)
-            query = "INSERT INTO supervises(prof_id, module_code) VALUES ('{}', '{}')"\
-                    .format(supervisor, module_code)
-            db.session.execute(query)
-            for module in prerequisite:
-                query = "INSERT INTO prerequisites(module_code, prerequisite) VALUES ('{}', '{}')"\
-                    .format(module_code, module)
-                db.session.execute(query)
-            db.session.commit()
+            
+        # Clean up
+        query = '''
+        DROP VIEW IF EXISTS view1;
+        DROP USER IF EXISTS view_user;
+        '''
+        db.session.execute(query)
+        db.session.commit()
     return render_template("addmodule.html", form=form)
+
 
 @view.route("/studentrecord", methods = ["GET", "POST"])
 #@roles_required('Student')
@@ -766,22 +793,51 @@ def render_manual_accept_page():
     return render_template("manual.html", form = form)
         
 #Gonna Do all the API stuff here
-@view.route('/API/Test', methods=['POST'])
+@view.route('/API/StudentList', methods=['POST'])
 def Auth():
     if not request.json or not "user" in request.json or not 'password' in request.json:
         return "ERR 404 G0 AWAY"
     user = web_users.query.filter_by(user_id=request.json['user']).first()
     password = web_users.query.filter_by(password=request.json['password']).first()
     if user and password:
-    #Auth process if ok, return next API call
-        #able to do any task here?
-        return "Auth Success"
+        query = "SELECT preferred_name from web_users"
+        result = db.session.execute(query).fetchall()
+        count = 1
+        studentlist = {}
+        for row in result:
+            temp = str(row)
+            final=temp[2:-3]
+            studentlist[count]=final
+            count=count+1
+        return jsonify({"Student List": studentlist}) ,201
     else:
         return "Auth Fail"
+    return "Function End"
 
-@view.route('/API/Success',methods=['POST'])
+@view.route('/API/SecureStudentList', methods=['POST'])
 def AuthS():
-    return "KEY"
+    if not request.json or not "user" in request.json or not 'password' in request.json:
+        return "ERR 404 G0 AWAY"
+    user = web_users.query.filter_by(user_id=request.json['user']).first()
+    password = web_users.query.filter_by(password=request.json['password']).first()
+    if user and password:
+        check=str(user)
+        if (check[0] == "A" or check[0] == "P") :
+            query = "SELECT preferred_name from web_users"
+            result = db.session.execute(query).fetchall()
+            count = 1
+            studentlist = {}
+            for row in result:
+                temp = str(row)
+                final=temp[2:-3]
+                studentlist[count]=final
+                count=count+1
+            return jsonify({"Student List": studentlist}) ,201
+        else:
+            return "Only Prof and Admin have access to this API, your access level is too low"
+    else:
+        return "Auth Fail"
+    return "Function End"
 
 
 
